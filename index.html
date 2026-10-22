@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!DOCT</div>YPE html>
 <html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>PROJECT-NEXUS-OS — Modern SaaS Personal OS</title>
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
@@ -37,6 +37,19 @@ nav a.tab-btn.active{background:linear-gradient(135deg,#6366f1,#4f46e5);color:#f
 @keyframes popUp{from{opacity:0;transform:scale(0.96) translateY(12px);}to{opacity:1;transform:scale(1) translateY(0);}}
 .badge-completed{background:#d1fae5;color:#047857;border:1px solid #a7f3d0;font-weight:800;font-size:.75rem;border-radius:9999px;padding:.15rem .7rem;text-transform:uppercase;}
 .badge-upcoming{background:#e0e7ff;color:#3730a3;border:1px solid #c7d2fe;font-weight:800;font-size:.75rem;border-radius:9999px;padding:.15rem .7rem;text-transform:uppercase;}
+
+/* Mobile-first responsive rules */
+@media (max-width: 768px){nav{gap:.4rem;padding:.75rem 1rem;border-radius:12px;}nav h1{font-size:1.1rem;}nav a.tab-btn{font-size:.78rem;padding:.4rem .7rem;}.grid{grid-template-columns:1fr;gap:1rem;}.card{padding:1rem;}.card h2{font-size:1rem;}.table-clean{font-size:.82rem;}}
+@media (max-width: 480px){body{padding:1rem .75rem;}nav{padding:.6rem .8rem;}nav a.tab-btn{padding:.35rem .6rem;font-size:.75rem;}.card{padding:.9rem .85rem;}.card button{padding:.55rem .9rem;font-size:.85rem;}}
+.table-wrap{overflow-x:auto;max-width:100%;border-radius:var(--radius);border:1px solid var(--border);}
+.modal-card{width:92%;max-width:420px;max-height:85vh;overflow-y:auto;padding:1.2rem;}
+/* Touch targets & fluid type */
+nav a.tab-btn, .card button, .secondary{min-height:44px;display:inline-flex;align-items:center;justify-content:center;min-width:72px;}
+h1,h2,h3{font-size:clamp(1.1rem,2.8vw,1.6rem);}
+/* Responsive table scroll wrapper */
+.table-scroll{overflow-x:auto;max-width:100%;-webkit-overflow-scrolling:touch;scrollbar-width:thin;scrollbar-color:#c7d2fe transparent;}
+.table-scroll::-webkit-scrollbar{height:6px;}
+.table-scroll::-webkit-scrollbar-thumb{background:#c7d2fe;border-radius:3px;}
 </style>
 </head>
 <body>
@@ -88,7 +101,7 @@ nav a.tab-btn.active{background:linear-gradient(135deg,#6366f1,#4f46e5);color:#f
   <main class="grid" aria-label="Study Hub">
     <section style="display:flex;flex-direction:column;gap:1.5rem;">
       <article class="card" aria-label="Exam Routine"><h2>🎓 NU Honours 2nd Year — Final Exam Routine</h2>
-        <table class="table-clean" id="study-table">
+        <div class="table-scroll"><table class="table-clean" id="study-table">
           <thead><tr><th>Date</th><th>Day</th><th>Subject</th><th>Paper</th><th>Status</th></tr></thead>
           <tbody>
             <tr><td>Nov 10</td><td>Mon</td><td>CS-101: Computing</td><td>CS-101-F</td><td><span class="badge badge-completed">COMPLETED ✓</span></td></tr>
@@ -96,7 +109,7 @@ nav a.tab-btn.active{background:linear-gradient(135deg,#6366f1,#4f46e5);color:#f
             <tr><td>Nov 18</td><td>Tue</td><td>ENG-301: Technical Writing</td><td>ENG-301-F</td><td><span class="badge" style="background:#e0e7ff;color:#3730a3;border-color:#c7d2fe;">UPCOMING ⏳</span></td></tr>
             <tr><td>Nov 22</td><td>Sat</td><td>CS-101 Lab (Practical)</td><td>CS-LAB</td><td><span class="badge" style="background:#e0e7ff;color:#3730a3;border-color:#c7d2fe;">UPCOMING ⏳</span></td></tr>
           </tbody>
-        </table>
+        </table</div>>
       </article>
       <article class="card" aria-label="3rd Year Roadmap" style="background:#fdfcfb;"><h2>📘 3rd Year Academic Roadmap (Tentative)</h2>
         <p style="font-weight:600;font-size:.95rem;margin-bottom:.6rem;">Expected Class Start: <strong>Jan 12, 2027</strong> &nbsp;|&nbsp; Exam Window: <strong>Apr 14 – Apr 28, 2027</strong></p>
@@ -269,4 +282,4 @@ function initStudy(){const done=JSON.parse(localStorage.getItem('study_done')||'
 document.addEventListener('DOMContentLoaded',()=>{initClients();initLeads();initMemory();initTeam();initStudy();});
 </script>
 </body>
-</html>
+</html<div class="table-scroll">>
