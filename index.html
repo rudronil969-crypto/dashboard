@@ -243,7 +243,46 @@ nav a.logout-btn{background:var(--pink);}
   <a href="#" class="tab-btn" style="background:var(--pink);text-decoration:none;" onclick="alert('+ Add Research / Bookmark clicked — open form to add bookmark.');return false;">+ Add Research / Bookmark</a>
 </div>
 </div></div>
-<div id="tab-memory" class="tab-content" aria-label="Memory Vault"><div style="max-width:1200px;margin:0 auto;"><article class="card" style="background:var(--pink);"><h2>Memory Vault</h2><p>Profile notes (Billal Hossien), skill references (bangla-user-interaction, maps, notion, google-workspace), reminder logs.</p></article></div></div>
+<div id="tab-memory" class="tab-content" aria-label="Memory Vault"><div style="max-width:1200px;margin:0 auto;">
+<div class="grid" style="margin-top:1rem;">
+  <article class="card" style="background:var(--pink);"><h2>🔐 Vault Metrics</h2>
+    <ul><li><span>Saved Notes & Ideas</span> <strong>24</strong></li>
+    <li><span>Vault Documents</span> <strong>8</strong></li>
+    <li><span>Encrypted Entries</span> <strong>5</strong></li></ul>
+  </article>
+</div>
+<article class="card" style="margin-top:1.5rem;background:var(--yellow);"><h2>📓 Knowledge Base & Ideas Directory</h2>
+  <table style="width:100%;border-collapse:collapse;font-weight:700;font-size:.85rem;">
+    <thead><tr style="border-bottom:4px solid var(--black);"><th style="text-align:left;padding:.4rem;">Note Title</th><th>Category</th><th>Date</th><th>Actions</th></tr></thead>
+    <tbody>
+      <tr style="border-bottom:2px dashed var(--black);"><td>Social-automation skill notes</td><td>Business Idea</td><td>Oct 22, 2026</td><td><a href="#" style="border:2px solid var(--black);padding:.15rem .5rem;border-radius:9999px;font-weight:900;font-size:.75rem;text-decoration:none;background:#fff;color:var(--ink);box-shadow:2px 2px 0 var(--black);">View</a> <a href="#" style="border:2px solid var(--black);padding:.15rem .5rem;border-radius:9999px;font-weight:900;font-size:.75rem;text-decoration:none;background:#fff;color:var(--ink);box-shadow:2px 2px 0 var(--black);">Edit</a></td></tr>
+      <tr style="border-bottom:2px dashed var(--black);"><td>Real estate dashboard design spec</td><td>Strategy</td><td>Oct 20, 2026</td><td><a href="#" style="border:2px solid var(--black);padding:.15rem .5rem;border-radius:9999px;font-weight:900;font-size:.75rem;text-decoration:none;background:#fff;color:var(--ink);box-shadow:2px 2px 0 var(--black);">View</a> <a href="#" style="border:2px solid var(--black);padding:.15rem .5rem;border-radius:9999px;font-weight:900;font-size:.75rem;text-decoration:none;background:#fff;color:var(--ink);box-shadow:2px 2px 0 var(--black);">Edit</a></td></tr>
+      <tr><td>Profile reminder settings (Bangla/English)</td><td>Personal</td><td>Oct 22, 2026</td><td><a href="#" style="border:2px solid var(--black);padding:.15rem .5rem;border-radius:9999px;font-weight:900;font-size:.75rem;text-decoration:none;background:#fff;color:var(--ink);box-shadow:2px 2px 0 var(--black);">View</a> <a href="#" style="border:2px solid var(--black);padding:.15rem .5rem;border-radius:9999px;font-weight:900;font-size:.75rem;text-decoration:none;background:#fff;color:var(--ink);box-shadow:2px 2px 0 var(--black);">Edit</a></td></tr>
+    </tbody>
+  </table>
+</article>
+<article class="card" style="margin-top:1.5rem;background:var(--mint);"><h2>🔒 Secure Document Vault</h2>
+  <ul><li><span>Passport / ID Backup</span> <span style="font-size:.75rem;color:#777;">Encrypted • Verified</span></li>
+  <li><span>Master Password List (Notion DB sync)</span> <span style="font-size:.75rem;color:#777;">Encrypted • Verified</span></li>
+  <li><span>Service Account Credentials</span> <span style="font-size:.75rem;color:#777;">Encrypted • Verified</span></li>
+  <li><span>Dashboard Contract Template</span> <span style="font-size:.75rem;color:#777;">Encrypted • Verified</span></li>
+  </ul>
+</article>
+<div style="display:flex;gap:.8rem;flex-wrap:wrap;max-width:1200px;margin:1.5rem auto 0 auto;">
+  <a href="#" class="tab-btn" style="background:var(--pink);text-decoration:none;" onclick="openModal('add-note');return false;">+ Save New Note</a>
+</div>
+<div id="modal-add-note" style="display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.65);z-index:1000;align-items:center;justify-content:center;" onclick="if(event.target===this)closeModal('add-note')">
+  <div class="card" style="width:92%;max-width:480px;background:var(--yellow);box-shadow:8px 8px 0 var(--black);" onclick="event.stopPropagation()">
+    <h2 style="display:flex;justify-content:space-between;align-items:center;">+ Save New Note <button onclick="closeModal('add-note')" style="border:3px solid var(--black);background:var(--pink);font-weight:900;border-radius:9999px;padding:.3rem .6rem;cursor:pointer;">✕</button></h2>
+    <form onsubmit="submitAddNote(event)">
+      <label style="font-weight:700;">Note Title <input type="text" id="mn-title" required style="margin-top:.2rem;"></label><br><br>
+      <label style="font-weight:700;">Category <select id="mn-cat" style="margin-top:.2rem;border:3px solid var(--black);padding:.3rem;border-radius:8px;font-family:inherit;font-weight:700;"><option>Business Idea</option><option>Personal</option><option>Strategy</option></select></label><br><br>
+      <label style="font-weight:700;">Content <textarea id="mn-content" rows="3" style="width:100%;margin-top:.2rem;border:3px solid var(--black);border-radius:8px;font-family:inherit;font-weight:700;padding:.3rem;"></textarea></label><br><br>
+      <button type="submit" style="padding:.55rem 1.2rem;border:3px solid var(--black);background:var(--mint);font-weight:900;border-radius:9999px;box-shadow:4px 4px 0 var(--black);cursor:pointer;">Save Note</button>
+    </form>
+  </div>
+</div>
+</div></div>
 <div id="tab-team" class="tab-content" aria-label="Team"><div style="max-width:1200px;margin:0 auto;"><article class="card" style="background:#fff;"><h2>Team</h2><p>Agent roles (Lead Scraper, Dashboard Agent, Outreach Agent, Manager), skills assigned.</p></article></div></div>
 <div id="tab-logout" class="tab-content" aria-label="Log out"><div style="max-width:1200px;margin:0 auto;"><article class="card" style="background:var(--black);color:#fff;"><h2 style="color:var(--yellow);">Logged out</h2><p>Session ended. Open <strong>personal_command_centre.html</strong> again to restart.</p></article></div></div>
 
@@ -308,6 +347,8 @@ window.addEventListener('DOMContentLoaded',()=>{updateMetrics();});
 function submitAddLead(e){e.preventDefault();const name=document.getElementById('ld-name').value;const source=document.getElementById('ld-source').value;const value=document.getElementById('ld-value').value;const priority=document.getElementById('ld-priority').value;const tbody=document.querySelector('#leads-table tbody');const row=document.createElement('tr');row.innerHTML='<td>'+name+'</td><td>'+source+'</td><td>$'+value+'</td><td><span style="border:2px solid var(--black);padding:.1rem .4rem;border-radius:9999px;background:var(--pink);font-size:.7rem;">New</span></td><td>'+priority+'</td><td><a href="#" style="border:2px solid var(--black);padding:.15rem .5rem;border-radius:9999px;font-weight:900;font-size:.75rem;text-decoration:none;background:#fff;color:var(--ink);box-shadow:2px 2px 0 var(--black);">Contact</a></td>';tbody.appendChild(row);const clients=JSON.parse(localStorage.getItem('crm_clients')||'[]');clients.push({name,project:'Lead',retainer:value,status:'New'});localStorage.setItem('crm_clients',JSON.stringify(clients));closeModal('add-lead');alert('Lead added: '+name);e.target.reset();}
 
 function copyPrompt(btn){alert('Copied prompt to clipboard!');}
+
+function submitAddNote(e){e.preventDefault();const title=document.getElementById('mn-title').value;const cat=document.getElementById('mn-cat').value;const content=document.getElementById('mn-content').value;const tbody=document.querySelector('#tab-memory table tbody');if(tbody){const row=document.createElement('tr');row.innerHTML='<td>'+title+'</td><td>'+cat+'</td><td>Today</td><td><a href="#" style="border:2px solid var(--black);padding:.15rem .5rem;border-radius:9999px;font-weight:900;font-size:.75rem;text-decoration:none;background:#fff;color:var(--ink);box-shadow:2px 2px 0 var(--black);">View</a> <a href="#" style="border:2px solid var(--black);padding:.15rem .5rem;border-radius:9999px;font-weight:900;font-size:.75rem;text-decoration:none;background:#fff;color:var(--ink);box-shadow:2px 2px 0 var(--black);">Edit</a></td>';tbody.appendChild(row);}const notes=JSON.parse(localStorage.getItem('vault_notes')||'[]');notes.push({title,cat,content,date:'Today'});localStorage.setItem('vault_notes',JSON.stringify(notes));closeModal('add-note');alert('Note saved to Memory Vault: '+title);e.target.reset();}
 
 </script>
 </body>
