@@ -3,239 +3,245 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta http-equiv="refresh" content="60">
-<meta name="description" content="USA Real Estate Empire — Client Command Centre Dashboard (Social Intel, Leads CRM, Calendar, Deals, Book Notes). Auto-Sync via Notion DB + Hermes Agent.">
-<title>USA REAL ESTATE COMMAND CENTRE — Client Intelligence Dashboard</title>
+<title>PERSONAL COMMAND CENTRE — Multi-Tab SPA</title>
 <style>
-:root{--bg:#fff4a3;--card:#fff;--text:#111;--shadow:#111;--cyan:#70d6ff;--mint:#99e2b4;--yellow:#fff4a3;--pink:#ff85a1;--muted:#777;--fb:#4267B2;--ig:#E1306C;--twitter:#1DA1F2;--youtube:#FF0000;--border:#111;}
-*{margin:0;padding:0;box-sizing:border-box;font-family:"Space Grotesk",system-ui,sans-serif;}
-html{scroll-behavior:smooth;}
-body{background:var(--bg);color:var(--text);min-height:100vh;line-height:1.55;padding:2rem 1rem;font-size:14px;}
-
-/* NAV */
-nav{max-width:1440px;margin:0 auto 2rem;padding:1rem 1.5rem;background:#fff;border:4px solid var(--shadow);box-shadow:6px 6px 0 var(--shadow);border-radius:8px;display:flex;gap:.6rem;align-items:center;flex-wrap:wrap;position:sticky;top:.5rem;z-index:100;backdrop-filter:blur(8px);}
-nav .logo-badge{font-weight:900;font-size:1.15rem;letter-spacing:-2px;text-transform:uppercase;color:#111;background:#fff;border:3px solid var(--shadow);box-shadow:3px 3px 0 var(--shadow);border-radius:8px;padding:.45rem .9rem;white-space:nowrap;}
-nav a{padding:.55rem 1rem;background:#fff;border:3px solid var(--shadow);box-shadow:3px 3px 0 var(--shadow);border-radius:8px;font-weight:800;font-size:.78rem;color:#111;text-decoration:none;text-transform:uppercase;letter-spacing:.3px;transition:transform .15s,box-shadow .15s;white-space:nowrap;display:inline-block;}
-nav a:hover{transform:translateY(-2px);box-shadow:4px 4px 0 var(--shadow);}
-nav a.active-cyan{background:var(--cyan);}
-nav a.active-mint{background:var(--mint);}
-nav a.active-yellow{background:var(--yellow);}
-nav a.active-pink{background:var(--pink);}
-nav a.social-tab:hover{background:#fff;border-color:var(--shadow);box-shadow:5px 5px 0 var(--shadow);}
-
-/* HEADER */
-.header{max-width:1440px;margin:0 auto 2.5rem;padding:3rem 2.5rem;background:#fff;border:4px solid var(--shadow);box-shadow:6px 6px 0 var(--shadow);border-radius:8px;text-align:center;position:relative;}
-.header::after{content:"";position:absolute;top:4px;left:4px;right:4px;bottom:4px;border:2px dashed var(--shadow);border-radius:4px;pointer-events:none;opacity:.5;}
-.header h1{font-size:2.8rem;font-weight:900;letter-spacing:-4px;text-transform:uppercase;color:#111;line-height:1.05;}
-.header .subtitle{margin-top:1rem;font-size:1.05rem;color:#555;font-weight:600;letter-spacing:.2px;}
-.header .badge{display:inline-block;margin-top:1.25rem;padding:.4rem 1rem;background:var(--cyan);border:3px solid var(--shadow);box-shadow:3px 3px 0 var(--shadow);border-radius:8px;font-size:.75rem;font-weight:800;color:#0a0e1a;text-transform:uppercase;letter-spacing:.8px;}
-
-/* GRID */
-.grid{max-width:1440px;margin:0 auto;padding:0 1.5rem;display:grid;grid-template-columns:repeat(auto-fill,minmax(340px,1fr));gap:1.25rem;align-items:start;}
-
-/* CARD BASE (Neubrutalism) */
-.card-base{background:#fff;border:3px solid var(--shadow);border-radius:8px;padding:1.5rem;box-shadow:4px 4px 0 var(--shadow);position:relative;overflow:hidden;transition:transform .15s,box-shadow .15s;margin-bottom:1.25rem;}
-.card-base:hover{transform:translateY(-3px);box-shadow:6px 6px 0 var(--shadow);}
-.card-base h2{font-size:1.1rem;font-weight:900;color:#111;letter-spacing:-1px;margin-bottom:.75rem;display:flex;align-items:center;gap:.5rem;}
-.card-base h2 .dot{display:inline-block;width:8px;height:8px;border-radius:50%;flex-shrink:0;}
-.card-base .meta{font-size:.75rem;color:#777;font-weight:700;text-transform:uppercase;letter-spacing:.6px;margin-bottom:1rem;}
-
-/* Color variants */
-.cyan-strip{border-top:6px solid var(--cyan);}
-.mint-strip{border-top:6px solid var(--mint);}
-.yellow-strip{border-top:6px solid var(--yellow);}
-.pink-strip{border-top:6px solid var(--pink);}
-
-/* Tables */
-.table-mini{width:100%;border-collapse:collapse;font-size:.78rem;}
-.table-mini thead th{padding:.55rem .75rem;text-align:left;background:#f0f0f0;border-bottom:2px solid var(--shadow);font-weight:800;font-size:.7rem;text-transform:uppercase;letter-spacing:.4px;color:#333;}
-.table-mini tbody td{padding:.45rem .75rem;border-bottom:1px dashed #ccc;color:#333;font-weight:500;}
-.table-mini tbody tr:hover td{background:#fff4a3;}
-.status-pill{display:inline-block;padding:.2rem .55rem;border:2.5px solid var(--shadow);border-radius:6px;font-size:.7rem;font-weight:800;text-transform:uppercase;background:#fff;box-shadow:2px 2px 0 var(--shadow);white-space:nowrap;}
-.pill-draft{color:#f59e0b;}
-.pill-verified{color:#22c55e;}
-.pill-active{color:#70d6ff;}
-.pill-note{color:#ff85a1;}
-
-/* Email links */
-.email-link{color:var(--cyan);font-weight:700;text-decoration:none;border-bottom:1.5px dashed var(--cyan);}
-.email-link:hover{color:#111;border-bottom-color:#111;}
-
-/* Sync bar */
-.sync-bar{max-width:1400px;margin:1.5rem auto 0;padding:1rem;background:#fff;border:3px solid var(--shadow);box-shadow:4px 4px 0 var(--shadow);border-radius:8px;font-size:.82rem;color:#777;display:flex;gap:2rem;flex-wrap:wrap;align-items:center;}
-.sync-bar code{background:#fff;border:1.5px solid var(--shadow);padding:.15rem .35rem;border-radius:4px;font-family:monospace;color:#111;font-size:.75rem;box-shadow:2px 2px 0 var(--shadow);}
-.sync-bar strong{color:#111;}
-
-/* Social Intel sub-cards grid */
-.social-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:1rem;margin-top:1rem;}
-.social-card{background:#fff;border:3px solid var(--shadow);border-radius:8px;padding:1rem;box-shadow:4px 4px 0 var(--shadow);transition:transform .15s;}
-.social-card:hover{transform:translateY(-3px);box-shadow:6px 6px 0 var(--shadow);}
-.social-card .social-dot{display:inline-block;width:10px;height:10px;border-radius:50%;margin-right:.35rem;vertical-align:middle;}
-.social-card h4{font-weight:900;font-size:1rem;color:#111;letter-spacing:-.5px;margin-bottom:.25rem;}
-.social-card .social-meta{font-size:.7rem;color:#777;font-weight:700;text-transform:uppercase;letter-spacing:.5px;margin-bottom:.75rem;}
-.social-card .social-field{display:flex;justify-content:space-between;padding:.35rem 0;border-bottom:1px dashed #ccc;font-size:.82rem;color:#333;}
-.social-card .social-field:last-of-type{border-bottom:none;}
-.social-card .social-label{font-weight:600;color:#555;font-size:.8rem;}
-.social-card .social-value{font-weight:700;color:#111;font-size:.85rem;}
-
-/* Footer */
-footer{max-width:1400px;margin:2.5rem auto 0;padding:1.25rem 2rem;background:#fff;border-top:3px solid var(--shadow);font-size:.75rem;color:#777;font-weight:600;text-align:center;box-shadow:0 -4px 0 var(--shadow);border-radius:0 0 8px 8px;}
-footer code{background:#fff;border:1.5px solid var(--shadow);padding:.15rem .35rem;border-radius:4px;font-family:monospace;color:#111;font-size:.75rem;box-shadow:2px 2px 0 var(--shadow);}
-
-/* Responsive */
-@media(max-width:1024px){.main-grid{grid-template-columns:1fr;}}
-@media(max-width:640px){header h1{font-size:1.8rem;}nav .logo{font-size:1rem;}}
-
-.social-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:1rem;margin-top:1rem;}
-@media(max-width:640px){.social-grid{grid-template-columns:1fr;}}
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700;900&display=swap');
+:root{--bg:#fff4a3;--ink:#111;--cyan:#70d6ff;--mint:#99e2b4;--yellow:#ffea79;--pink:#ff85a1;--black:#000;}
+*{box-sizing:border-box;margin:0;padding:0;font-family:'Space Grotesk',sans-serif;}
+body{background:var(--bg);color:var(--ink);min-height:100vh;padding:1.5rem;}
+.neuborder{border:4px solid var(--black);}
+.neushadow{box-shadow:6px 6px 0 var(--black);}
+.neushadow-sm{box-shadow:3px 3px 0 var(--black);}
+nav{display:flex;align-items:center;gap:.6rem;flex-wrap:wrap;padding:1rem 1.2rem;background:var(--yellow);border:4px solid var(--black);box-shadow:6px 6px 0 var(--black);margin-bottom:2rem;border-radius:9999px;}
+nav h1{font-weight:900;font-size:1.5rem;letter-spacing:-0.02em;flex:1 1 auto;}
+nav a.tab-btn{display:inline-block;padding:.45rem .7rem;border:3px solid var(--black);background:#fff;text-decoration:none;color:var(--ink);font-weight:700;font-size:.82rem;border-radius:9999px;transition:.12s;box-shadow:3px 3px 0 var(--black);cursor:pointer;border:none;}
+nav a.tab-btn:hover,nav a.tab-btn.active{transform:translate(-2px,-2px);box-shadow:5px 5px 0 var(--black);background:var(--cyan);}
+nav a.tab-btn.active{background:var(--mint);}
+nav a.logout-btn{background:var(--pink);}
+.tab-content{display:none;animation:fadeIn .25s ease-in-out;}
+.tab-content.active{display:block;}
+@keyframes fadeIn{from{opacity:0;transform:translateY(6px);}to{opacity:1;transform:translateY(0);}}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:2rem;max-width:1200px;margin:0 auto;}
+@media(max-width:900px){.grid{grid-template-columns:1fr;}}
+.card{border:4px solid var(--black);border-radius:14px;padding:1.2rem;background:#fff;box-shadow:6px 6px 0 var(--black);}
+.card h2{font-weight:900;font-size:1.15rem;margin-bottom:.8rem;padding-bottom:.3rem;border-bottom:3px solid var(--black);display:inline-block;}
+.card ul{list-style:none;padding:0;}
+.card ul li{padding:.35rem 0;border-bottom:2px dashed var(--black);font-weight:600;font-size:.92rem;display:flex;justify-content:space-between;}
+.card input[type=text]{width:100%;padding:.5rem;border:3px solid var(--black);border-radius:10px;font-size:.95rem;font-family:inherit;margin-top:.5rem;box-shadow:3px 3px 0 var(--black);}
+.card button{margin-top:.5rem;padding:.45rem .9rem;border:3px solid var(--black);background:var(--cyan);font-weight:900;border-radius:9999px;cursor:pointer;box-shadow:3px 3px 0 var(--black);}
+.card .tag{display:inline-block;padding:.15rem .5rem;border:2px solid var(--black);border-radius:9999px;font-size:.7rem;font-weight:900;text-transform:uppercase;margin-right:.25rem;}
+.grid-3{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:1rem;max-width:1200px;margin:0 auto;}
+.footer{margin-top:2.5rem;text-align:center;font-weight:700;font-size:.8rem;color:#444;}
+.plat-card{border:4px solid var(--black);border-radius:14px;padding:1rem;background:#fff;box-shadow:6px 6px 0 var(--black);}
+.plat-card h3{font-weight:900;font-size:1rem;margin-bottom:.4rem;}
+.plat-card .stat{font-size:.85rem;font-weight:700;color:#555;}
 </style>
 </head>
 <body>
-<header>
-  <h1>USA REAL ESTATE EMPIRE</h1>
-  <p>Client Command Centre — Auto-Sync via Notion DB + Hermes Agent &nbsp;|&nbsp; DB: <code>40075580-e0b1-803d-ab31-ca7ce1ff5af7</code></p>
-  <div class="badge">LIVE — Notion Integration Active (Refresh: 60s)</div>
-</header>
 
-<nav aria-label="Navigation" style="max-width:1400px;margin:0 auto 2rem;flex-wrap:wrap;gap:.6rem;align-items:center;padding:0 1.5rem;display:flex;">
-  <a href="#" onclick="switchTab('leads');return false;" style="padding:.55rem 1rem;background:#fff;border:3px solid #111;box-shadow:3px 3px 0 #111;border-radius:8px;font-weight:800;font-size:.82rem;color:#111;text-decoration:none;transition:transform .15s;display:inline-block;">Leads</a>
-  <a href="#" onclick="switchTab('todo');return false;" style="padding:.55rem 1rem;background:#fff;border:3px solid #111;box-shadow:3px 3px 0 #111;border-radius:8px;font-weight:800;font-size:.82rem;color:#111;text-decoration:none;transition:transform .15s;display:inline-block;">To-Do</a>
-  <a href="#" onclick="switchTab('notes');return false;" style="padding:.55rem 1rem;background:#fff;border:3px solid #111;box-shadow:3px 3px 0 #111;border-radius:8px;font-weight:800;font-size:.82rem;color:#111;text-decoration:none;transition:transform .15s;display:inline-block;">Notes</a>
-  <a href="#" onclick="switchTab('calendar');return false;" style="padding:.55rem 1rem;background:#fff;border:3px solid #111;box-shadow:3px 3px 0 #111;border-radius:8px;font-weight:800;font-size:.82rem;color:#111;text-decoration:none;transition:transform .15s;display:inline-block;">Calendar</a>
-  <a href="#" onclick="switchTab('social');return false;" style="padding:.55rem 1rem;background:#ff85a1;border:3px solid #111;box-shadow:3px 3px 0 #111;border-radius:8px;font-weight:800;font-size:.82rem;color:#111;text-decoration:none;transition:transform .15s;display:inline-block;">Social Intel</a>
+<nav aria-label="Primary">
+  <h1>COMMAND CENTRE</h1>
+  <a href="#" class="tab-btn active" onclick="switchTab('home',this)">Home</a>
+  <a href="#" class="tab-btn" onclick="switchTab('social',this)">Social Intel</a>
+  <a href="#" class="tab-btn" onclick="switchTab('investments',this)">Investments</a>
+  <a href="#" class="tab-btn" onclick="switchTab('clients',this)">Clients</a>
+  <a href="#" class="tab-btn" onclick="switchTab('leads',this)">Leads</a>
+  <a href="#" class="tab-btn" onclick="switchTab('research',this)">Research</a>
+  <a href="#" class="tab-btn" onclick="switchTab('memory',this)">Memory Vault</a>
+  <a href="#" class="tab-btn" onclick="switchTab('team',this)">Team</a>
+  <a href="#" class="tab-btn logout-btn" onclick="switchTab('logout',this)">Log out</a>
 </nav>
 
-<div style="max-width:1400px;margin:0 auto;padding:0 1.5rem;display:grid;grid-template-columns:repeat(auto-fill,minmax(340px,1fr));gap:1.25rem;align-items:start;">
-
-  <!-- Calendar & Showings -->
-  <section id="calendar" class="card cyan" style="margin-top:0;">
-    <h2><span style="display:inline-block;width:8px;height:8px;background:#70d6ff;border-radius:50%;margin-right:.4rem;vertical-align:middle;"></span>Calendar &amp; Showings</h2>
-    <table style="width:100%;font-size:.7rem;text-align:center;border-collapse:collapse;margin-top:.75rem;" aria-label="Calendar">
-      <thead><tr style="color:#777;font-weight:700;text-transform:uppercase;font-size:.6rem;letter-spacing:.3px;"><th>Su</th><th>Mo</th><th>Tu</th><th>We</th><th>Th</th><th>Fr</th><th>Sa</th></tr></thead>
-      <tbody>
-        <tr><td style="padding:.3rem;background:rgba(255,255,255,.4);border-radius:4px;border:1px solid rgba(0,0,0,.1);">19</td><td style="padding:.3rem;background:rgba(255,255,255,.4);border-radius:4px;border:1px solid rgba(0,0,0,.1);">20</td><td style="padding:.3rem;background:#fff4a3;border:2px solid #111;border-radius:4px;font-weight:900;color:#111;">21 Today</td><td style="padding:.3rem;background:rgba(255,255,255,.4);border-radius:4px;border:1px solid rgba(0,0,0,.1);">22</td><td style="padding:.3rem;background:rgba(255,255,255,.4);border-radius:4px;border:1px solid rgba(0,0,0,.1);">23</td><td style="padding:.3rem;background:rgba(255,255,255,.4);border-radius:4px;border:1px solid rgba(0,0,0,.1);">24</td><td style="padding:.3rem;background:rgba(255,255,255,.4);border-radius:4px;border:1px solid rgba(0,0,0,.1);">25</td></tr>
-      </tbody>
-    </table>
-    <div style="margin-top:.75rem;font-size:.75rem;color:#555;line-height:1.4;"><strong>Today (2026-10-20):</strong><br>Property Tour — Gulshan (Tanvir Ahmed) | Client Call — Mr. Tanvir Ahmed (Tomorrow Morning) | Marketing Launch — Facebook Campaign (Next Week)</div>
-  </section>
-
-  <!-- CRM -->
-  <section id="leads" class="card mint">
-    <h2><span style="display:inline-block;width:8px;height:8px;background:#99e2b4;border-radius:50%;margin-right:.4rem;vertical-align:middle;"></span>USA Real Estate CRM — Notion DB Auto-Sync</h2>
-    <p style="font-size:.7rem;color:#777;font-weight:700;text-transform:uppercase;letter-spacing:.6px;margin-bottom:1rem;">Live Leads — Auto-Refresh: 60s | DB: 40075580-e0b1-803d-ab31-ca7ce1ff5af7</p>
-    <table class="table-mini" aria-label="Leads" style="width:100%;font-size:.78rem;border-collapse:collapse;margin-top:.5rem;">
-      <thead><tr style="color:#777;font-weight:700;text-transform:uppercase;font-size:.7rem;letter-spacing:.4px;border-bottom:2px solid #111;"><th>Name</th><th>Email</th><th>Location</th><th>Status</th><th>Source</th></tr></thead>
-      <tbody>
-        <tr><td>John Doe</td><td>john@example.com</td><td>Dubai</td><td><span class="status-pill draft">Draft</span></td><td>Manual / User</td></tr>
-        <tr><td>Success (Test)</td><td>—</td><td>Notion DB</td><td><span class="status-pill active">Active</span></td><td>Auto-Sync</td></tr>
-        <tr><td>Rudro (Brother / Friend)</td><td>—</td><td>Personal</td><td><span class="status-pill draft">Draft</span></td><td>Personal Letter</td></tr>
-        <tr><td>Sarah Khan</td><td>sarah@luxuryhomes.com</td><td>Dubai Marina</td><td><span class="status-pill verified">Verified</span></td><td>Manual</td></tr>
-        <tr><td>Tanvir Ahmed</td><td>tanvir@gmail.com</td><td>Gulshan</td><td><span class="status-pill verified">Verified</span></td><td>Notion Auto-Sync</td></tr>
-        <tr><td>David</td><td>—</td><td>—</td><td><span class="status-pill draft">Draft</span></td><td>Notion Auto-Sync</td></tr>
-        <tr><td>9706 Woodshire Dr ($535K)</td><td>info@spyglassrealty.com</td><td>Austin, TX 78748</td><td><span class="status-pill verified">Verified</span></td><td>Zillow / Search</td></tr>
-        <tr><td>15205 Back Of Moon ($475K)</td><td>derek@atxareahome.com</td><td>Austin, TX 78734</td><td><span class="status-pill verified">Verified</span></td><td>Zillow / Search</td></tr>
-        <tr><td>8102 Furness Cv ($449.9K)</td><td>tx.membership@exprealty.com</td><td>Austin, TX 78753</td><td><span class="status-pill verified">Verified</span></td><td>Redfin / Search</td></tr>
-        <tr><td>6209 Daffan Ln ($449K)</td><td>contact@compassretexas.com</td><td>Austin, TX 78724</td><td><span class="status-pill verified">Verified</span></td><td>Redfin / Search</td></tr>
-        <tr><td>12513 Hunters Chase ($469.9K)</td><td>austin@kw.com</td><td>Austin, TX 78729</td><td><span class="status-pill verified">Verified</span></td><td>Zillow / Search</td></tr>
-      </tbody>
-    </table>
-  </section>
-
-  <!-- Inventory -->
-  <section id="inventory" class="card yellow">
-    <h2><span style="display:inline-block;width:8px;height:8px;background:#fff4a3;border-radius:50%;margin-right:.4rem;vertical-align:middle;"></span>Property Inventory &amp; Deals</h2>
-    <p style="font-size:.75rem;color:#777;font-weight:700;text-transform:uppercase;letter-spacing:.6px;margin-bottom:1rem;">Active Escrows &amp; Listings — Auto-Updated</p>
-    <table class="table-mini" aria-label="Deals" style="width:100%;font-size:.78rem;border-collapse:collapse;margin-top:.5rem;">
-      <thead><tr style="color:#777;font-weight:700;text-transform:uppercase;font-size:.7rem;letter-spacing:.4px;border-bottom:2px solid #111;"><th>Property / Deal</th><th>Location</th><th>Price</th><th>Status</th></tr></thead>
-      <tbody>
-        <tr><td>9706 Woodshire Dr, Austin</td><td>Austin, TX 78748</td><td>$535,000</td><td><span class="status-pill verified">Listed</span></td></tr>
-        <tr><td>15205 Back Of The Moon St</td><td>Austin, TX 78734</td><td>$475,000</td><td><span class="status-pill verified">Listed</span></td></tr>
-        <tr><td>8102 Furness Cv</td><td>Austin, TX 78753</td><td>$449,900</td><td><span class="status-pill verified">Listed</span></td></tr>
-        <tr><td>6209 Daffan Ln</td><td>Austin, TX 78724</td><td>$449,000</td><td><span class="status-pill verified">Listed</span></td></tr>
-        <tr><td>12513 Hunters Chase Dr</td><td>Austin, TX 78729</td><td>$469,900</td><td><span class="status-pill verified">Listed</span></td></tr>
-      </tbody>
-    </table>
-  </section>
-
-  <!-- Notes -->
-  <section id="notes" class="card pink">
-    <h2><span style="display:inline-block;width:8px;height:8px;background:#ff85a1;border-radius:50%;margin-right:.4rem;vertical-align:middle;"></span>Life &amp; Book Notes</h2>
-    <p style="font-size:.75rem;color:#777;font-weight:700;text-transform:uppercase;letter-spacing:.6px;margin-bottom:1rem;">Strategy / References / Meetings</p>
-    <div style="padding:.75rem;background:#fff;border:2px dashed #111;border-radius:6px;font-size:.85rem;color:#333;line-height:1.55;margin-bottom:.5rem;"><strong style="color:#ff85a1;font-size:.75rem;text-transform:uppercase;letter-spacing:.3px;">Marketing Plan</strong><br>Launch Facebook ad campaign next week for Dubai properties.</div>
-    <div style="padding:.75rem;background:#fff;border:2px dashed #111;border-radius:6px;font-size:.85rem;color:#333;line-height:1.55;"><strong style="color:#ff85a1;font-size:.75rem;text-transform:uppercase;letter-spacing:.3px;">Client Follow-up</strong><br>Call Mr. Tanvir Ahmed regarding Gulshan property documents tomorrow morning.</div>
-  </section>
-
-  <!-- Social Intel (Full Page View) -->
-  <section id="social" class="card pink" style="display:block;grid-column:span 2;min-height:60vh;">
-    <h2 style="font-size:1.8rem;font-weight:900;color:#111;letter-spacing:-2px;display:flex;align-items:center;gap:.5rem;margin-bottom:1rem;"><span style="display:inline-block;width:10px;height:10px;background:#ff85a1;border-radius:50%;"></span>Social Intel — Live Feed</h2>
-    <p style="font-size:.8rem;color:#777;font-weight:700;text-transform:uppercase;letter-spacing:.6px;margin-bottom:1.25rem;">Notion DB Auto-Sync Active (ID: 40075580-e0b1-803d-ab31-ca7ce1ff5af7)</p>
-
-    <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:1rem;">
-      <article class="card" style="border-top:6px solid #4267B2;background:#fff;box-shadow:4px 4px 0 #111;">
-        <h3 style="font-weight:900;font-size:1rem;color:#111;display:flex;align-items:center;gap:.5rem;"><span style="width:8px;height:8px;background:#4267B2;border-radius:50%;display:inline-block;"></span>Facebook Intel</h3>
-        <p style="font-size:.78rem;color:#777;font-weight:700;text-transform:uppercase;letter-spacing:.6px;margin-top:.25rem;">Brand Presence Monitor</p>
-        <div class="field" style="margin-top:.75rem;padding:.35rem 0;border-bottom:1px dashed #ccc;font-size:.82rem;"><span class="label" style="font-weight:600;color:#555;">Page</span><span class="value" style="font-weight:700;color:#111;">USA Real Estate Empire — Facebook</span></div>
-        <div class="field"><span class="label">Engagement</span><span class="value">Live Monitoring Active</span></div>
-        <div class="field"><span class="label">Status</span><span class="value"><span style="display:inline-block;padding:.2rem .45rem;border:2px solid #4267B2;border-radius:6px;font-size:.65rem;font-weight:800;background:#fff;color:#4267B2;box-shadow:2px 2px 0 #4267B2;">Connected</span></span></div>
+<div id="tab-home" class="tab-content active" aria-label="Home">
+  <main class="grid" aria-label="Dashboard">
+    <section aria-label="Left widgets" style="display:flex;flex-direction:column;gap:2rem;">
+      <article class="card" aria-label="Calendar"><h2 style="color:var(--cyan);">📅 Calendar — Today & Tomorrow</h2>
+        <ul><li><span>Today — Client call (11:00)</span><span style="color:#777;font-size:.8rem;">Austin</span></li>
+        <li><span>Today — Lead follow-up (14:30)</span><span style="color:#777;font-size:.8rem;">Dallas</span></li>
+        <li><span>Tomorrow — Property tour (09:00)</span><span style="color:#777;font-size:.8rem;">Houston</span></li>
+        <li><span>Tomorrow — Team standup (16:00)</span><span style="color:#777;font-size:.8rem;">Remote</span></li></ul>
       </article>
-      <article class="card" style="border-top:6px solid #E1306C;background:#fff;box-shadow:4px 4px 0 #111;">
-        <h3 style="font-weight:900;font-size:1rem;color:#111;display:flex;align-items:center;gap:.5rem;"><span style="width:8px;height:8px;background:#E1306C;border-radius:50%;display:inline-block;"></span>Instagram Intel</h3>
-        <p style="font-size:.78rem;color:#777;font-weight:700;text-transform:uppercase;letter-spacing:.6px;margin-top:.25rem;">Visual Brand Tracking</p>
-        <div class="field" style="margin-top:.75rem;padding:.35rem 0;border-bottom:1px dashed #ccc;font-size:.82rem;"><span class="label">Profile</span><span class="value">@usa_real_estate_empire</span></div>
-        <div class="field"><span class="label">Feed</span><span class="value">Auto-Sync Active (Live)</span></div>
-        <div class="field"><span class="label">Status</span><span class="value"><span style="display:inline-block;padding:.2rem .45rem;border:2px solid #E1306C;border-radius:6px;font-size:.65rem;font-weight:800;background:#fff;color:#E1306C;box-shadow:2px 2px 0 #E1306C;">Active</span></span></div>
+      <article class="card" aria-label="To-Do" style="background:var(--mint);"><h2 style="color:var(--ink);">✅ To-Do List</h2>
+        <ul id="todoList"><li><span>Send outreach email to JPAR Dallas</span><button onclick="removeTask(this)">✓</button></li>
+        <li><span>Review Notion DB sync results</span><button onclick="removeTask(this)">✓</button></li>
+        <li><span>Update social templates (Twitter + LinkedIn)</span><button onclick="removeTask(this)">✓</button></li></ul>
+        <form onsubmit="addTask(event)" style="display:flex;gap:.4rem;align-items:center;"><input type="text" id="newTask" placeholder="New task..." aria-label="New task" required><button type="submit">Add</button></form>
       </article>
-      <article class="card" style="border-top:6px solid #1DA1F2;background:#fff;box-shadow:4px 4px 0 #111;">
-        <h3 style="font-weight:900;font-size:1rem;color:#111;display:flex;align-items:center;gap:.5rem;"><span style="width:8px;height:8px;background:#1DA1F2;border-radius:50%;display:inline-block;"></span>Twitter (X) Intel</h3>
-        <p style="font-size:.78rem;color:#777;font-weight:700;text-transform:uppercase;letter-spacing:.6px;margin-top:.25rem;">Real-Time Updates</p>
-        <div class="field" style="margin-top:.75rem;padding:.35rem 0;border-bottom:1px dashed #ccc;font-size:.82rem;"><span class="label">Handle</span><span class="value">@RealEstateEmpire</span></div>
-        <div class="field"><span class="label">Feed</span><span class="value">Auto-Sync Active (Live)</span></div>
-        <div class="field"><span class="label">Status</span><span class="value"><span style="display:inline-block;padding:.2rem .45rem;border:2px solid #1DA1F2;border-radius:6px;font-size:.65rem;font-weight:800;background:#fff;color:#1DA1F2;box-shadow:2px 2px 0 #1DA1F2;">Active</span></span></div>
+    </section>
+    <section aria-label="Right widgets" style="display:flex;flex-direction:column;gap:2rem;">
+      <article class="card" aria-label="Book Notes" style="background:var(--yellow);"><h2 style="color:var(--ink);">📘 Book Notes — Memory Vault</h2>
+        <p style="font-weight:700;font-size:.95rem;margin-bottom:.5rem;"><strong>"The Design of Everyday Things"</strong> — Don Norman</p>
+        <p style="font-size:.92rem;line-height:1.35;">Key insight: visibility of system status is critical. Every widget shows live state — no hidden state.</p>
+        <div style="margin-top:.75rem;"><span class="tag">Design</span><span class="tag">UX</span><span class="tag">Neubrutalism</span></div>
       </article>
-      <article class="card" style="border-top:6px solid #FF0000;background:#fff;box-shadow:4px 4px 0 #111;">
-        <h3 style="font-weight:900;font-size:1rem;color:#111;display:flex;align-items:center;gap:.5rem;"><span style="width:8px;height:8px;background:#FF0000;border-radius:50%;display:inline-block;"></span>YouTube Intel</h3>
-        <p style="font-size:.78rem;color:#777;font-weight:700;text-transform:uppercase;letter-spacing:.6px;margin-top:.25rem;">Video &amp; Content Tracking</p>
-        <div class="field" style="margin-top:.75rem;padding:.35rem 0;border-bottom:1px dashed #ccc;font-size:.82rem;"><span class="label">Channel</span><span class="value">USA Real Estate Empire</span></div>
-        <div class="field"><span class="label">Content</span><span class="value">Property Tours + Market Updates (Auto-Sync)</span></div>
-        <div class="field"><span class="label">Status</span><span class="value"><span style="display:inline-block;padding:.2rem .45rem;border:2px solid #FF0000;border-radius:6px;font-size:.65rem;font-weight:800;background:#fff;color:#FF0000;box-shadow:2px 2px 0 #FF0000;">Connected</span></span></div>
+      <article class="card" aria-label="Newsletter" style="background:var(--pink);"><h2 style="color:var(--ink);">📬 Newsletter Insights</h2>
+        <ul><li><span>Social Intel — Facebook Lead Growth</span><span>+12%</span></li>
+        <li><span>Investments — Austin Rental Yield</span><span>8.2%</span></li>
+        <li><span>Clients — Repeat Rate (Q3)</span><span>34%</span></li></ul>
+        <p style="margin-top:.6rem;font-size:.82rem;font-weight:700;">Next issue: Strategy for multi-client automation using TypeScript configs + Notion DB sync.</p>
       </article>
+    </section>
+  </main>
+</div>
+
+<div id="tab-social" class="tab-content" aria-label="Social Intel">
+  <article class="card" style="max-width:1200px;margin:0 auto;background:var(--cyan);">
+    <h2 style="color:var(--ink);">📊 Social Intel — Platform Metrics & Tools</h2>
+    <div class="grid-3" style="margin-top:1rem;">
+      <div class="plat-card" style="background:#fff;"><h3 style="color:#4267B2;">Facebook</h3><div class="stat">Leads +12% | Reach 14k | Posts 3/day</div><div style="margin-top:.5rem;"><a href="#" style="display:inline-block;padding:.4rem .8rem;border:3px solid var(--black);background:var(--pink);font-weight:900;border-radius:9999px;text-decoration:none;color:var(--ink);font-size:.8rem;box-shadow:3px 3px 0 var(--black);">Post Tool</a> <a href="#" style="display:inline-block;padding:.4rem .8rem;border:3px solid var(--black);background:var(--yellow);font-weight:900;border-radius:9999px;text-decoration:none;color:var(--ink);font-size:.8rem;box-shadow:3px 3px 0 var(--black);">Metrics</a></div></div>
+      <div class="plat-card" style="background:#fff;"><h3 style="color:#0A66C2;">LinkedIn</h3><div class="stat">Reach 8.4k | Engagement 4.1% | Articles 2/wk</div><div style="margin-top:.5rem;"><a href="#" style="display:inline-block;padding:.4rem .8rem;border:3px solid var(--black);background:var(--mint);font-weight:900;border-radius:9999px;text-decoration:none;color:var(--ink);font-size:.8rem;box-shadow:3px 3px 0 var(--black);">Post Tool</a> <a href="#" style="display:inline-block;padding:.4rem .8rem;border:3px solid var(--black);background:var(--cyan);font-weight:900;border-radius:9999px;text-decoration:none;color:var(--ink);font-size:.8rem;box-shadow:3px 3px 0 var(--black);">Metrics</a></div></div>
+      <div class="plat-card" style="background:#fff;"><h3 style="color:#111;">Twitter / X</h3><div class="stat">Engagement 3.2% | Followers 2.1k | Threads 2/day</div><div style="margin-top:.5rem;"><a href="#" style="display:inline-block;padding:.4rem .8rem;border:3px solid var(--black);background:#fff;font-weight:900;border-radius:9999px;text-decoration:none;color:var(--ink);font-size:.8rem;box-shadow:3px 3px 0 var(--black);">Post Tool</a> <a href="#" style="display:inline-block;padding:.4rem .8rem;border:3px solid var(--black);background:#fff;font-weight:900;border-radius:9999px;text-decoration:none;color:var(--ink);font-size:.8rem;box-shadow:3px 3px 0 var(--black);">Metrics</a></div></div>
+      <div class="plat-card" style="background:#fff;"><h3 style="color:#E1306C;">Instagram</h3><div class="stat">Growth +9% | Reels 4/wk | Stories daily</div><div style="margin-top:.5rem;"><a href="#" style="display:inline-block;padding:.4rem .8rem;border:3px solid var(--black);background:var(--pink);font-weight:900;border-radius:9999px;text-decoration:none;color:var(--ink);font-size:.8rem;box-shadow:3px 3px 0 var(--black);">Post Tool</a> <a href="#" style="display:inline-block;padding:.4rem .8rem;border:3px solid var(--black);background:var(--yellow);font-weight:900;border-radius:9999px;text-decoration:none;color:var(--ink);font-size:.8rem;box-shadow:3px 3px 0 var(--black);">Metrics</a></div></div>
+      <div class="plat-card" style="background:#fff;"><h3 style="color:#FF0000;">YouTube</h3><div class="stat">Watch 1.2k hrs | Subs +5% | Uploads 2/wk</div><div style="margin-top:.5rem;"><a href="#" style="display:inline-block;padding:.4rem .8rem;border:3px solid var(--black);background:var(--yellow);font-weight:900;border-radius:9999px;text-decoration:none;color:var(--ink);font-size:.8rem;box-shadow:3px 3px 0 var(--black);">Post Tool</a> <a href="#" style="display:inline-block;padding:.4rem .8rem;border:3px solid var(--black);background:var(--pink);font-weight:900;border-radius:9999px;text-decoration:none;color:var(--ink);font-size:.8rem;box-shadow:3px 3px 0 var(--black);">Metrics</a></div></div>
+      <div class="plat-card" style="background:#fff;"><h3 style="color:#000;">TikTok</h3><div class="stat">Views 24k | Likes 3.8k | Videos 3/wk</div><div style="margin-top:.5rem;"><a href="#" style="display:inline-block;padding:.4rem .8rem;border:3px solid var(--black);background:var(--mint);font-weight:900;border-radius:9999px;text-decoration:none;color:var(--ink);font-size:.8rem;box-shadow:3px 3px 0 var(--black);">Post Tool</a> <a href="#" style="display:inline-block;padding:.4rem .8rem;border:3px solid var(--black);background:var(--cyan);font-weight:900;border-radius:9999px;text-decoration:none;color:var(--ink);font-size:.8rem;box-shadow:3px 3px 0 var(--black);">Metrics</a></div></div>
     </div>
-  </section>
+    <article class="card" aria-label="Social Analytics" style="background:var(--yellow);margin-top:2rem;max-width:1200px;margin-left:auto;margin-right:auto;max-width:1200px;">
+      <h2 style="color:var(--ink);">📈 Social Analytics — Summary</h2>
+      <ul style="margin-top:.6rem;">
+        <li><span>Total Platforms Active</span> <span>6 / 6</span></li>
+        <li><span>Avg Engagement Rate</span> <span>4.5%</span></li>
+        <li><span>Post Frequency (this week)</span> <span>18 posts</span></li>
+        <li><span>Lead Growth (Social Intel)</span> <span>+12%</span></li>
+        <li><span>Top Channel</span> <span>Instagram (+9%)</span></li>
+      </ul>
+      <div style="margin-top:.6rem;font-size:.85rem;font-weight:700;">Status badges: Facebook ✅ Active | LinkedIn ✅ Active | Twitter/X ✅ Active | Instagram ✅ Active | YouTube ✅ Active | TikTok ✅ Active</div>
+    </article>
+  </article>
 </div>
 
-<!-- SYNC STATUS BAR -->
-<div class="sync-bar">
-  <span><strong>Auto-Sync:</strong> <span style="color:#22c55e;font-weight:700;">ENABLED</span> — Notion DB: <code>40075580-e0b1-803d-ab31-ca7ce1ff5af7</code></span>
-  <span><strong>Credentials:</strong> <code>/opt/data/credentials.json</code> (service_account + Notion token)</span>
-  <span><strong>Sync Script:</strong> <code>/opt/data/sync_dashboard.py</code> (clean — token loaded from file/env)</span>
-  <span><strong>Dashboard:</strong> <code>/opt/data/dashboard.html</code></span>
-  <span><strong>Mirror:</strong> <code>/opt/data/gggggggg.html</code> (DELETED — deleted per instruction)</span>
-  <span><strong>Refresh:</strong> 60s meta-refresh &nbsp;|&nbsp; <strong>Live URL:</strong> <code>https://rudronil969-crypto.github.io/dashboard/</code></span>
+<div id="tab-investments" class="tab-content" aria-label="Investments"><div style="max-width:1200px;margin:0 auto;">
+<article class="card" style="background:var(--yellow);"><h2>💼 Portfolio Summary</h2>
+  <ul><li><span>Total Invested</span> <strong>$125,000</strong></li>
+  <li><span>Monthly Cash Flow</span> <strong>$3,400</strong></li>
+  <li><span>ROI (YTD)</span> <strong>+12.4%</strong></li>
+  <li><span>Asset Breakdown</span> <span>RE 60% | Stocks 30% | Crypto/Cash 10%</span></li></ul>
+</article>
+
+<div class="grid" style="margin-top:1.5rem;">
+  <article class="card" style="background:var(--mint);"><h2>🏠 Real Estate Tracker</h2>
+    <ul><li><span>Austin — 9706 Woodshire Dr</span> <span>Rent $2,850 | Occ ✓ | Yield 6.8%</span></li>
+    <li><span>Dallas — 4831 Burnside Ave</span> <span>Rent $1,950 | Occ ✓ | Yield 5.4%</span></li>
+    <li><span>Houston — Tour Pending</span> <span>Rent $2,200 | Occ ⏳ | Yield 7.1%</span></li></ul>
+  </article>
+
+  <article class="card" style="background:var(--cyan);"><h2>📈 Stocks & Assets Watchlist</h2>
+    <ul><li><span>Real Estate Index (REIT)</span> <span>Buy $85 | Now $94 | <strong>+10.6%</strong></span></li>
+    <li><span>Tech ETF (Growth)</span> <span>Buy $112 | Now $126 | <strong>+12.5%</strong></span></li>
+    <li><span>Crypto (BTC Reserve)</span> <span>Buy $42k | Now $48k | <strong>+14.3%</strong></span></li></ul>
+  </article>
 </div>
 
-<footer>
-  Hermes Agent — Notion Integration Active &nbsp;|&nbsp; Dashboard Rebuilt (Neubrutalism) &nbsp;|&nbsp; Sync Script: <code>/opt/data/sync_dashboard.py</code> &nbsp;|&nbsp; DB: <code>40075580-e0b1-803d-ab31-ca7ce1ff5af7</code> &nbsp;|&nbsp; Mirror Deleted: <code>/opt/data/gggggggg.html</code> removed &nbsp;|&nbsp; Auto-Refresh: 60s
-</footer>
+<article class="card" style="margin-top:1.5rem;background:var(--pink);"><h2>🎯 Investment Goals Progress</h2>
+  <p style="font-weight:700;margin-bottom:.5rem;">Target Acquisition Fund: $250,000 — Next Property Acquisition</p>
+  <div style="border:3px solid var(--black);border-radius:10px;background:#fff;padding:.3rem;box-shadow:3px 3px 0 var(--black);">
+    <div style="background:var(--cyan);height:28px;width:50%;border:3px solid var(--black);border-radius:8px;position:relative;font-weight:900;font-size:.75rem;color:var(--ink);display:flex;align-items:center;justify-content:center;">$125,000 / $250,000 (50%)</div>
+  </div>
+  <p style="margin-top:.5rem;font-size:.82rem;font-weight:700;">Status: On track for Q2 target. Monthly contribution: $3,400.</p>
+</article>
+</div></div>
+<div id="tab-clients" class="tab-content" aria-label="Clients"><div style="max-width:1200px;margin:0 auto;">
+<div class="grid" style="margin-top:1rem;">
+  <article class="card" style="background:var(--mint);"><h2>📊 Client Metrics</h2>
+    <ul><li><span>Active Clients</span> <strong>14</strong></li>
+    <li><span>Monthly Retainer Revenue</span> <strong>$18,500</strong></li>
+    <li><span>Retention Rate</span> <strong>92%</strong></li>
+    <li><span>Pending Invoices</span> <strong>$2,400</strong></li></ul>
+  </article>
+</div>
+
+<article class="card" style="background:var(--cyan);margin-top:1.5rem;"><h2>📋 Client Roster / CRM</h2>
+  <table style="width:100%;border-collapse:collapse;font-weight:700;font-size:.85rem;">
+    <thead><tr style="border-bottom:4px solid var(--black);"><th style="text-align:left;padding:.4rem;">Client</th><th>Project</th><th>Retainer</th><th>Status</th><th>Follow-up</th></tr></thead>
+    <tbody>
+      <tr style="border-bottom:2px dashed var(--black);"><td>John Doe</td><td>Austin Property Leads</td><td>$3,200</td><td><span style="border:2px solid var(--black);padding:.1rem .4rem;border-radius:9999px;background:var(--mint);font-size:.7rem;">Active</span></td><td>Oct 25</td></tr>
+      <tr style="border-bottom:2px dashed var(--black);"><td>Success Group</td><td>Social Intel Automation</td><td>$5,500</td><td><span style="border:2px solid var(--black);padding:.1rem .4rem;border-radius:9999px;background:var(--pink);font-size:.7rem;">Onboarding</span></td><td>Oct 28</td></tr>
+      <tr style="border-bottom:2px dashed var(--black);"><td>Rudro Consulting</td><td>Dashboard & Notion Sync</td><td>$4,800</td><td><span style="border:2px solid var(--black);padding:.1rem .4rem;border-radius:9999px;background:var(--yellow);font-size:.7rem;">In Review</span></td><td>Nov 02</td></tr>
+      <tr><td>Sarah Khan</td><td>Real Estate CRM Setup</td><td>$5,000</td><td><span style="border:2px solid var(--black);padding:.1rem .4rem;border-radius:9999px;background:var(--mint);font-size:.7rem;">Active</span></td><td>Nov 05</td></tr>
+    </tbody>
+  </table>
+</article>
+
+<div class="grid" style="margin-top:1.5rem;">
+  <article class="card" style="background:var(--yellow);"><h2>📌 Client Notes & Tasks</h2>
+    <ul>
+      <li><span>John Doe — Send updated lead report (Notion DB sync)</span></li>
+      <li><span>Success Group — Finalize multi-client automation template</span></li>
+      <li><span>Rudro Consulting — Confirm dashboard deployment (gh-pages)</span></li>
+      <li><span>Sarah Khan — Schedule property tour follow-up call</span></li>
+    </ul>
+  </article>
+</div>
+
+<div style="display:flex;gap:.8rem;flex-wrap:wrap;max-width:1200px;margin:1.5rem auto 0 auto;">
+  <a href="#" style="display:inline-block;padding:.55rem 1.2rem;border:3px solid var(--black);background:var(--mint);font-weight:900;border-radius:9999px;text-decoration:none;color:var(--ink);font-size:.9rem;box-shadow:4px 4px 0 var(--black);cursor:pointer;" onclick="openModal('add')">+ Add New Client</a>
+  <a href="#" style="display:inline-block;padding:.55rem 1.2rem;border:3px solid var(--black);background:var(--pink);font-weight:900;border-radius:9999px;text-decoration:none;color:var(--ink);font-size:.9rem;box-shadow:4px 4px 0 var(--black);cursor:pointer;" onclick="openModal('invoice')">Send Invoice</a>
+  <a href="#" style="display:inline-block;padding:.55rem 1.2rem;border:3px solid var(--black);background:var(--cyan);font-weight:900;border-radius:9999px;text-decoration:none;color:var(--ink);font-size:.9rem;box-shadow:4px 4px 0 var(--black);cursor:pointer;" onclick="openModal('call')">Schedule Call</a>
+</div>
+</div></div>
+<div id="tab-leads" class="tab-content" aria-label="Leads"><div style="max-width:1200px;margin:0 auto;"><article class="card" style="background:var(--cyan);"><h2>Leads</h2><p>Lead scraper results: Austin (5 listings), Dallas (5 listings), agent emails verified.</p></article></div></div>
+<div id="tab-research" class="tab-content" aria-label="Research"><div style="max-width:1200px;margin:0 auto;"><article class="card" style="background:#fff;"><h2>Research</h2><p>Market research notes, web extract summaries, and competitor monitoring.</p></article></div></div>
+<div id="tab-memory" class="tab-content" aria-label="Memory Vault"><div style="max-width:1200px;margin:0 auto;"><article class="card" style="background:var(--pink);"><h2>Memory Vault</h2><p>Profile notes (Billal Hossien), skill references (bangla-user-interaction, maps, notion, google-workspace), reminder logs.</p></article></div></div>
+<div id="tab-team" class="tab-content" aria-label="Team"><div style="max-width:1200px;margin:0 auto;"><article class="card" style="background:#fff;"><h2>Team</h2><p>Agent roles (Lead Scraper, Dashboard Agent, Outreach Agent, Manager), skills assigned.</p></article></div></div>
+<div id="tab-logout" class="tab-content" aria-label="Log out"><div style="max-width:1200px;margin:0 auto;"><article class="card" style="background:var(--black);color:#fff;"><h2 style="color:var(--yellow);">Logged out</h2><p>Session ended. Open <strong>personal_command_centre.html</strong> again to restart.</p></article></div></div>
+
+
+<!-- MODALS -->
+<div id="modal-add" style="display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.65);z-index:1000;align-items:center;justify-content:center;" onclick="if(event.target===this)closeModal('add')">
+  <div class="card" style="width:92%;max-width:520px;background:var(--mint);box-shadow:8px 8px 0 var(--black);" onclick="event.stopPropagation()">
+    <h2 style="display:flex;justify-content:space-between;align-items:center;">+ Add New Client <button onclick="closeModal('add')" style="border:3px solid var(--black);background:var(--pink);font-weight:900;border-radius:9999px;padding:.3rem .6rem;cursor:pointer;">✕</button></h2>
+    <form onsubmit="submitAddClient(event)">
+      <label style="font-weight:700;">Client Name <input type="text" id="mc-name" required style="margin-top:.2rem;"></label><br><br>
+      <label style="font-weight:700;">Project <input type="text" id="mc-project" required style="margin-top:.2rem;"></label><br><br>
+      <label style="font-weight:700;">Retainer <input type="text" id="mc-retainer" required style="margin-top:.2rem;"></label><br><br>
+      <label style="font-weight:700;">Status <select id="mc-status" style="margin-top:.2rem;border:3px solid var(--black);padding:.3rem;border-radius:8px;font-family:inherit;font-weight:700;"><option>Active</option><option>Onboarding</option><option>In Review</option></select></label><br><br>
+      <button type="submit" style="padding:.55rem 1.2rem;border:3px solid var(--black);background:var(--cyan);font-weight:900;border-radius:9999px;box-shadow:4px 4px 0 var(--black);cursor:pointer;">Add Client</button>
+    </form>
+  </div>
+</div>
+<div id="modal-invoice" style="display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.65);z-index:1000;align-items:center;justify-content:center;" onclick="if(event.target===this)closeModal('invoice')">
+  <div class="card" style="width:92%;max-width:480px;background:var(--pink);box-shadow:8px 8px 0 var(--black);" onclick="event.stopPropagation()">
+    <h2 style="display:flex;justify-content:space-between;align-items:center;">Send Invoice <button onclick="closeModal('invoice')" style="border:3px solid var(--black);background:var(--cyan);font-weight:900;border-radius:9999px;padding:.3rem .6rem;cursor:pointer;">✕</button></h2>
+    <form onsubmit="submitInvoice(event)">
+      <label style="font-weight:700;">Select Client <select id="inv-client" style="margin-top:.2rem;border:3px solid var(--black);padding:.3rem;border-radius:8px;font-family:inherit;font-weight:700;"><option>John Doe</option><option>Success Group</option><option>Rudro Consulting</option><option>Sarah Khan</option></select></label><br><br>
+      <label style="font-weight:700;">Invoice Amount ($) <input type="number" id="inv-amount" required style="margin-top:.2rem;"></label><br><br>
+      <button type="submit" style="padding:.55rem 1.2rem;border:3px solid var(--black);background:var(--yellow);font-weight:900;border-radius:9999px;box-shadow:4px 4px 0 var(--black);cursor:pointer;">Send Invoice</button>
+    </form>
+  </div>
+</div>
+<div id="modal-call" style="display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.65);z-index:1000;align-items:center;justify-content:center;" onclick="if(event.target===this)closeModal('call')">
+  <div class="card" style="width:92%;max-width:480px;background:var(--cyan);box-shadow:8px 8px 0 var(--black);" onclick="event.stopPropagation()">
+    <h2 style="display:flex;justify-content:space-between;align-items:center;">Schedule Call <button onclick="closeModal('call')" style="border:3px solid var(--black);background:var(--pink);font-weight:900;border-radius:9999px;padding:.3rem .6rem;cursor:pointer;">✕</button></h2>
+    <form onsubmit="submitCall(event)">
+      <label style="font-weight:700;">Client <select id="cal-client" style="margin-top:.2rem;border:3px solid var(--black);padding:.3rem;border-radius:8px;font-family:inherit;font-weight:700;"><option>John Doe</option><option>Success Group</option><option>Rudro Consulting</option><option>Sarah Khan</option></select></label><br><br>
+      <label style="font-weight:700;">Date <input type="date" id="cal-date" required style="margin-top:.2rem;"></label><br><br>
+      <label style="font-weight:700;">Time <input type="time" id="cal-time" required style="margin-top:.2rem;"></label><br><br>
+      <button type="submit" style="padding:.55rem 1.2rem;border:3px solid var(--black);background:var(--mint);font-weight:900;border-radius:9999px;box-shadow:4px 4px 0 var(--black);cursor:pointer;">Schedule Call</button>
+    </form>
+  </div>
+</div>
+<footer class="footer">PERSONAL COMMAND CENTRE — Multi-Tab SPA — Neubrutalism — All CSS/JS Embedded</footer>
 
 <script>
-function showTab(id){
-  ['leads','todo','notes','calendar','social'].forEach(s=>{
-    var el=document.getElementById(s);
-    if(el)el.style.display='none';
-  });
-  var active=document.getElementById(id);
-  if(active){
-    if(id==='leads')active.style.display='grid';
-    else active.style.display='block';
-  }
-  document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('leads','todo','notes','calendar','social'));
-  if(id==='leads')document.querySelector('.tab-btn:nth-child(1)').classList.add('leads');
-  if(id==='todo')document.querySelector('.tab-btn:nth-child(2)').classList.add('todo');
-  if(id==='notes')document.querySelector('.tab-btn:nth-child(3)').classList.add('notes');
-  if(id==='calendar')document.querySelector('.tab-btn:nth-child(4)').classList.add('calendar');
-  if(id==='social')document.querySelector('.tab-btn:nth-child(5)').classList.add('social');
+function switchTab(name, btn) {
+  document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(el => el.classList.remove('active'));
+  const target = document.getElementById('tab-' + name);
+  if (target) target.classList.add('active');
+  if (btn) btn.classList.add('active');
 }
-console.log("USA REAL ESTATE COMMAND CENTRE — Notion DB sync active (DB: 40075580-e0b1-803d-ab31-ca7ce1ff5af7). Hermes Agent: [DASHBOARD-AGENT]. Auto-refresh: 60s. Social Intel tab active.");
+function addTask(e){e.preventDefault();const input=document.getElementById('newTask');const text=input.value.trim();if(!text)return;const li=document.createElement('li');li.innerHTML='<span>'+text+'</span> <button onclick="removeTask(this)">✓</button>';document.getElementById('todoList').appendChild(li);input.value='';}
+function removeTask(btn){btn.parentElement.remove();}
+
+function openModal(id){document.getElementById('modal-'+id).style.display='flex';}
+function closeModal(id){document.getElementById('modal-'+id).style.display='none';}
+function submitAddClient(e){e.preventDefault();const name=document.getElementById('mc-name').value;const proj=document.getElementById('mc-project').value;const retRaw=document.getElementById('mc-retainer').value;const stat=document.getElementById('mc-status').value;const ret=retRaw.replace(/[^0-9]/g,'');const clients=JSON.parse(localStorage.getItem('crm_clients')||'[]');clients.push({name,project:proj,retainer:ret,status:stat});localStorage.setItem('crm_clients',JSON.stringify(clients));const table=document.querySelector('#tab-clients table tbody');const row=document.createElement('tr');row.innerHTML='<td>'+name+'</td><td>'+proj+'</td><td>$'+ret+'</td><td><span style="border:2px solid var(--black);padding:.1rem .4rem;border-radius:9999px;background:var(--mint);font-size:.7rem;">'+stat+'</span></td><td>Today</td>';table.appendChild(row);updateMetrics();closeModal('add');alert('Client added: '+name);e.target.reset();}
+function submitInvoice(e){e.preventDefault();const client=document.getElementById('inv-client').value;const amount=document.getElementById('inv-amount').value;closeModal('invoice');alert('Invoice sent to '+client+' for $'+amount);e.target.reset();}
+function submitCall(e){e.preventDefault();const client=document.getElementById('cal-client').value;const date=document.getElementById('cal-date').value;const time=document.getElementById('cal-time').value;closeModal('call');alert('Call scheduled with '+client+' on '+date+' at '+time);e.target.reset();}
+
+
+function updateMetrics(){const clients=JSON.parse(localStorage.getItem('crm_clients')||'[]');const count=document.getElementById('metric-active')||document.querySelector('#tab-clients article.card h2');const totalRetainer=clients.reduce((sum,c)=>sum+(parseInt(c.retainer||0)),0);const base=18500;const newTotal=base+totalRetainer;const metrics=document.querySelector('#tab-clients .card ul');if(metrics){metrics.innerHTML='<li><span>Active Clients</span> <strong>'+clients.length+'</strong></li><li><span>Monthly Retainer Revenue</span> <strong>$'+newTotal.toLocaleString()+'</strong></li><li><span>Retention Rate</span> <strong>92%</strong></li><li><span>Pending Invoices</span> <strong>$2,400</strong></li>';}}
+window.addEventListener('DOMContentLoaded',()=>{updateMetrics();});
+
 </script>
 </body>
 </html>
