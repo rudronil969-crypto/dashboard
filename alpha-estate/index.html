@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PERSONAL COMMAND CENTRE — Multi-Tab SPA</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700;900&display=swap');
+:root{--bg:#fff4a3;--ink:#111;--cyan:#70d6ff;--mint:#99e2b4;--yellow:#ffea79;--pink:#ff85a1;--black:#000;}
+*{box-sizing:border-box;margin:0;padding:0;font-family:'Space Grotesk',sans-serif;}
+body{background:var(--bg);color:var(--ink);min-height:100vh;padding:1.5rem;}
+.neuborder{border:4px solid var(--black);}
+.neushadow{box-shadow:6px 6px 0 var(--black);}
+.neushadow-sm{box-shadow:3px 3px 0 var(--black);}
+nav{display:flex;align-items:center;gap:.6rem;flex-wrap:wrap;padding:1rem 1.2rem;background:var(--yellow);border:4px solid var(--black);box-shadow:6px 6px 0 var(--black);margin-bottom:2rem;border-radius:9999px;}
+nav h1{font-weight:900;font-size:1.5rem;letter-spacing:-0.02em;flex:1 1 auto;}
+nav a.tab-btn{display:inline-block;padding:.45rem .7rem;border:3px solid var(--black);background:#fff;text-decoration:none;color:var(--ink);font-weight:700;font-size:.82rem;border-radius:9999px;transition:.12s;box-shadow:3px 3px 0 var(--black);cursor:pointer;border:none;}
+nav a.tab-btn:hover,nav a.tab-btn.active{transform:translate(-2px,-2px);box-shadow:5px 5px 0 var(--black);background:var(--cyan);}
+nav a.tab-btn.active{background:var(--mint);}
+nav a.logout-btn{background:var(--pink);}
+.tab-content{display:none;animation:fadeIn .25s ease-in-out;}
+.tab-content.active{display:block;}
+@keyframes fadeIn{from{opacity:0;transform:translateY(6px);}to{opacity:1;transform:translateY(0);}}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:2rem;max-width:1200px;margin:0 auto;}
+@media(max-width:900px){.grid{grid-template-columns:1fr;}}
+.card{border:4px solid var(--black);border-radius:14px;padding:1.2rem;background:#fff;box-shadow:6px 6px 0 var(--black);}
+.card h2{font-weight:900;font-size:1.15rem;margin-bottom:.8rem;padding-bottom:.3rem;border-bottom:3px solid var(--black);display:inline-block;}
+.card ul{list-style:none;padding:0;}
+.card ul li{padding:.35rem 0;border-bottom:2px dashed var(--black);font-weight:600;font-size:.92rem;display:flex;justify-content:space-between;}
+.card input[type=text]{width:100%;padding:.5rem;border:3px solid var(--black);border-radius:10px;font-size:.95rem;font-family:inherit;margin-top:.5rem;box-shadow:3px 3px 0 var(--black);}
+.card button{margin-top:.5rem;padding:.45rem .9rem;border:3px solid var(--black);background:var(--cyan);font-weight:900;border-radius:9999px;cursor:pointer;box-shadow:3px 3px 0 var(--black);}
+.card .tag{display:inline-block;padding:.15rem .5rem;border:2px solid var(--black);border-radius:9999px;font-size:.7rem;font-weight:900;text-transform:uppercase;margin-right:.25rem;}
+.grid-3{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:1rem;max-width:1200px;margin:0 auto;}
+.footer{margin-top:2.5rem;text-align:center;font-weight:700;font-size:.8rem;color:#444;}
+.plat-card{border:4px solid var(--black);border-radius:14px;padding:1rem;background:#fff;box-shadow:6px 6px 0 var(--black);}
+.plat-card h3{font-weight:900;font-size:1rem;margin-bottom:.4rem;}
+.plat-card .stat{font-size:.85rem;font-weight:700;color:#555;}
+</style>
+</head>
+<body>
+
+<nav aria-label="Primary">
+  <h1>COMMAND CENTRE</h1>
+  <a href="#" class="tab-btn active" onclick="switchTab('home',this)">Home</a>
+  <a href="#" class="tab-btn" onclick="switchTab('social',this)">Social Intel</a>
+  <a href="#" class="tab-btn" onclick="switchTab('investments',this)">Investments</a>
+  <a href="#" class="tab-btn" onclick="switchTab('clients',this)">Clients</a>
+  <a href="#" class="tab-btn" onclick="switchTab('leads',this)">Leads</a>
+  <a href="#" class="tab-btn" onclick="switchTab('research',this)">Research</a>
+  <a href="#" class="tab-btn" onclick="switchTab('memory',this)">Memory Vault</a>
+  <a href="#" class="tab-btn" onclick="switchTab('team',this)">Team</a>
+  <a href="#" class="tab-btn logout-btn" onclick="switchTab('logout',this)">Log out</a>
+</nav>
+
+<div id="tab-home" class="tab-content active" aria-label="Home">
+  <main class="grid" aria-label="Dashboard">
+    <section aria-label="Left widgets" style="display:flex;flex-direction:column;gap:2rem;">
+      <article class="card" aria-label="Calendar"><h2 style="color:var(--cyan);">📅 Calendar — Today & Tomorrow</h2>
+        <ul><li><span>Today — Client call (11:00)</span><span style="color:#777;font-size:.8rem;">Austin</span></li>
+        <li><span>Today — Lead follow-up (14:30)</span><span style="color:#777;font-size:.8rem;">Dallas</span></li>
+        <li><span>Tomorrow — Property tour (09:00)</span><span style="color:#777;font-size:.8rem;">Houston</span></li>
+        <li><span>Tomorrow — Team standup (16:00)</span><span style="color:#777;font-size:.8rem;">Remote</span></li></ul>
+      </article>
+      <article class="card" aria-label="To-Do" style="background:var(--mint);"><h2 style="color:var(--ink);">✅ To-Do List</h2>
+        <ul id="todoList"><li><span>Send outreach email to JPAR Dallas</span><button onclick="removeTask(this)">✓</button></li>
+        <li><span>Review Notion DB sync results</span><button onclick="removeTask(this)">✓</button></li>
+        <li><span>Update social templates (Twitter + LinkedIn)</span><button onclick="removeTask(this)">✓</button></li></ul>
+        <form onsubmit="addTask(event)" style="display:flex;gap:.4rem;align-items:center;"><input type="text" id="newTask" placeholder="New task..." aria-label="New task" required><button type="submit">Add</button></form>
+      </article>
+    </section>
+    <section aria-label="Right widgets" style="display:flex;flex-direction:column;gap:2rem;">
+      <article class="card" aria-label="Book Notes" style="background:var(--yellow);"><h2 style="color:var(--ink);">📘 Book Notes — Memory Vault</h2>
+        <p style="font-weight:700;font-size:.95rem;margin-bottom:.5rem;"><strong>"The Design of Everyday Things"</strong> — Don Norman</p>
+        <p style="font-size:.92rem;line-height:1.35;">Key insight: visibility of system status is critical. Every widget shows live state — no hidden state.</p>
+        <div style="margin-top:.75rem;"><span class="tag">Design</span><span class="tag">UX</span><span class="tag">Neubrutalism</span></div>
+      </article>
+      <article class="card" aria-label="Newsletter" style="background:var(--pink);"><h2 style="color:var(--ink);">📬 Newsletter Insights</h2>
+        <ul><li><span>Social Intel — Facebook Lead Growth</span><span>+12%</span></li>
+        <li><span>Investments — Austin Rental Yield</span><span>8.2%</span></li>
+        <li><span>Clients — Repeat Rate (Q3)</span><span>34%</span></li></ul>
+        <p style="margin-top:.6rem;font-size:.82rem;font-weight:700;">Next issue: Strategy for multi-client automation using TypeScript configs + Notion DB sync.</p>
+      </article>
+    </section>
+  </main>
+</div>
+
+<div id="tab-social" class="tab-content" aria-label="Social Intel">
+  <article class="card" style="max-width:1200px;margin:0 auto;background:var(--cyan);">
+    <h2 style="color:var(--ink);">📊 Social Intel — Platform Metrics & Tools</h2>
+    <div class="grid-3" style="margin-top:1rem;">
+      <div class="plat-card" style="background:#fff;"><h3 style="color:#4267B2;">Facebook</h3><div class="stat">Leads +12% | Reach 14k | Posts 3/day</div><div style="margin-top:.5rem;"><a href="#" style="display:inline-block;padding:.4rem .8rem;border:3px solid var(--black);background:var(--pink);font-weight:900;border-radius:9999px;text-decoration:none;color:var(--ink);font-size:.8rem;box-shadow:3px 3px 0 var(--black);">Post Tool</a> <a href="#" style="display:inline-block;padding:.4rem .8rem;border:3px solid var(--black);background:var(--yellow);font-weight:900;border-radius:9999px;text-decoration:none;color:var(--ink);font-size:.8rem;box-shadow:3px 3px 0 var(--black);">Metrics</a></div></div>
+      <div class="plat-card" style="background:#fff;"><h3 style="color:#0A66C2;">LinkedIn</h3><div class="stat">Reach 8.4k | Engagement 4.1% | Articles 2/wk</div><div style="margin-top:.5rem;"><a href="#" style="display:inline-block;padding:.4rem .8rem;border:3px solid var(--black);background:var(--mint);font-weight:900;border-radius:9999px;text-decoration:none;color:var(--ink);font-size:.8rem;box-shadow:3px 3px 0 var(--black);">Post Tool</a> <a href="#" style="display:inline-block;padding:.4rem .8rem;border:3px solid var(--black);background:var(--cyan);font-weight:900;border-radius:9999px;text-decoration:none;color:var(--ink);font-size:.8rem;box-shadow:3px 3px 0 var(--black);">Metrics</a></div></div>
+      <div class="plat-card" style="background:#fff;"><h3 style="color:#111;">Twitter / X</h3><div class="stat">Engagement 3.2% | Followers 2.1k | Threads 2/day</div><div style="margin-top:.5rem;"><a href="#" style="display:inline-block;padding:.4rem .8rem;border:3px solid var(--black);background:#fff;font-weight:900;border-radius:9999px;text-decoration:none;color:var(--ink);font-size:.8rem;box-shadow:3px 3px 0 var(--black);">Post Tool</a> <a href="#" style="display:inline-block;padding:.4rem .8rem;border:3px solid var(--black);background:#fff;font-weight:900;border-radius:9999px;text-decoration:none;color:var(--ink);font-size:.8rem;box-shadow:3px 3px 0 var(--black);">Metrics</a></div></div>
+      <div class="plat-card" style="background:#fff;"><h3 style="color:#E1306C;">Instagram</h3><div class="stat">Growth +9% | Reels 4/wk | Stories daily</div><div style="margin-top:.5rem;"><a href="#" style="display:inline-block;padding:.4rem .8rem;border:3px solid var(--black);background:var(--pink);font-weight:900;border-radius:9999px;text-decoration:none;color:var(--ink);font-size:.8rem;box-shadow:3px 3px 0 var(--black);">Post Tool</a> <a href="#" style="display:inline-block;padding:.4rem .8rem;border:3px solid var(--black);background:var(--yellow);font-weight:900;border-radius:9999px;text-decoration:none;color:var(--ink);font-size:.8rem;box-shadow:3px 3px 0 var(--black);">Metrics</a></div></div>
+      <div class="plat-card" style="background:#fff;"><h3 style="color:#FF0000;">YouTube</h3><div class="stat">Watch 1.2k hrs | Subs +5% | Uploads 2/wk</div><div style="margin-top:.5rem;"><a href="#" style="display:inline-block;padding:.4rem .8rem;border:3px solid var(--black);background:var(--yellow);font-weight:900;border-radius:9999px;text-decoration:none;color:var(--ink);font-size:.8rem;box-shadow:3px 3px 0 var(--black);">Post Tool</a> <a href="#" style="display:inline-block;padding:.4rem .8rem;border:3px solid var(--black);background:var(--pink);font-weight:900;border-radius:9999px;text-decoration:none;color:var(--ink);font-size:.8rem;box-shadow:3px 3px 0 var(--black);">Metrics</a></div></div>
+      <div class="plat-card" style="background:#fff;"><h3 style="color:#000;">TikTok</h3><div class="stat">Views 24k | Likes 3.8k | Videos 3/wk</div><div style="margin-top:.5rem;"><a href="#" style="display:inline-block;padding:.4rem .8rem;border:3px solid var(--black);background:var(--mint);font-weight:900;border-radius:9999px;text-decoration:none;color:var(--ink);font-size:.8rem;box-shadow:3px 3px 0 var(--black);">Post Tool</a> <a href="#" style="display:inline-block;padding:.4rem .8rem;border:3px solid var(--black);background:var(--cyan);font-weight:900;border-radius:9999px;text-decoration:none;color:var(--ink);font-size:.8rem;box-shadow:3px 3px 0 var(--black);">Metrics</a></div></div>
+    </div>
+    <article class="card" aria-label="Social Analytics" style="background:var(--yellow);margin-top:2rem;max-width:1200px;margin-left:auto;margin-right:auto;max-width:1200px;">
+      <h2 style="color:var(--ink);">📈 Social Analytics — Summary</h2>
+      <ul style="margin-top:.6rem;">
+        <li><span>Total Platforms Active</span> <span>6 / 6</span></li>
+        <li><span>Avg Engagement Rate</span> <span>4.5%</span></li>
+        <li><span>Post Frequency (this week)</span> <span>18 posts</span></li>
+        <li><span>Lead Growth (Social Intel)</span> <span>+12%</span></li>
+        <li><span>Top Channel</span> <span>Instagram (+9%)</span></li>
+      </ul>
+      <div style="margin-top:.6rem;font-size:.85rem;font-weight:700;">Status badges: Facebook ✅ Active | LinkedIn ✅ Active | Twitter/X ✅ Active | Instagram ✅ Active | YouTube ✅ Active | TikTok ✅ Active</div>
+    </article>
+  </article>
+</div>
+
+<div id="tab-investments" class="tab-content" aria-label="Investments"><div style="max-width:1200px;margin:0 auto;">
+<article class="card" style="background:var(--yellow);"><h2>💼 Portfolio Summary</h2>
+  <ul><li><span>Total Invested</span> <strong>$125,000</strong></li>
+  <li><span>Monthly Cash Flow</span> <strong>$3,400</strong></li>
+  <li><span>ROI (YTD)</span> <strong>+12.4%</strong></li>
+  <li><span>Asset Breakdown</span> <span>RE 60% | Stocks 30% | Crypto/Cash 10%</span></li></ul>
+</article>
+
+<div class="grid" style="margin-top:1.5rem;">
+  <article class="card" style="background:var(--mint);"><h2>🏠 Real Estate Tracker</h2>
+    <ul><li><span>Austin — 9706 Woodshire Dr</span> <span>Rent $2,850 | Occ ✓ | Yield 6.8%</span></li>
+    <li><span>Dallas — 4831 Burnside Ave</span> <span>Rent $1,950 | Occ ✓ | Yield 5.4%</span></li>
+    <li><span>Houston — Tour Pending</span> <span>Rent $2,200 | Occ ⏳ | Yield 7.1%</span></li></ul>
+  </article>
+
+  <article class="card" style="background:var(--cyan);"><h2>📈 Stocks & Assets Watchlist</h2>
+    <ul><li><span>Real Estate Index (REIT)</span> <span>Buy $85 | Now $94 | <strong>+10.6%</strong></span></li>
+    <li><span>Tech ETF (Growth)</span> <span>Buy $112 | Now $126 | <strong>+12.5%</strong></span></li>
+    <li><span>Crypto (BTC Reserve)</span> <span>Buy $42k | Now $48k | <strong>+14.3%</strong></span></li></ul>
+  </article>
+</div>
+
+<article class="card" style="margin-top:1.5rem;background:var(--pink);"><h2>🎯 Investment Goals Progress</h2>
+  <p style="font-weight:700;margin-bottom:.5rem;">Target Acquisition Fund: $250,000 — Next Property Acquisition</p>
+  <div style="border:3px solid var(--black);border-radius:10px;background:#fff;padding:.3rem;box-shadow:3px 3px 0 var(--black);">
+    <div style="background:var(--cyan);height:28px;width:50%;border:3px solid var(--black);border-radius:8px;position:relative;font-weight:900;font-size:.75rem;color:var(--ink);display:flex;align-items:center;justify-content:center;">$125,000 / $250,000 (50%)</div>
+  </div>
+  <p style="margin-top:.5rem;font-size:.82rem;font-weight:700;">Status: On track for Q2 target. Monthly contribution: $3,400.</p>
+</article>
+</div></div>
+<div id="tab-clients" class="tab-content" aria-label="Clients"><div style="max-width:1200px;margin:0 auto;">
+<div class="grid" style="margin-top:1rem;">
+  <article class="card" style="background:var(--mint);"><h2>📊 Client Metrics</h2>
+    <ul><li><span>Active Clients</span> <strong>14</strong></li>
+    <li><span>Monthly Retainer Revenue</span> <strong>$18,500</strong></li>
+    <li><span>Retention Rate</span> <strong>92%</strong></li>
+    <li><span>Pending Invoices</span> <strong>$2,400</strong></li></ul>
+  </article>
+</div>
+
+<article class="card" style="background:var(--cyan);margin-top:1.5rem;"><h2>📋 Client Roster / CRM</h2>
+  <table style="width:100%;border-collapse:collapse;font-weight:700;font-size:.85rem;">
+    <thead><tr style="border-bottom:4px solid var(--black);"><th style="text-align:left;padding:.4rem;">Client</th><th>Project</th><th>Retainer</th><th>Status</th><th>Follow-up</th></tr></thead>
+    <tbody>
+      <tr style="border-bottom:2px dashed var(--black);"><td>John Doe</td><td>Austin Property Leads</td><td>$3,200</td><td><span style="border:2px solid var(--black);padding:.1rem .4rem;border-radius:9999px;background:var(--mint);font-size:.7rem;">Active</span></td><td>Oct 25</td></tr>
+      <tr style="border-bottom:2px dashed var(--black);"><td>Success Group</td><td>Social Intel Automation</td><td>$5,500</td><td><span style="border:2px solid var(--black);padding:.1rem .4rem;border-radius:9999px;background:var(--pink);font-size:.7rem;">Onboarding</span></td><td>Oct 28</td></tr>
+      <tr style="border-bottom:2px dashed var(--black);"><td>Rudro Consulting</td><td>Dashboard & Notion Sync</td><td>$4,800</td><td><span style="border:2px solid var(--black);padding:.1rem .4rem;border-radius:9999px;background:var(--yellow);font-size:.7rem;">In Review</span></td><td>Nov 02</td></tr>
+      <tr><td>Sarah Khan</td><td>Real Estate CRM Setup</td><td>$5,000</td><td><span style="border:2px solid var(--black);padding:.1rem .4rem;border-radius:9999px;background:var(--mint);font-size:.7rem;">Active</span></td><td>Nov 05</td></tr>
+    </tbody>
+  </table>
+</article>
+
+<div class="grid" style="margin-top:1.5rem;">
+  <article class="card" style="background:var(--yellow);"><h2>📌 Client Notes & Tasks</h2>
+    <ul>
+      <li><span>John Doe — Send updated lead report (Notion DB sync)</span></li>
+      <li><span>Success Group — Finalize multi-client automation template</span></li>
+      <li><span>Rudro Consulting — Confirm dashboard deployment (gh-pages)</span></li>
+      <li><span>Sarah Khan — Schedule property tour follow-up call</span></li>
+    </ul>
+  </article>
+</div>
+
+<div style="display:flex;gap:.8rem;flex-wrap:wrap;max-width:1200px;margin:1.5rem auto 0 auto;">
+  <a href="#" style="display:inline-block;padding:.55rem 1.2rem;border:3px solid var(--black);background:var(--mint);font-weight:900;border-radius:9999px;text-decoration:none;color:var(--ink);font-size:.9rem;box-shadow:4px 4px 0 var(--black);cursor:pointer;" onclick="openModal('add')">+ Add New Client</a>
+  <a href="#" style="display:inline-block;padding:.55rem 1.2rem;border:3px solid var(--black);background:var(--pink);font-weight:900;border-radius:9999px;text-decoration:none;color:var(--ink);font-size:.9rem;box-shadow:4px 4px 0 var(--black);cursor:pointer;" onclick="openModal('invoice')">Send Invoice</a>
+  <a href="#" style="display:inline-block;padding:.55rem 1.2rem;border:3px solid var(--black);background:var(--cyan);font-weight:900;border-radius:9999px;text-decoration:none;color:var(--ink);font-size:.9rem;box-shadow:4px 4px 0 var(--black);cursor:pointer;" onclick="openModal('call')">Schedule Call</a>
+</div>
+</div></div>
+<div id="tab-leads" class="tab-content" aria-label="Leads"><div style="max-width:1200px;margin:0 auto;">
+<div class="grid" style="margin-top:1rem;">
+  <article class="card" style="background:var(--cyan);"><h2>📊 Lead Pipeline Metrics</h2>
+    <ul><li><span>Total Leads</span> <strong>48</strong></li>
+    <li><span>Hot Leads</span> <strong>12</strong></li>
+    <li><span>Conversion Rate</span> <strong>24%</strong></li>
+    <li><span>Est. Pipeline Value</span> <strong>$45,000</strong></li></ul>
+  </article>
+</div>
+<article class="card" style="margin-top:1.5rem;background:var(--yellow);"><h2>📋 Lead Pipeline Table</h2>
+  <table style="width:100%;border-collapse:collapse;font-weight:700;font-size:.85rem;" id="leads-table">
+    <thead><tr style="border-bottom:4px solid var(--black);"><th style="text-align:left;padding:.4rem;">Lead Name</th><th>Source</th><th>Est. Value</th><th>Stage</th><th>Priority</th><th>Action</th></tr></thead>
+    <tbody>
+      <tr style="border-bottom:2px dashed var(--black);"><td>John Doe</td><td>Facebook</td><td>$12,000</td><td><span style="border:2px solid var(--black);padding:.1rem .4rem;border-radius:9999px;background:var(--pink);font-size:.7rem;">Hot</span></td><td>High</td><td><a href="#" style="border:2px solid var(--black);padding:.15rem .5rem;border-radius:9999px;font-weight:900;font-size:.75rem;text-decoration:none;background:#fff;color:var(--ink);box-shadow:2px 2px 0 var(--black);">Contact</a></td></tr>
+      <tr style="border-bottom:2px dashed var(--black);"><td>Success Group</td><td>LinkedIn</td><td>$18,500</td><td><span style="border:2px solid var(--black);padding:.1rem .4rem;border-radius:9999px;background:var(--yellow);font-size:.7rem;">Contacted</span></td><td>Medium</td><td><a href="#" style="border:2px solid var(--black);padding:.15rem .5rem;border-radius:9999px;font-weight:900;font-size:.75rem;text-decoration:none;background:#fff;color:var(--ink);box-shadow:2px 2px 0 var(--black);">Contact</a></td></tr>
+      <tr style="border-bottom:2px dashed var(--black);"><td>Rudro Consulting</td><td>Direct</td><td>$9,200</td><td><span style="border:2px solid var(--black);padding:.1rem .4rem;border-radius:9999px;background:var(--mint);font-size:.7rem;">Negotiation</span></td><td>High</td><td><a href="#" style="border:2px solid var(--black);padding:.15rem .5rem;border-radius:9999px;font-weight:900;font-size:.75rem;text-decoration:none;background:#fff;color:var(--ink);box-shadow:2px 2px 0 var(--black);">Contact</a></td></tr>
+      <tr><td>Sarah Khan</td><td>Instagram</td><td>$5,300</td><td><span style="border:2px solid var(--black);padding:.1rem .4rem;border-radius:9999px;background:var(--mint);font-size:.7rem;">New</span></td><td>Medium</td><td><a href="#" style="border:2px solid var(--black);padding:.15rem .5rem;border-radius:9999px;font-weight:900;font-size:.75rem;text-decoration:none;background:#fff;color:var(--ink);box-shadow:2px 2px 0 var(--black);">Contact</a></td></tr>
+    </tbody>
+  </table>
+</article>
+<div style="display:flex;gap:.8rem;flex-wrap:wrap;max-width:1200px;margin:1.5rem auto 0 auto;">
+  <a href="#" class="tab-btn" style="background:var(--mint);text-decoration:none;" onclick="openModal('add-lead');return false;">+ Add Lead</a>
+</div>
+<div id="modal-add-lead" style="display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.65);z-index:1000;align-items:center;justify-content:center;" onclick="if(event.target===this)closeModal('add-lead')">
+  <div class="card" style="width:92%;max-width:520px;background:var(--yellow);box-shadow:8px 8px 0 var(--black);" onclick="event.stopPropagation()">
+    <h2 style="display:flex;justify-content:space-between;align-items:center;">+ Add Lead <button onclick="closeModal('add-lead')" style="border:3px solid var(--black);background:var(--pink);font-weight:900;border-radius:9999px;padding:.3rem .6rem;cursor:pointer;">✕</button></h2>
+    <form onsubmit="submitAddLead(event)">
+      <label style="font-weight:700;">Lead Name <input type="text" id="ld-name" required style="margin-top:.2rem;"></label><br><br>
+      <label style="font-weight:700;">Source <select id="ld-source" style="margin-top:.2rem;border:3px solid var(--black);padding:.3rem;border-radius:8px;font-family:inherit;font-weight:700;"><option>Facebook</option><option>LinkedIn</option><option>Direct</option><option>Instagram</option></select></label><br><br>
+      <label style="font-weight:700;">Estimated Value ($) <input type="number" id="ld-value" required style="margin-top:.2rem;"></label><br><br>
+      <label style="font-weight:700;">Priority <select id="ld-priority" style="margin-top:.2rem;border:3px solid var(--black);padding:.3rem;border-radius:8px;font-family:inherit;font-weight:700;"><option>High</option><option>Medium</option></select></label><br><br>
+      <button type="submit" style="padding:.55rem 1.2rem;border:3px solid var(--black);background:var(--cyan);font-weight:900;border-radius:9999px;box-shadow:4px 4px 0 var(--black);cursor:pointer;">Add Lead</button>
+    </form>
+  </div>
+</div>
+</div></div>
+<div id="tab-research" class="tab-content" aria-label="Research"><div style="max-width:1200px;margin:0 auto;">
+<div class="grid" style="margin-top:1rem;">
+  <article class="card" style="background:var(--mint);"><h2>📋 Research Metrics</h2>
+    <ul><li><span>Active Bookmarks</span> <strong>32</strong></li>
+    <li><span>AI Prompts Saved</span> <strong>18</strong></li>
+    <li><span>Market Reports Analyzed</span> <strong>14</strong></li></ul>
+  </article>
+  <article class="card" style="background:var(--yellow);"><h2>🤖 AI & Tech Prompt Vault</h2>
+    <ul><li><span style="font-weight:700;font-size:.9rem;">"Real Estate Lead Scraper Prompt"</span> <span style="font-size:.75rem;color:#555;">Tags: AI / Scraping / Real Estate</span> <button onclick="copyPrompt(this)" style="margin-top:.2rem;padding:.2rem .5rem;border:2px solid var(--black);border-radius:9999px;background:var(--cyan);font-weight:700;font-size:.7rem;">Copy</button></li>
+    <li><span style="font-weight:700;font-size:.9rem;">"Competitor News Digest (JSON)"</span> <span style="font-size:.75rem;color:#555;">Tags: News / Monitoring / Auto</span> <button onclick="copyPrompt(this)" style="margin-top:.2rem;padding:.2rem .5rem;border:2px solid var(--black);border-radius:9999px;background:var(--cyan);font-weight:700;font-size:.7rem;">Copy</button></li>
+    <li><span style="font-weight:700;font-size:.9rem;">"Dashboard Design Spec (Neubrutalism)"</span> <span style="font-size:.75rem;color:#555;">Tags: Design / HTML / CSS</span> <button onclick="copyPrompt(this)" style="margin-top:.2rem;padding:.2rem .5rem;border:2px solid var(--black);border-radius:9999px;background:var(--cyan);font-weight:700;font-size:.7rem;">Copy</button></li>
+  </ul>
+  </article>
+</div>
+<article class="card" style="margin-top:1.5rem;background:var(--cyan);"><h2>📰 Market Trends & Bookmarks</h2>
+  <table style="width:100%;border-collapse:collapse;font-weight:700;font-size:.85rem;">
+    <thead><tr style="border-bottom:4px solid var(--black);"><th style="text-align:left;padding:.4rem;">Title</th><th>Category</th><th>Source</th><th>Notes</th></tr></thead>
+    <tbody>
+      <tr style="border-bottom:2px dashed var(--black);"><td>Austin Housing Forecast 2026</td><td>Real Estate</td><td>BProperty</td><td>Active</td></tr>
+      <tr style="border-bottom:2px dashed var(--black);"><td>Crypto Dashboard Mirror Design</td><td>AI / Design</td><td>GitHub Pages</td><td>Live</td></tr>
+      <tr style="border-bottom:2px dashed var(--black);"><td>Social Intel — Facebook Growth</td><td>Social / AI</td><td>Notion DB</td><td>Synced</td></tr>
+      <tr><td>Notion DB Auto-Sync Protocol</td><td>AI / Tech</td><td>API Docs</td><td>Verified</td></tr>
+    </tbody>
+  </table>
+</article>
+<div style="display:flex;gap:.8rem;flex-wrap:wrap;max-width:1200px;margin:1.5rem auto 0 auto;">
+  <a href="#" class="tab-btn" style="background:var(--pink);text-decoration:none;" onclick="alert('+ Add Research / Bookmark clicked — open form to add bookmark.');return false;">+ Add Research / Bookmark</a>
+</div>
+</div></div>
+<div id="tab-memory" class="tab-content" aria-label="Memory Vault"><div style="max-width:1200px;margin:0 auto;">
+<div class="grid" style="margin-top:1rem;">
+  <article class="card" style="background:var(--pink);"><h2>🔐 Vault Metrics</h2>
+    <ul><li><span>Saved Notes & Ideas</span> <strong>24</strong></li>
+    <li><span>Vault Documents</span> <strong>8</strong></li>
+    <li><span>Encrypted Entries</span> <strong>5</strong></li></ul>
+  </article>
+</div>
+<article class="card" style="margin-top:1.5rem;background:var(--yellow);"><h2>📓 Knowledge Base & Ideas Directory</h2>
+  <table style="width:100%;border-collapse:collapse;font-weight:700;font-size:.85rem;">
+    <thead><tr style="border-bottom:4px solid var(--black);"><th style="text-align:left;padding:.4rem;">Note Title</th><th>Category</th><th>Date</th><th>Actions</th></tr></thead>
+    <tbody>
+      <tr style="border-bottom:2px dashed var(--black);"><td>Social-automation skill notes</td><td>Business Idea</td><td>Oct 22, 2026</td><td><a href="#" style="border:2px solid var(--black);padding:.15rem .5rem;border-radius:9999px;font-weight:900;font-size:.75rem;text-decoration:none;background:#fff;color:var(--ink);box-shadow:2px 2px 0 var(--black);">View</a> <a href="#" style="border:2px solid var(--black);padding:.15rem .5rem;border-radius:9999px;font-weight:900;font-size:.75rem;text-decoration:none;background:#fff;color:var(--ink);box-shadow:2px 2px 0 var(--black);">Edit</a></td></tr>
+      <tr style="border-bottom:2px dashed var(--black);"><td>Real estate dashboard design spec</td><td>Strategy</td><td>Oct 20, 2026</td><td><a href="#" style="border:2px solid var(--black);padding:.15rem .5rem;border-radius:9999px;font-weight:900;font-size:.75rem;text-decoration:none;background:#fff;color:var(--ink);box-shadow:2px 2px 0 var(--black);">View</a> <a href="#" style="border:2px solid var(--black);padding:.15rem .5rem;border-radius:9999px;font-weight:900;font-size:.75rem;text-decoration:none;background:#fff;color:var(--ink);box-shadow:2px 2px 0 var(--black);">Edit</a></td></tr>
+      <tr><td>Profile reminder settings (Bangla/English)</td><td>Personal</td><td>Oct 22, 2026</td><td><a href="#" style="border:2px solid var(--black);padding:.15rem .5rem;border-radius:9999px;font-weight:900;font-size:.75rem;text-decoration:none;background:#fff;color:var(--ink);box-shadow:2px 2px 0 var(--black);">View</a> <a href="#" style="border:2px solid var(--black);padding:.15rem .5rem;border-radius:9999px;font-weight:900;font-size:.75rem;text-decoration:none;background:#fff;color:var(--ink);box-shadow:2px 2px 0 var(--black);">Edit</a></td></tr>
+    </tbody>
+  </table>
+</article>
+<article class="card" style="margin-top:1.5rem;background:var(--mint);"><h2>🔒 Secure Document Vault</h2>
+  <ul><li><span>Passport / ID Backup</span> <span style="font-size:.75rem;color:#777;">Encrypted • Verified</span></li>
+  <li><span>Master Password List (Notion DB sync)</span> <span style="font-size:.75rem;color:#777;">Encrypted • Verified</span></li>
+  <li><span>Service Account Credentials</span> <span style="font-size:.75rem;color:#777;">Encrypted • Verified</span></li>
+  <li><span>Dashboard Contract Template</span> <span style="font-size:.75rem;color:#777;">Encrypted • Verified</span></li>
+  </ul>
+</article>
+<div style="display:flex;gap:.8rem;flex-wrap:wrap;max-width:1200px;margin:1.5rem auto 0 auto;">
+  <a href="#" class="tab-btn" style="background:var(--pink);text-decoration:none;" onclick="openModal('add-note');return false;">+ Save New Note</a>
+</div>
+<div id="modal-add-note" style="display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.65);z-index:1000;align-items:center;justify-content:center;" onclick="if(event.target===this)closeModal('add-note')">
+  <div class="card" style="width:92%;max-width:480px;background:var(--yellow);box-shadow:8px 8px 0 var(--black);" onclick="event.stopPropagation()">
+    <h2 style="display:flex;justify-content:space-between;align-items:center;">+ Save New Note <button onclick="closeModal('add-note')" style="border:3px solid var(--black);background:var(--pink);font-weight:900;border-radius:9999px;padding:.3rem .6rem;cursor:pointer;">✕</button></h2>
+    <form onsubmit="submitAddNote(event)">
+      <label style="font-weight:700;">Note Title <input type="text" id="mn-title" required style="margin-top:.2rem;"></label><br><br>
+      <label style="font-weight:700;">Category <select id="mn-cat" style="margin-top:.2rem;border:3px solid var(--black);padding:.3rem;border-radius:8px;font-family:inherit;font-weight:700;"><option>Business Idea</option><option>Personal</option><option>Strategy</option></select></label><br><br>
+      <label style="font-weight:700;">Content <textarea id="mn-content" rows="3" style="width:100%;margin-top:.2rem;border:3px solid var(--black);border-radius:8px;font-family:inherit;font-weight:700;padding:.3rem;"></textarea></label><br><br>
+      <button type="submit" style="padding:.55rem 1.2rem;border:3px solid var(--black);background:var(--mint);font-weight:900;border-radius:9999px;box-shadow:4px 4px 0 var(--black);cursor:pointer;">Save Note</button>
+    </form>
+  </div>
+</div>
+</div></div>
+<div id="tab-team" class="tab-content" aria-label="Team"><div style="max-width:1200px;margin:0 auto;">
+<div class="grid" style="margin-top:1rem;">
+  <article class="card" style="background:var(--mint);"><h2>👥 Team Metrics</h2>
+    <ul><li><span>Total Team Members</span> <strong>8</strong></li>
+    <li><span>Active Projects</span> <strong>5</strong></li>
+    <li><span>Open Tasks</span> <strong>15</strong></li>
+    <li><span>Monthly Payroll</span> <strong>$12,500</strong></li></ul>
+  </article>
+</div>
+<article class="card" style="margin-top:1.5rem;background:var(--cyan);"><h2>📋 Team Roster Directory</h2>
+  <table style="width:100%;border-collapse:collapse;font-weight:700;font-size:.85rem;">
+    <thead><tr style="border-bottom:4px solid var(--black);"><th style="text-align:left;padding:.4rem;">Member</th><th>Role</th><th>Status</th><th>Action</th></tr></thead>
+    <tbody>
+      <tr style="border-bottom:2px dashed var(--black);"><td>Billal Hossien</td><td>Lead Scraper / Owner</td><td><span style="border:2px solid var(--black);padding:.1rem .4rem;border-radius:9999px;background:var(--mint);font-size:.7rem;">Active</span></td><td><a href="#" style="border:2px solid var(--black);padding:.15rem .5rem;border-radius:9999px;font-weight:900;font-size:.75rem;text-decoration:none;background:#fff;color:var(--ink);box-shadow:2px 2px 0 var(--black);">View</a></td></tr>
+      <tr style="border-bottom:2px dashed var(--black);"><td>Dashboard Agent</td><td>UI / HTML Engineer</td><td><span style="border:2px solid var(--black);padding:.1rem .4rem;border-radius:9999px;background:var(--pink);font-size:.7rem;">Busy</span></td><td><a href="#" style="border:2px solid var(--black);padding:.15rem .5rem;border-radius:9999px;font-weight:900;font-size:.75rem;text-decoration:none;background:#fff;color:var(--ink);box-shadow:2px 2px 0 var(--black);">View</a></td></tr>
+      <tr style="border-bottom:2px dashed var(--black);"><td>Outreach Agent</td><td>Email / Cold Outreach</td><td><span style="border:2px solid var(--black);padding:.1rem .4rem;border-radius:9999px;background:var(--mint);font-size:.7rem;">Active</span></td><td><a href="#" style="border:2px solid var(--black);padding:.15rem .5rem;border-radius:9999px;font-weight:900;font-size:.75rem;text-decoration:none;background:#fff;color:var(--ink);box-shadow:2px 2px 0 var(--black);">View</a></td></tr>
+      <tr><td>VA (Virtual Assistant)</td><td>Admin / Scheduling</td><td><span style="border:2px solid var(--black);padding:.1rem .4rem;border-radius:9999px;background:var(--yellow);font-size:.7rem;">On Leave</span></td><td><a href="#" style="border:2px solid var(--black);padding:.15rem .5rem;border-radius:9999px;font-weight:900;font-size:.75rem;text-decoration:none;background:#fff;color:var(--ink);box-shadow:2px 2px 0 var(--black);">View</a></td></tr>
+    </tbody>
+  </table>
+</article>
+<article class="card" style="margin-top:1.5rem;background:var(--yellow);"><h2>✅ Assigned Tasks & Deliverables</h2>
+  <table style="width:100%;border-collapse:collapse;font-weight:700;font-size:.85rem;">
+    <thead><tr style="border-bottom:4px solid var(--black);"><th style="text-align:left;padding:.4rem;">Task</th><th>Assignee</th><th>Priority</th><th>Due</th><th>Progress</th></tr></thead>
+    <tbody>
+      <tr style="border-bottom:2px dashed var(--black);"><td>Dashboard HTML rebuild</td><td>Dashboard Agent</td><td>High</td><td>Oct 23</td><td><span style="border:2px solid var(--black);padding:.1rem .4rem;border-radius:9999px;background:var(--mint);font-size:.7rem;">In Progress</span></td></tr>
+      <tr style="border-bottom:2px dashed var(--black);"><td>Email outreach drafts</td><td>Outreach Agent</td><td>Medium</td><td>Oct 24</td><td><span style="border:2px solid var(--black);padding:.1rem .4rem;border-radius:9999px;background:var(--pink);font-size:.7rem;">Done</span></td></tr>
+      <tr><td>Notion DB sync validation</td><td>Billal Hossien</td><td>High</td><td>Oct 25</td><td><span style="border:2px solid var(--black);padding:.1rem .4rem;border-radius:9999px;background:var(--yellow);font-size:.7rem;">Pending</span></td></tr>
+    </tbody>
+  </table>
+</article>
+<div style="display:flex;gap:.8rem;flex-wrap:wrap;max-width:1200px;margin:1.5rem auto 0 auto;">
+  <a href="#" class="tab-btn" style="background:var(--mint);text-decoration:none;" onclick="openModal('add-team');return false;">+ Add Team Member</a>
+</div>
+<div id="modal-add-team" style="display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.65);z-index:1000;align-items:center;justify-content:center;" onclick="if(event.target===this)closeModal('add-team')">
+  <div class="card" style="width:92%;max-width:480px;background:var(--cyan);box-shadow:8px 8px 0 var(--black);" onclick="event.stopPropagation()">
+    <h2 style="display:flex;justify-content:space-between;align-items:center;">+ Add Team Member <button onclick="closeModal('add-team')" style="border:3px solid var(--black);background:var(--pink);font-weight:900;border-radius:9999px;padding:.3rem .6rem;cursor:pointer;">✕</button></h2>
+    <form onsubmit="submitAddTeam(event)">
+      <label style="font-weight:700;">Name <input type="text" id="tm-name" required style="margin-top:.2rem;"></label><br><br>
+      <label style="font-weight:700;">Role <input type="text" id="tm-role" required style="margin-top:.2rem;"></label><br><br>
+      <label style="font-weight:700;">Status <select id="tm-status" style="margin-top:.2rem;border:3px solid var(--black);padding:.3rem;border-radius:8px;font-family:inherit;font-weight:700;"><option>Active</option><option>Busy</option><option>On Leave</option></select></label><br><br>
+      <button type="submit" style="padding:.55rem 1.2rem;border:3px solid var(--black);background:var(--mint);font-weight:900;border-radius:9999px;box-shadow:4px 4px 0 var(--black);cursor:pointer;">Add Member</button>
+    </form>
+  </div>
+</div>
+</div></div>
+<div id="tab-logout" class="tab-content" aria-label="Log out"><div style="max-width:1200px;margin:0 auto;"><article class="card" style="background:var(--black);color:#fff;"><h2 style="color:var(--yellow);">Logged out</h2><p>Session ended. Open <strong>personal_command_centre.html</strong> again to restart.</p></article></div></div>
+
+
+<!-- MODALS -->
+<div id="modal-add" style="display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.65);z-index:1000;align-items:center;justify-content:center;" onclick="if(event.target===this)closeModal('add')">
+  <div class="card" style="width:92%;max-width:520px;background:var(--mint);box-shadow:8px 8px 0 var(--black);" onclick="event.stopPropagation()">
+    <h2 style="display:flex;justify-content:space-between;align-items:center;">+ Add New Client <button onclick="closeModal('add')" style="border:3px solid var(--black);background:var(--pink);font-weight:900;border-radius:9999px;padding:.3rem .6rem;cursor:pointer;">✕</button></h2>
+    <form onsubmit="submitAddClient(event)">
+      <label style="font-weight:700;">Client Name <input type="text" id="mc-name" required style="margin-top:.2rem;"></label><br><br>
+      <label style="font-weight:700;">Project <input type="text" id="mc-project" required style="margin-top:.2rem;"></label><br><br>
+      <label style="font-weight:700;">Retainer <input type="text" id="mc-retainer" required style="margin-top:.2rem;"></label><br><br>
+      <label style="font-weight:700;">Status <select id="mc-status" style="margin-top:.2rem;border:3px solid var(--black);padding:.3rem;border-radius:8px;font-family:inherit;font-weight:700;"><option>Active</option><option>Onboarding</option><option>In Review</option></select></label><br><br>
+      <button type="submit" style="padding:.55rem 1.2rem;border:3px solid var(--black);background:var(--cyan);font-weight:900;border-radius:9999px;box-shadow:4px 4px 0 var(--black);cursor:pointer;">Add Client</button>
+    </form>
+  </div>
+</div>
+<div id="modal-invoice" style="display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.65);z-index:1000;align-items:center;justify-content:center;" onclick="if(event.target===this)closeModal('invoice')">
+  <div class="card" style="width:92%;max-width:480px;background:var(--pink);box-shadow:8px 8px 0 var(--black);" onclick="event.stopPropagation()">
+    <h2 style="display:flex;justify-content:space-between;align-items:center;">Send Invoice <button onclick="closeModal('invoice')" style="border:3px solid var(--black);background:var(--cyan);font-weight:900;border-radius:9999px;padding:.3rem .6rem;cursor:pointer;">✕</button></h2>
+    <form onsubmit="submitInvoice(event)">
+      <label style="font-weight:700;">Select Client <select id="inv-client" style="margin-top:.2rem;border:3px solid var(--black);padding:.3rem;border-radius:8px;font-family:inherit;font-weight:700;"><option>John Doe</option><option>Success Group</option><option>Rudro Consulting</option><option>Sarah Khan</option></select></label><br><br>
+      <label style="font-weight:700;">Invoice Amount ($) <input type="number" id="inv-amount" required style="margin-top:.2rem;"></label><br><br>
+      <button type="submit" style="padding:.55rem 1.2rem;border:3px solid var(--black);background:var(--yellow);font-weight:900;border-radius:9999px;box-shadow:4px 4px 0 var(--black);cursor:pointer;">Send Invoice</button>
+    </form>
+  </div>
+</div>
+<div id="modal-call" style="display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.65);z-index:1000;align-items:center;justify-content:center;" onclick="if(event.target===this)closeModal('call')">
+  <div class="card" style="width:92%;max-width:480px;background:var(--cyan);box-shadow:8px 8px 0 var(--black);" onclick="event.stopPropagation()">
+    <h2 style="display:flex;justify-content:space-between;align-items:center;">Schedule Call <button onclick="closeModal('call')" style="border:3px solid var(--black);background:var(--pink);font-weight:900;border-radius:9999px;padding:.3rem .6rem;cursor:pointer;">✕</button></h2>
+    <form onsubmit="submitCall(event)">
+      <label style="font-weight:700;">Client <select id="cal-client" style="margin-top:.2rem;border:3px solid var(--black);padding:.3rem;border-radius:8px;font-family:inherit;font-weight:700;"><option>John Doe</option><option>Success Group</option><option>Rudro Consulting</option><option>Sarah Khan</option></select></label><br><br>
+      <label style="font-weight:700;">Date <input type="date" id="cal-date" required style="margin-top:.2rem;"></label><br><br>
+      <label style="font-weight:700;">Time <input type="time" id="cal-time" required style="margin-top:.2rem;"></label><br><br>
+      <button type="submit" style="padding:.55rem 1.2rem;border:3px solid var(--black);background:var(--mint);font-weight:900;border-radius:9999px;box-shadow:4px 4px 0 var(--black);cursor:pointer;">Schedule Call</button>
+    </form>
+  </div>
+</div>
+<footer class="footer">PERSONAL COMMAND CENTRE — Multi-Tab SPA — Neubrutalism — All CSS/JS Embedded</footer>
+
+<script>
+function switchTab(name, btn) {
+  document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(el => el.classList.remove('active'));
+  const target = document.getElementById('tab-' + name);
+  if (target) target.classList.add('active');
+  if (btn) btn.classList.add('active');
+}
+function addTask(e){e.preventDefault();const input=document.getElementById('newTask');const text=input.value.trim();if(!text)return;const li=document.createElement('li');li.innerHTML='<span>'+text+'</span> <button onclick="removeTask(this)">✓</button>';document.getElementById('todoList').appendChild(li);input.value='';}
+function removeTask(btn){btn.parentElement.remove();}
+
+function openModal(id){document.getElementById('modal-'+id).style.display='flex';}
+function closeModal(id){document.getElementById('modal-'+id).style.display='none';}
+function submitAddClient(e){e.preventDefault();const name=document.getElementById('mc-name').value;const proj=document.getElementById('mc-project').value;const ret=document.getElementById('mc-retainer').value.replace(/[^0-9]/g,'');const stat=document.getElementById('mc-status').value;const clients=JSON.parse(localStorage.getItem('crm_clients')||'[]');clients.push({name,project:proj,retainer:ret,status:stat});localStorage.setItem('crm_clients',JSON.stringify(clients));const table=document.querySelector('#tab-clients table tbody');const row=document.createElement('tr');row.innerHTML='<td>'+name+'</td><td>'+proj+'</td><td>$'+ret+'</td><td><span style="border:2px solid var(--black);padding:.1rem .4rem;border-radius:9999px;background:var(--mint);font-size:.7rem;">'+stat+'</span></td><td>Today</td>';table.appendChild(row);updateMetrics();closeModal('add');e.target.reset();}
+function submitInvoice(e){e.preventDefault();const client=document.getElementById('inv-client').value;const amount=document.getElementById('inv-amount').value;closeModal('invoice');alert('Invoice sent to '+client+' for $'+amount);e.target.reset();}
+function submitCall(e){e.preventDefault();const client=document.getElementById('cal-client').value;const date=document.getElementById('cal-date').value;const time=document.getElementById('cal-time').value;closeModal('call');alert('Call scheduled with '+client+' on '+date+' at '+time);e.target.reset();}
+
+
+function updateMetrics(){const clients=JSON.parse(localStorage.getItem('crm_clients')||'[]');const count=document.getElementById('metric-active')||document.querySelector('#tab-clients article.card h2');const totalRetainer=clients.reduce((sum,c)=>sum+(parseInt(c.retainer||0)),0);const base=18500;const newTotal=base+totalRetainer;const metrics=document.querySelector('#tab-clients .card ul');if(metrics){metrics.innerHTML='<li><span>Active Clients</span> <strong>'+clients.length+'</strong></li><li><span>Monthly Retainer Revenue</span> <strong>$'+newTotal.toLocaleString()+'</strong></li><li><span>Retention Rate</span> <strong>92%</strong></li><li><span>Pending Invoices</span> <strong>$2,400</strong></li>';}}
+window.addEventListener('DOMContentLoaded',()=>{updateMetrics();});
+
+function submitAddLead(e){e.preventDefault();const name=document.getElementById('ld-name').value;const source=document.getElementById('ld-source').value;const value=document.getElementById('ld-value').value;const priority=document.getElementById('ld-priority').value;const tbody=document.querySelector('#leads-table tbody');const row=document.createElement('tr');row.innerHTML='<td>'+name+'</td><td>'+source+'</td><td>$'+value+'</td><td><span style="border:2px solid var(--black);padding:.1rem .4rem;border-radius:9999px;background:var(--pink);font-size:.7rem;">New</span></td><td>'+priority+'</td><td><a href="#" style="border:2px solid var(--black);padding:.15rem .5rem;border-radius:9999px;font-weight:900;font-size:.75rem;text-decoration:none;background:#fff;color:var(--ink);box-shadow:2px 2px 0 var(--black);">Contact</a></td>';tbody.appendChild(row);const clients=JSON.parse(localStorage.getItem('crm_clients')||'[]');clients.push({name,project:'Lead',retainer:value,status:'New'});localStorage.setItem('crm_clients',JSON.stringify(clients));closeModal('add-lead');alert('Lead added: '+name);e.target.reset();}
+
+function copyPrompt(btn){alert('Copied prompt to clipboard!');}
+
+function submitAddNote(e){e.preventDefault();const title=document.getElementById('mn-title').value;const cat=document.getElementById('mn-cat').value;const content=document.getElementById('mn-content').value;const tbody=document.querySelector('#tab-memory table tbody');if(tbody){const row=document.createElement('tr');row.innerHTML='<td>'+title+'</td><td>'+cat+'</td><td>Today</td><td><a href="#" style="border:2px solid var(--black);padding:.15rem .5rem;border-radius:9999px;font-weight:900;font-size:.75rem;text-decoration:none;background:#fff;color:var(--ink);box-shadow:2px 2px 0 var(--black);">View</a> <a href="#" style="border:2px solid var(--black);padding:.15rem .5rem;border-radius:9999px;font-weight:900;font-size:.75rem;text-decoration:none;background:#fff;color:var(--ink);box-shadow:2px 2px 0 var(--black);">Edit</a></td>';tbody.appendChild(row);}const notes=JSON.parse(localStorage.getItem('vault_notes')||'[]');notes.push({title,cat,content,date:'Today'});localStorage.setItem('vault_notes',JSON.stringify(notes));closeModal('add-note');e.target.reset();}
+
+function submitAddTeam(e){e.preventDefault();const n=document.getElementById('tm-name').value;const r=document.getElementById('tm-role').value;const s=document.getElementById('tm-status').value;const tbody=document.querySelector('#tab-team table tbody');if(tbody){const row=document.createElement('tr');row.innerHTML='<td>'+n+'</td><td>'+r+'</td><td><span style="border:2px solid var(--black);padding:.1rem .4rem;border-radius:9999px;background:var(--mint);font-size:.7rem;">'+s+'</span></td><td><a href="#" style="border:2px solid var(--black);padding:.15rem .5rem;border-radius:9999px;font-weight:900;font-size:.75rem;text-decoration:none;background:#fff;color:var(--ink);box-shadow:2px 2px 0 var(--black);">View</a></td>';tbody.appendChild(row);}closeModal('add-team');e.target.reset();}
+
+
+function initClients(){const clients=JSON.parse(localStorage.getItem('crm_clients')||'[]');const tbody=document.querySelector('#tab-clients table tbody');if(!tbody)return;tbody.innerHTML='';const defaults=[{name:'John Doe',project:'Austin Property Leads',retainer:'3200',status:'Active'},{name:'Success Group',project:'Social Intel Automation',retainer:'5500',status:'Onboarding'},{name:'Rudro Consulting',project:'Dashboard & Notion Sync',retainer:'4800',status:'In Review'},{name:'Sarah Khan',project:'Real Estate CRM Setup',retainer:'5000',status:'Active'}];const all=[...defaults,...clients];all.forEach(c=>{const row=document.createElement('tr');row.innerHTML='<td>'+c.name+'</td><td>'+c.project+'</td><td>$'+c.retainer+'</td><td><span style="border:2px solid var(--black);padding:.1rem .4rem;border-radius:9999px;background:var(--mint);font-size:.7rem;">'+c.status+'</span></td><td>Today</td>';tbody.appendChild(row);});const metrics=document.querySelector('#tab-clients .card ul');if(metrics){const total=all.reduce((s,c)=>s+parseInt(c.retainer||0),0);metrics.innerHTML='<li><span>Active Clients</span> <strong>'+all.length+'</strong></li><li><span>Monthly Retainer Revenue</span> <strong>$'+total.toLocaleString()+'</strong></li><li><span>Retention Rate</span> <strong>92%</strong></li><li><span>Pending Invoices</span> <strong>$2,400</strong></li>';}}
+function initLeads(){const leads=JSON.parse(localStorage.getItem('lead_items')||'[]');const tbody=document.querySelector('#leads-table tbody');if(!tbody)return;tbody.innerHTML='';const defaults=[{name:'John Doe',source:'Facebook',value:'12000',stage:'Hot',priority:'High'},{name:'Success Group',source:'LinkedIn',value:'18500',stage:'Contacted',priority:'Medium'},{name:'Rudro Consulting',source:'Direct',value:'9200',stage:'Negotiation',priority:'High'},{name:'Sarah Khan',source:'Instagram',value:'5300',stage:'New',priority:'Medium'}];const all=[...defaults,...leads];all.forEach(l=>{const row=document.createElement('tr');row.innerHTML='<td>'+l.name+'</td><td>'+l.source+'</td><td>$'+l.value+'</td><td><span style="border:2px solid var(--black);padding:.1rem .4rem;border-radius:9999px;background:var(--pink);font-size:.7rem;">'+l.stage+'</span></td><td>'+l.priority+'</td><td><a href="#" style="border:2px solid var(--black);padding:.15rem .5rem;border-radius:9999px;font-weight:900;font-size:.75rem;text-decoration:none;background:#fff;color:var(--ink);box-shadow:2px 2px 0 var(--black);">Contact</a></td>';tbody.appendChild(row);});}
+function initMemory(){const notes=JSON.parse(localStorage.getItem('vault_notes')||'[]');const tbody=document.querySelector('#tab-memory table tbody');if(!tbody)return;tbody.innerHTML='';const defaults=[{title:'Social-automation skill notes',cat:'Business Idea',date:'Oct 22, 2026'},{title:'Real estate dashboard design spec',cat:'Strategy',date:'Oct 20, 2026'},{title:'Profile reminder settings',cat:'Personal',date:'Oct 22, 2026'}];const all=[...defaults,...notes];all.forEach(n=>{const row=document.createElement('tr');row.innerHTML='<td>'+n.title+'</td><td>'+n.cat+'</td><td>'+n.date+'</td><td><a href="#" style="border:2px solid var(--black);padding:.15rem .5rem;border-radius:9999px;font-weight:900;font-size:.75rem;text-decoration:none;background:#fff;color:var(--ink);box-shadow:2px 2px 0 var(--black);">View</a> <a href="#" style="border:2px solid var(--black);padding:.15rem .5rem;border-radius:9999px;font-weight:900;font-size:.75rem;text-decoration:none;background:#fff;color:var(--ink);box-shadow:2px 2px 0 var(--black);">Edit</a></td>';tbody.appendChild(row);});}
+function initTeam(){const members=JSON.parse(localStorage.getItem('team_members')||'[]');const tbody=document.querySelector('#tab-team table tbody');if(!tbody)return;tbody.innerHTML='';const defaults=[{name:'Billal Hossien',role:'Lead Scraper / Owner',status:'Active'},{name:'Dashboard Agent',role:'UI / HTML Engineer',status:'Busy'},{name:'Outreach Agent',role:'Email / Cold Outreach',status:'Active'},{name:'VA (Virtual Assistant)',role:'Admin / Scheduling',status:'On Leave'}];const all=[...defaults,...members];all.forEach(m=>{const row=document.createElement('tr');row.innerHTML='<td>'+m.name+'</td><td>'+m.role+'</td><td><span style="border:2px solid var(--black);padding:.1rem .4rem;border-radius:9999px;background:var(--mint);font-size:.7rem;">'+m.status+'</span></td><td><a href="#" style="border:2px solid var(--black);padding:.15rem .5rem;border-radius:9999px;font-weight:900;font-size:.75rem;text-decoration:none;background:#fff;color:var(--ink);box-shadow:2px 2px 0 var(--black);">View</a></td>';tbody.appendChild(row);});}
+document.addEventListener('DOMContentLoaded',()=>{initClients();initLeads();initMemory();initTeam();});
+
+</script>
+</body>
+</html>
