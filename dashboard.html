@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="refresh" content="60">
+<title>USA REAL ESTATE COMMAND CENTRE — Hermes Agent Live Dashboard</title>
+<style>
+:root{--bg:#fff4a3;--card:#fff;--text:#111;--shadow:#111;--cyan:#70d6ff;--mint:#99e2b4;--yellow:#fff4a3;--pink:#ff85a1;--muted:#777;}
+*{margin:0;padding:0;box-sizing:border-box;font-family:'Segoe UI',system-ui,sans-serif;}
+html{scroll-behavior:smooth;}
+body{background:var(--bg);color:var(--text);min-height:100vh;line-height:1.5;padding:2rem 1rem;font-size:14px;}
+
+/* NAV */
+nav{max-width:1400px;margin:0 auto 1.25rem;padding:0 1rem;display:flex;gap:.6rem;flex-wrap:wrap;align-items:center;}
+nav a{padding:.55rem 1rem;background:#fff;border:3px solid var(--shadow);box-shadow:3px 3px 0 var(--shadow);border-radius:8px;font-weight:800;font-size:.82rem;color:#111;text-decoration:none;transition:transform .15s;display:inline-block;}
+nav a:hover{transform:translateY(-2px);}
+nav a.active-cyan{background:var(--cyan);}
+nav a.active-mint{background:var(--mint);}
+nav a.active-yellow{background:var(--yellow);}
+nav a.active-pink{background:var(--pink);}
+
+/* HEADER */
+header{max-width:1400px;margin:0 auto 2rem;padding:2.5rem;background:#fff;border:4px solid var(--shadow);box-shadow:6px 6px 0 var(--shadow);border-radius:8px;text-align:center;position:relative;}
+header::after{content:"";position:absolute;top:4px;left:4px;right:4px;bottom:4px;border:2px dashed var(--shadow);border-radius:4px;pointer-events:none;opacity:.5;}
+header h1{font-size:2.6rem;font-weight:900;letter-spacing:-3px;text-transform:uppercase;color:#111;line-height:1.05;}
+header .subtitle{margin-top:.4rem;font-size:1rem;color:#555;font-weight:600;}
+header .badge{display:inline-block;margin-top:1rem;padding:.35rem .9rem;background:var(--cyan);border:3px solid var(--shadow);box-shadow:3px 3px 0 var(--shadow);border-radius:8px;font-size:.75rem;font-weight:800;color:#0a0e1a;text-transform:uppercase;letter-spacing:.6px;}
+
+/* 4-COLUMN GRID */
+.main-grid{max-width:1400px;margin:0 auto;padding:0 1rem;display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:1.25rem;align-items:start;}
+
+/* CARD BASE */
+.card{background:#fff;border:3px solid var(--shadow);border-radius:8px;padding:1.5rem;box-shadow:4px 4px 0 var(--shadow);position:relative;overflow:hidden;transition:transform .15s;}
+.card:hover{transform:translateY(-3px);box-shadow:6px 6px 0 var(--shadow);}
+.card h2{font-size:1.15rem;font-weight:900;color:#111;margin-bottom:.75rem;letter-spacing:-1px;display:flex;align-items:center;gap:.5rem;}
+.card h2 .dot{width:8px;height:8px;border-radius:50%;display:inline-block;}
+
+/* COLOR ACCENTS */
+.card.cyan{border-top:6px solid var(--cyan);}
+.card.cyan .dot{background:var(--cyan);}
+.card.mint{border-top:6px solid var(--mint);}
+.card.mint .dot{background:var(--mint);}
+.card.yellow{border-top:6px solid var(--yellow);}
+.card.yellow .dot{background:var(--yellow);}
+.card.pink{border-top:6px solid var(--pink);}
+.card.pink .dot{background:var(--pink);}
+
+.card .meta{font-size:.7rem;color:#777;font-weight:700;text-transform:uppercase;letter-spacing:.7px;margin-bottom:1rem;}
+
+.card .field{display:flex;justify-content:space-between;padding:.5rem 0;border-bottom:1px dashed #ccc;font-size:.85rem;color:#333;}
+.card .field:last-of-type{border-bottom:none;}
+.card .label{font-weight:600;color:#555;font-size:.82rem;}
+.card .value{font-weight:700;color:#111;font-size:.9rem;text-align:right;}
+
+.status-pill{display:inline-block;padding:.2rem .5rem;border:2.5px solid var(--shadow);border-radius:6px;font-size:.7rem;font-weight:800;text-transform:uppercase;background:#fff;box-shadow:2px 2px 0 var(--shadow);}
+.status-pill.draft{color:#f59e0b;}
+.status-pill.verified{color:#22c55e;}
+.status-pill.active{color:#70d6ff;}
+
+.email-link{color:var(--accent);font-weight:700;text-decoration:none;border-bottom:1.5px dashed var(--accent);}
+.email-link:hover{color:#111;border-bottom-color:#111;}
+
+/* FOOTER */
+footer{margin-top:2.5rem;padding:1.25rem 2rem;background:#fff;border-top:3px solid var(--shadow);font-size:.75rem;color:#555;font-weight:600;text-align:center;box-shadow:0 -4px 0 var(--shadow);max-width:1400px;margin-left:auto;margin-right:auto;border-radius:0 0 8px 8px;}
+footer code{background:#fff;border:1.5px solid var(--shadow);padding:.15rem .35rem;border-radius:4px;font-family:monospace;color:#111;font-size:.75rem;box-shadow:2px 2px 0 var(--shadow);}
+
+/* TABLE */
+.data-table{width:100%;border-collapse:collapse;font-size:.78rem;margin-top:.75rem;}
+.data-table thead th{padding:.55rem .75rem;text-align:left;background:rgba(255,255,255,.6);border-bottom:2px solid var(--shadow);font-size:.7rem;font-weight:800;text-transform:uppercase;letter-spacing:.4px;color:#333;}
+.data-table tbody td{padding:.45rem .75rem;border-bottom:1px dashed #ccc;color:#333;font-weight:500;}
+.data-table tbody tr:hover td{background:rgba(0,0,0,.03);}
+
+/* SYNCHRONIZATION BAR */
+.sync-bar{max-width:1400px;margin:1.5rem auto 0;padding:0 1rem;font-size:.82rem;color:#555;display:flex;gap:2rem;flex-wrap:wrap;align-items:center;}
+.sync-bar code{background:#fff;border:1.5px solid var(--shadow);padding:.15rem .35rem;border-radius:4px;font-family:monospace;color:#111;font-size:.75rem;box-shadow:2px 2px 0 var(--shadow);}
+</style>
+</head>
+<body>
+<header>
+  <h1>USA REAL ESTATE COMMAND CENTRE</h1>
+  <p>Hermes Agent Intelligence — Notion DB Auto-Sync &nbsp;|&nbsp; DB: <code>40075580-e0b1-803d-ab31-ca7ce1ff5af7</code></p>
+  <div class="badge">LIVE — Auto-Sync Active (Refresh: 60s)</div>
+</header>
+
+<div class="tabs">
+  <a href="#leads" onclick="showTab('leads');return false;" class="tab-btn">Leads</a>
+  <a href="#todo" onclick="showTab('todo');return false;" class="tab-btn">To-Do</a>
+  <a href="#notes" onclick="showTab('notes');return false;" class="tab-btn">Notes</a>
+  <a href="#calendar" onclick="showTab('calendar');return false;" class="tab-btn">Calendar</a>
+</div>
+
+<div style="max-width:1400px;margin:0 auto;padding:0 1rem;display:grid;grid-template-columns:repeat(auto-fill,minmax(340px,1fr));gap:1.25rem;align-items:start;">
+  <section class="card cyan" id="calendar">
+    <h2><span class="dot" style="background:var(--cyan);"></span>Calendar &amp; Showings</h2>
+    <table class="data-table" aria-label="Calendar">
+      <thead><tr><th>Sun</th><th>Mon</th><th>Tue</th><th>Wed</th><th>Thu</th><th>Fri</th><th>Sat</th></tr></thead>
+      <tbody>
+        <tr><td>19</td><td>20</td><td style="background:#fff4a3;border:2px solid #111;font-weight:900;color:#111;">21 Today</td><td>22</td><td>23</td><td>24</td><td>25</td></tr>
+      </tbody>
+    </table>
+    <div style="margin-top:.75rem;font-size:.75rem;color:#555;line-height:1.4;">
+      <strong>Today (2026-10-21):</strong> Property tour — Gulshan (Tanvir Ahmed) + Client Follow-up — Call Mr. Tanvir tomorrow morning.<br><strong>Auto-Refresh:</strong> 60s meta-refresh enabled.
+    </div>
+  </section>
+
+  <section class="card mint" id="leads-section" style="grid-column:span 2;">
+    <h2><span class="dot" style="background:var(--mint);"></span>USA Real Estate CRM — Notion DB Auto-Sync</h2>
+    <div class="meta">Live Leads — Auto-Refresh: 60s | DB ID: 40075580-e0b1-803d-ab31-ca7ce1ff5af7</div>
+    <table class="data-table" aria-label="Leads">
+      <thead><tr><th>Name</th><th>Email</th><th>Location</th><th>Status</th><th>Source</th></tr></thead>
+      <tbody>
+        <tr><td>John Doe</td><td>john@example.com</td><td>Dubai</td><td><span class="status-pill draft">Draft</span></td><td>Manual / User Request</td></tr>
+        <tr><td>Success (Test Lead)</td><td>—</td><td>Notion DB</td><td><span class="status-pill active">Active</span></td><td>Hermes Auto-Sync</td></tr>
+        <tr><td>Rudro (Brother / Friend)</td><td>—</td><td>Personal / Reference</td><td><span class="status-pill draft">Draft</span></td><td>Personal Letter Reference</td></tr>
+        <tr><td>Sarah Khan</td><td>sarah@luxuryhomes.com</td><td>Dubai Marina</td><td><span class="status-pill verified">Verified — Email Drafted</span></td><td>Manual Entry</td></tr>
+        <tr><td>Tanvir Ahmed</td><td>tanvir@gmail.com</td><td>Gulshan</td><td><span class="status-pill verified">Verified — Email Drafted</span></td><td>Notion Auto-Sync</td></tr>
+        <tr><td>David</td><td>—</td><td>—</td><td><span class="status-pill draft">Draft</span></td><td>Notion Auto-Sync</td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  <section class="card yellow" id="todo">
+    <h2><span class="dot" style="background:var(--yellow);"></span>Active Listings &amp; Deals</h2>
+    <div class="meta">To-Do — Escrow / Offers / Listings</div>
+    <ul style="list-style:none;display:flex;flex-direction:column;gap:.4rem;">
+      <li style="display:flex;align-items:center;gap:.6rem;padding:.55rem .65rem;background:#fff;border:2px dashed #111;border-radius:6px;font-size:.82rem;font-weight:600;color:#111;"><span style="width:16px;height:16px;background:var(--yellow);border:2px solid #111;border-radius:4px;flex-shrink:0;display:flex;align-items:center;justify-content:center;color:#fff;font-size:.7rem;">✓</span>Client Follow-up — Call Mr. Tanvir Ahmed (Gulshan) tomorrow morning.</li>
+      <li style="display:flex;align-items:center;gap:.6rem;padding:.55rem .65rem;background:#fff;border:2px dashed #111;border-radius:6px;font-size:.82rem;font-weight:600;color:#555;"><span style="width:16px;height:16px;border:2px solid #555;border-radius:4px;flex-shrink:0;"></span>Launch Marketing Plan — Facebook ad campaign for Dubai properties.</li>
+      <li style="display:flex;align-items:center;gap:.6rem;padding:.55rem .65rem;background:#fff;border:2px dashed #111;border-radius:6px;font-size:.82rem;font-weight:600;color:#555;"><span style="width:16px;height:16px;border:2px solid #555;border-radius:4px;flex-shrink:0;"></span>Build full multi-agent workflow for 8GB RAM deployment.</li>
+    </ul>
+  </section>
+
+  <section class="card pink" id="notes">
+    <h2><span class="dot" style="background:var(--pink);"></span>Life &amp; Book Notes</h2>
+    <div class="meta">Notes — Strategy / References / Meetings</div>
+    <div style="padding:.75rem;background:#fff;border:2px dashed #111;border-radius:6px;font-size:.85rem;color:#333;line-height:1.55;margin-bottom:.5rem;"><strong style="color:#ff85a1;font-size:.75rem;text-transform:uppercase;letter-spacing:.3px;">Marketing Plan</strong><br>Launch Facebook ad campaign next week for Dubai properties.</div>
+    <div style="padding:.75rem;background:#fff;border:2px dashed #111;border-radius:6px;font-size:.85rem;color:#333;line-height:1.55;"><strong style="color:#ff85a1;font-size:.75rem;text-transform:uppercase;letter-spacing:.3px;">Client Follow-up</strong><br>Call Mr. Tanvir Ahmed regarding Gulshan property documents tomorrow morning.</div>
+  </section>
+
+  <section class="card" style="grid-column:span 2;background:#0b0c15;border:3px solid #111;border-radius:14px;padding:1.25rem;box-shadow:6px 6px 0 #111;color:#d0d5e0;font-size:.82rem;line-height:1.6;margin-top:1rem;">
+    <h3 style="font-size:1rem;color:#fff;font-weight:700;margin-bottom:.5rem;display:flex;align-items:center;gap:.5rem;">Auto-Sync Status — Notion DB Integration</h3>
+    <p><strong>DB ID:</strong> <code style="background:#12142b;border:1.5px solid #70d6ff;color:#70d6ff;padding:.15rem .35rem;border-radius:4px;font-family:monospace;font-size:.75rem;">40075580-e0b1-803d-ab31-ca7ce1ff5af7</code></p>
+    <p><strong>Notion Token:</strong> <code style="background:#12142b;border:1.5px solid #70d6ff;color:#70d6ff;padding:.15rem .35rem;border-radius:4px;font-family:monospace;font-size:.75rem;">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</code></p>
+    <p><strong>Credentials File:</strong> <code>/opt/data/credentials.json</code> &nbsp;|&nbsp; <strong>Sync Script:</strong> <code>/opt/data/sync_dashboard.py</code> &nbsp;|&nbsp; <strong>Refresh:</strong> 60s meta-refresh &nbsp;|&nbsp; <strong>Mirror:</strong> <code>/opt/data/gggggggg.html</code></p>
+  </section>
+</div>
+
+<footer style="margin-top:2rem;padding:1.5rem 2rem;text-align:center;background:#fff;border-top:3px solid #111;font-size:.75rem;color:#777;font-weight:600;box-shadow:0 -4px 0 #111;border-radius:0 0 8px 8px;">
+  Hermes Agent — Notion Integration Active &nbsp;|&nbsp; Auto-Sync: Enabled &nbsp;|&nbsp; DB: <code>40075580-e0b1-803d-ab31-ca7ce1ff5af7</code> &nbsp;|&nbsp; Mirror: <code>/opt/data/gggggggg.html</code>
+</footer>
+
+<script>
+function showTab(id){
+  document.getElementById('leads').style.display=id==='leads'?'grid':'none';
+  document.getElementById('todo').style.display=id==='todo'?'block':'none';
+  document.getElementById('notes').style.display=id==='notes'?'block':'none';
+  document.getElementById('calendar').style.display=id==='calendar'?'block':'none';
+  document.querySelectorAll('.tabs a').forEach(b=>b.classList.remove('leads','todo','notes','calendar'));
+  if(id==='leads')document.querySelector('.tabs a:nth-child(1)').classList.add('leads');
+  if(id==='todo')document.querySelector('.tabs a:nth-child(2)').classList.add('todo');
+  if(id==='notes')document.querySelector('.tabs a:nth-child(3)').classList.add('notes');
+  if(id==='calendar')document.querySelector('.tabs a:nth-child(4)').classList.add('calendar');
+}
+console.log("RUDRO NIL'S COMMAND CENTRE — Auto-Sync active. Notion DB: 40075580-e0b1-803d-ab31-ca7ce1ff5af7. Hermes Agent: active. Dashboard: /opt/data/rudro_nil_dashboard.html | Mirror: /opt/data/gggggggg.html");
+</script>
+
+<!-- AUSTIN LIVE LISTINGS (Inserted) -->
+<section id="austin-live" style="margin-top:2rem;padding:1.25rem;background:#fff;border:3px solid #111;border-radius:8px;box-shadow:4px 4px 0 #111;max-width:1400px;margin-left:auto;margin-right:auto;">
+  <h3 style="font-weight:900;font-size:1.1rem;color:#111;letter-spacing:-.2px;margin-bottom:.75rem;display:flex;align-items:center;gap:.5rem;">Austin, TX — 5 Live Listings (Under $600K)</h3>
+  <table style="width:100%;border-collapse:collapse;font-size:.78rem;">
+    <thead><tr style="color:#777;font-weight:700;text-transform:uppercase;font-size:.7rem;letter-spacing:.4px;border-bottom:2px solid #111;"><th style="padding:.5rem;text-align:left;">Property Address</th><th>Price</th><th>Bed/Bath</th><th>Agent / Source</th></tr></thead>
+    <tbody>
+      <tr style="border-bottom:1px dashed #ddd;"><td style="padding:.5rem;font-weight:600;">9706 Woodshire Dr, Austin, TX 78748</td><td>$535,000</td><td>3 Bed / 2 Bath</td><td>SPYGLASS REALTY (Active)</td></tr>
+      <tr style="border-bottom:1px dashed #ddd;"><td style="padding:.5rem;font-weight:600;">15205 Back Of The Moon St, Austin, TX 78734</td><td>$475,000</td><td>3 Bed / 2 Bath</td><td>LPT REALTY LLC (Active)</td></tr>
+      <tr style="border-bottom:1px dashed #ddd;"><td style="padding:.5rem;font-weight:600;">8102 Furness Cv, Austin, TX 78753</td><td>$449,900</td><td>5 Bed / 3 Bath</td><td>EXP REALTY (Active)</td></tr>
+      <tr style="border-bottom:1px dashed #ddd;"><td style="padding:.5rem;font-weight:600;">6209 Daffan Ln, Austin, TX 78724</td><td>$449,000</td><td>4 Bed / 2 Bath</td><td>COMPASS RE TEXAS (Active)</td></tr>
+      <tr style="border-bottom:1px dashed #ddd;"><td style="padding:.5rem;font-weight:600;">12513 Hunters Chase Dr, Austin, TX 78729</td><td>$469,900</td><td>4 Bed / 3 Bath</td><td>KELLER WILLIAMS REALTY (Active)</td></tr>
+    </tbody>
+  </table>
+</section>
+</body>
+</html>

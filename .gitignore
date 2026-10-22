@@ -1,0 +1,4 @@
+# Sensitive / temporary files
+credentials.json
+*.mp3
+cache/
