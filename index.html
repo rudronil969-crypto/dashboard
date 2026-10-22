@@ -283,7 +283,51 @@ nav a.logout-btn{background:var(--pink);}
   </div>
 </div>
 </div></div>
-<div id="tab-team" class="tab-content" aria-label="Team"><div style="max-width:1200px;margin:0 auto;"><article class="card" style="background:#fff;"><h2>Team</h2><p>Agent roles (Lead Scraper, Dashboard Agent, Outreach Agent, Manager), skills assigned.</p></article></div></div>
+<div id="tab-team" class="tab-content" aria-label="Team"><div style="max-width:1200px;margin:0 auto;">
+<div class="grid" style="margin-top:1rem;">
+  <article class="card" style="background:var(--mint);"><h2>👥 Team Metrics</h2>
+    <ul><li><span>Total Team Members</span> <strong>8</strong></li>
+    <li><span>Active Projects</span> <strong>5</strong></li>
+    <li><span>Open Tasks</span> <strong>15</strong></li>
+    <li><span>Monthly Payroll</span> <strong>$12,500</strong></li></ul>
+  </article>
+</div>
+<article class="card" style="margin-top:1.5rem;background:var(--cyan);"><h2>📋 Team Roster Directory</h2>
+  <table style="width:100%;border-collapse:collapse;font-weight:700;font-size:.85rem;">
+    <thead><tr style="border-bottom:4px solid var(--black);"><th style="text-align:left;padding:.4rem;">Member</th><th>Role</th><th>Status</th><th>Action</th></tr></thead>
+    <tbody>
+      <tr style="border-bottom:2px dashed var(--black);"><td>Billal Hossien</td><td>Lead Scraper / Owner</td><td><span style="border:2px solid var(--black);padding:.1rem .4rem;border-radius:9999px;background:var(--mint);font-size:.7rem;">Active</span></td><td><a href="#" style="border:2px solid var(--black);padding:.15rem .5rem;border-radius:9999px;font-weight:900;font-size:.75rem;text-decoration:none;background:#fff;color:var(--ink);box-shadow:2px 2px 0 var(--black);">View</a></td></tr>
+      <tr style="border-bottom:2px dashed var(--black);"><td>Dashboard Agent</td><td>UI / HTML Engineer</td><td><span style="border:2px solid var(--black);padding:.1rem .4rem;border-radius:9999px;background:var(--pink);font-size:.7rem;">Busy</span></td><td><a href="#" style="border:2px solid var(--black);padding:.15rem .5rem;border-radius:9999px;font-weight:900;font-size:.75rem;text-decoration:none;background:#fff;color:var(--ink);box-shadow:2px 2px 0 var(--black);">View</a></td></tr>
+      <tr style="border-bottom:2px dashed var(--black);"><td>Outreach Agent</td><td>Email / Cold Outreach</td><td><span style="border:2px solid var(--black);padding:.1rem .4rem;border-radius:9999px;background:var(--mint);font-size:.7rem;">Active</span></td><td><a href="#" style="border:2px solid var(--black);padding:.15rem .5rem;border-radius:9999px;font-weight:900;font-size:.75rem;text-decoration:none;background:#fff;color:var(--ink);box-shadow:2px 2px 0 var(--black);">View</a></td></tr>
+      <tr><td>VA (Virtual Assistant)</td><td>Admin / Scheduling</td><td><span style="border:2px solid var(--black);padding:.1rem .4rem;border-radius:9999px;background:var(--yellow);font-size:.7rem;">On Leave</span></td><td><a href="#" style="border:2px solid var(--black);padding:.15rem .5rem;border-radius:9999px;font-weight:900;font-size:.75rem;text-decoration:none;background:#fff;color:var(--ink);box-shadow:2px 2px 0 var(--black);">View</a></td></tr>
+    </tbody>
+  </table>
+</article>
+<article class="card" style="margin-top:1.5rem;background:var(--yellow);"><h2>✅ Assigned Tasks & Deliverables</h2>
+  <table style="width:100%;border-collapse:collapse;font-weight:700;font-size:.85rem;">
+    <thead><tr style="border-bottom:4px solid var(--black);"><th style="text-align:left;padding:.4rem;">Task</th><th>Assignee</th><th>Priority</th><th>Due</th><th>Progress</th></tr></thead>
+    <tbody>
+      <tr style="border-bottom:2px dashed var(--black);"><td>Dashboard HTML rebuild</td><td>Dashboard Agent</td><td>High</td><td>Oct 23</td><td><span style="border:2px solid var(--black);padding:.1rem .4rem;border-radius:9999px;background:var(--mint);font-size:.7rem;">In Progress</span></td></tr>
+      <tr style="border-bottom:2px dashed var(--black);"><td>Email outreach drafts</td><td>Outreach Agent</td><td>Medium</td><td>Oct 24</td><td><span style="border:2px solid var(--black);padding:.1rem .4rem;border-radius:9999px;background:var(--pink);font-size:.7rem;">Done</span></td></tr>
+      <tr><td>Notion DB sync validation</td><td>Billal Hossien</td><td>High</td><td>Oct 25</td><td><span style="border:2px solid var(--black);padding:.1rem .4rem;border-radius:9999px;background:var(--yellow);font-size:.7rem;">Pending</span></td></tr>
+    </tbody>
+  </table>
+</article>
+<div style="display:flex;gap:.8rem;flex-wrap:wrap;max-width:1200px;margin:1.5rem auto 0 auto;">
+  <a href="#" class="tab-btn" style="background:var(--mint);text-decoration:none;" onclick="openModal('add-team');return false;">+ Add Team Member</a>
+</div>
+<div id="modal-add-team" style="display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.65);z-index:1000;align-items:center;justify-content:center;" onclick="if(event.target===this)closeModal('add-team')">
+  <div class="card" style="width:92%;max-width:480px;background:var(--cyan);box-shadow:8px 8px 0 var(--black);" onclick="event.stopPropagation()">
+    <h2 style="display:flex;justify-content:space-between;align-items:center;">+ Add Team Member <button onclick="closeModal('add-team')" style="border:3px solid var(--black);background:var(--pink);font-weight:900;border-radius:9999px;padding:.3rem .6rem;cursor:pointer;">✕</button></h2>
+    <form onsubmit="submitAddTeam(event)">
+      <label style="font-weight:700;">Name <input type="text" id="tm-name" required style="margin-top:.2rem;"></label><br><br>
+      <label style="font-weight:700;">Role <input type="text" id="tm-role" required style="margin-top:.2rem;"></label><br><br>
+      <label style="font-weight:700;">Status <select id="tm-status" style="margin-top:.2rem;border:3px solid var(--black);padding:.3rem;border-radius:8px;font-family:inherit;font-weight:700;"><option>Active</option><option>Busy</option><option>On Leave</option></select></label><br><br>
+      <button type="submit" style="padding:.55rem 1.2rem;border:3px solid var(--black);background:var(--mint);font-weight:900;border-radius:9999px;box-shadow:4px 4px 0 var(--black);cursor:pointer;">Add Member</button>
+    </form>
+  </div>
+</div>
+</div></div>
 <div id="tab-logout" class="tab-content" aria-label="Log out"><div style="max-width:1200px;margin:0 auto;"><article class="card" style="background:var(--black);color:#fff;"><h2 style="color:var(--yellow);">Logged out</h2><p>Session ended. Open <strong>personal_command_centre.html</strong> again to restart.</p></article></div></div>
 
 
@@ -349,6 +393,8 @@ function submitAddLead(e){e.preventDefault();const name=document.getElementById(
 function copyPrompt(btn){alert('Copied prompt to clipboard!');}
 
 function submitAddNote(e){e.preventDefault();const title=document.getElementById('mn-title').value;const cat=document.getElementById('mn-cat').value;const content=document.getElementById('mn-content').value;const tbody=document.querySelector('#tab-memory table tbody');if(tbody){const row=document.createElement('tr');row.innerHTML='<td>'+title+'</td><td>'+cat+'</td><td>Today</td><td><a href="#" style="border:2px solid var(--black);padding:.15rem .5rem;border-radius:9999px;font-weight:900;font-size:.75rem;text-decoration:none;background:#fff;color:var(--ink);box-shadow:2px 2px 0 var(--black);">View</a> <a href="#" style="border:2px solid var(--black);padding:.15rem .5rem;border-radius:9999px;font-weight:900;font-size:.75rem;text-decoration:none;background:#fff;color:var(--ink);box-shadow:2px 2px 0 var(--black);">Edit</a></td>';tbody.appendChild(row);}const notes=JSON.parse(localStorage.getItem('vault_notes')||'[]');notes.push({title,cat,content,date:'Today'});localStorage.setItem('vault_notes',JSON.stringify(notes));closeModal('add-note');alert('Note saved to Memory Vault: '+title);e.target.reset();}
+
+function submitAddTeam(e){e.preventDefault();const n=document.getElementById('tm-name').value;const r=document.getElementById('tm-role').value;const s=document.getElementById('tm-status').value;const tbody=document.querySelector('#tab-team table tbody');if(tbody){const row=document.createElement('tr');row.innerHTML='<td>'+n+'</td><td>'+r+'</td><td><span style="border:2px solid var(--black);padding:.1rem .4rem;border-radius:9999px;background:var(--mint);font-size:.7rem;">'+s+'</span></td><td><a href="#" style="border:2px solid var(--black);padding:.15rem .5rem;border-radius:9999px;font-weight:900;font-size:.75rem;text-decoration:none;background:#fff;color:var(--ink);box-shadow:2px 2px 0 var(--black);">View</a></td>';tbody.appendChild(row);}closeModal('add-team');alert('Member added: '+n);e.target.reset();}
 
 </script>
 </body>
