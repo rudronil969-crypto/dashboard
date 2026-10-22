@@ -178,7 +178,42 @@ nav a.logout-btn{background:var(--pink);}
   <a href="#" style="display:inline-block;padding:.55rem 1.2rem;border:3px solid var(--black);background:var(--cyan);font-weight:900;border-radius:9999px;text-decoration:none;color:var(--ink);font-size:.9rem;box-shadow:4px 4px 0 var(--black);cursor:pointer;" onclick="openModal('call')">Schedule Call</a>
 </div>
 </div></div>
-<div id="tab-leads" class="tab-content" aria-label="Leads"><div style="max-width:1200px;margin:0 auto;"><article class="card" style="background:var(--cyan);"><h2>Leads</h2><p>Lead scraper results: Austin (5 listings), Dallas (5 listings), agent emails verified.</p></article></div></div>
+<div id="tab-leads" class="tab-content" aria-label="Leads"><div style="max-width:1200px;margin:0 auto;">
+<div class="grid" style="margin-top:1rem;">
+  <article class="card" style="background:var(--cyan);"><h2>📊 Lead Pipeline Metrics</h2>
+    <ul><li><span>Total Leads</span> <strong>48</strong></li>
+    <li><span>Hot Leads</span> <strong>12</strong></li>
+    <li><span>Conversion Rate</span> <strong>24%</strong></li>
+    <li><span>Est. Pipeline Value</span> <strong>$45,000</strong></li></ul>
+  </article>
+</div>
+<article class="card" style="margin-top:1.5rem;background:var(--yellow);"><h2>📋 Lead Pipeline Table</h2>
+  <table style="width:100%;border-collapse:collapse;font-weight:700;font-size:.85rem;" id="leads-table">
+    <thead><tr style="border-bottom:4px solid var(--black);"><th style="text-align:left;padding:.4rem;">Lead Name</th><th>Source</th><th>Est. Value</th><th>Stage</th><th>Priority</th><th>Action</th></tr></thead>
+    <tbody>
+      <tr style="border-bottom:2px dashed var(--black);"><td>John Doe</td><td>Facebook</td><td>$12,000</td><td><span style="border:2px solid var(--black);padding:.1rem .4rem;border-radius:9999px;background:var(--pink);font-size:.7rem;">Hot</span></td><td>High</td><td><a href="#" style="border:2px solid var(--black);padding:.15rem .5rem;border-radius:9999px;font-weight:900;font-size:.75rem;text-decoration:none;background:#fff;color:var(--ink);box-shadow:2px 2px 0 var(--black);">Contact</a></td></tr>
+      <tr style="border-bottom:2px dashed var(--black);"><td>Success Group</td><td>LinkedIn</td><td>$18,500</td><td><span style="border:2px solid var(--black);padding:.1rem .4rem;border-radius:9999px;background:var(--yellow);font-size:.7rem;">Contacted</span></td><td>Medium</td><td><a href="#" style="border:2px solid var(--black);padding:.15rem .5rem;border-radius:9999px;font-weight:900;font-size:.75rem;text-decoration:none;background:#fff;color:var(--ink);box-shadow:2px 2px 0 var(--black);">Contact</a></td></tr>
+      <tr style="border-bottom:2px dashed var(--black);"><td>Rudro Consulting</td><td>Direct</td><td>$9,200</td><td><span style="border:2px solid var(--black);padding:.1rem .4rem;border-radius:9999px;background:var(--mint);font-size:.7rem;">Negotiation</span></td><td>High</td><td><a href="#" style="border:2px solid var(--black);padding:.15rem .5rem;border-radius:9999px;font-weight:900;font-size:.75rem;text-decoration:none;background:#fff;color:var(--ink);box-shadow:2px 2px 0 var(--black);">Contact</a></td></tr>
+      <tr><td>Sarah Khan</td><td>Instagram</td><td>$5,300</td><td><span style="border:2px solid var(--black);padding:.1rem .4rem;border-radius:9999px;background:var(--mint);font-size:.7rem;">New</span></td><td>Medium</td><td><a href="#" style="border:2px solid var(--black);padding:.15rem .5rem;border-radius:9999px;font-weight:900;font-size:.75rem;text-decoration:none;background:#fff;color:var(--ink);box-shadow:2px 2px 0 var(--black);">Contact</a></td></tr>
+    </tbody>
+  </table>
+</article>
+<div style="display:flex;gap:.8rem;flex-wrap:wrap;max-width:1200px;margin:1.5rem auto 0 auto;">
+  <a href="#" class="tab-btn" style="background:var(--mint);text-decoration:none;" onclick="openModal('add-lead');return false;">+ Add Lead</a>
+</div>
+<div id="modal-add-lead" style="display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.65);z-index:1000;align-items:center;justify-content:center;" onclick="if(event.target===this)closeModal('add-lead')">
+  <div class="card" style="width:92%;max-width:520px;background:var(--yellow);box-shadow:8px 8px 0 var(--black);" onclick="event.stopPropagation()">
+    <h2 style="display:flex;justify-content:space-between;align-items:center;">+ Add Lead <button onclick="closeModal('add-lead')" style="border:3px solid var(--black);background:var(--pink);font-weight:900;border-radius:9999px;padding:.3rem .6rem;cursor:pointer;">✕</button></h2>
+    <form onsubmit="submitAddLead(event)">
+      <label style="font-weight:700;">Lead Name <input type="text" id="ld-name" required style="margin-top:.2rem;"></label><br><br>
+      <label style="font-weight:700;">Source <select id="ld-source" style="margin-top:.2rem;border:3px solid var(--black);padding:.3rem;border-radius:8px;font-family:inherit;font-weight:700;"><option>Facebook</option><option>LinkedIn</option><option>Direct</option><option>Instagram</option></select></label><br><br>
+      <label style="font-weight:700;">Estimated Value ($) <input type="number" id="ld-value" required style="margin-top:.2rem;"></label><br><br>
+      <label style="font-weight:700;">Priority <select id="ld-priority" style="margin-top:.2rem;border:3px solid var(--black);padding:.3rem;border-radius:8px;font-family:inherit;font-weight:700;"><option>High</option><option>Medium</option></select></label><br><br>
+      <button type="submit" style="padding:.55rem 1.2rem;border:3px solid var(--black);background:var(--cyan);font-weight:900;border-radius:9999px;box-shadow:4px 4px 0 var(--black);cursor:pointer;">Add Lead</button>
+    </form>
+  </div>
+</div>
+</div></div>
 <div id="tab-research" class="tab-content" aria-label="Research"><div style="max-width:1200px;margin:0 auto;"><article class="card" style="background:#fff;"><h2>Research</h2><p>Market research notes, web extract summaries, and competitor monitoring.</p></article></div></div>
 <div id="tab-memory" class="tab-content" aria-label="Memory Vault"><div style="max-width:1200px;margin:0 auto;"><article class="card" style="background:var(--pink);"><h2>Memory Vault</h2><p>Profile notes (Billal Hossien), skill references (bangla-user-interaction, maps, notion, google-workspace), reminder logs.</p></article></div></div>
 <div id="tab-team" class="tab-content" aria-label="Team"><div style="max-width:1200px;margin:0 auto;"><article class="card" style="background:#fff;"><h2>Team</h2><p>Agent roles (Lead Scraper, Dashboard Agent, Outreach Agent, Manager), skills assigned.</p></article></div></div>
@@ -241,6 +276,8 @@ function submitCall(e){e.preventDefault();const client=document.getElementById('
 
 function updateMetrics(){const clients=JSON.parse(localStorage.getItem('crm_clients')||'[]');const count=document.getElementById('metric-active')||document.querySelector('#tab-clients article.card h2');const totalRetainer=clients.reduce((sum,c)=>sum+(parseInt(c.retainer||0)),0);const base=18500;const newTotal=base+totalRetainer;const metrics=document.querySelector('#tab-clients .card ul');if(metrics){metrics.innerHTML='<li><span>Active Clients</span> <strong>'+clients.length+'</strong></li><li><span>Monthly Retainer Revenue</span> <strong>$'+newTotal.toLocaleString()+'</strong></li><li><span>Retention Rate</span> <strong>92%</strong></li><li><span>Pending Invoices</span> <strong>$2,400</strong></li>';}}
 window.addEventListener('DOMContentLoaded',()=>{updateMetrics();});
+
+function submitAddLead(e){e.preventDefault();const name=document.getElementById('ld-name').value;const source=document.getElementById('ld-source').value;const value=document.getElementById('ld-value').value;const priority=document.getElementById('ld-priority').value;const tbody=document.querySelector('#leads-table tbody');const row=document.createElement('tr');row.innerHTML='<td>'+name+'</td><td>'+source+'</td><td>$'+value+'</td><td><span style="border:2px solid var(--black);padding:.1rem .4rem;border-radius:9999px;background:var(--pink);font-size:.7rem;">New</span></td><td>'+priority+'</td><td><a href="#" style="border:2px solid var(--black);padding:.15rem .5rem;border-radius:9999px;font-weight:900;font-size:.75rem;text-decoration:none;background:#fff;color:var(--ink);box-shadow:2px 2px 0 var(--black);">Contact</a></td>';tbody.appendChild(row);const clients=JSON.parse(localStorage.getItem('crm_clients')||'[]');clients.push({name,project:'Lead',retainer:value,status:'New'});localStorage.setItem('crm_clients',JSON.stringify(clients));closeModal('add-lead');alert('Lead added: '+name);e.target.reset();}
 
 </script>
 </body>
