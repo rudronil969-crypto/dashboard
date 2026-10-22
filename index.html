@@ -1,36 +1,42 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>PROJECT-NEXUS-OS — Personal OS Dashboard</title>
+<html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>PROJECT-NEXUS-OS — Modern SaaS Personal OS</title>
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700;900&display=swap');
-:root{--bg:#fff4a3;--ink:#111;--cyan:#70d6ff;--mint:#99e2b4;--yellow:#ffea79;--pink:#ff85a1;--black:#000;}
-*{box-sizing:border-box;margin:0;padding:0;font-family:'Space Grotesk',sans-serif;}
-body{background:var(--bg);color:var(--ink);min-height:100vh;padding:1.5rem;}
-.neuborder{border:4px solid var(--black);}
-.neushadow{box-shadow:6px 6px 0 var(--black);}
-nav{display:flex;align-items:center;gap:.6rem;flex-wrap:wrap;padding:1rem 1.2rem;background:var(--yellow);border:4px solid var(--black);box-shadow:6px 6px 0 var(--black);margin-bottom:2rem;border-radius:9999px;}
-nav h1{font-weight:900;font-size:1.4rem;letter-spacing:-0.02em;flex:1 1 auto;}
-nav a.tab-btn{display:inline-block;padding:.45rem .7rem;border:3px solid var(--black);background:#fff;text-decoration:none;color:var(--ink);font-weight:700;font-size:.82rem;border-radius:9999px;transition:.12s;box-shadow:3px 3px 0 var(--black);cursor:pointer;border:none;}
-nav a.tab-btn:hover,nav a.tab-btn.active{transform:translate(-2px,-2px);box-shadow:5px 5px 0 var(--black);background:var(--cyan);}
-nav a.tab-btn.active{background:var(--mint);}
-.tab-content{display:none;animation:fadeIn .25s ease-in-out;}
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
+:root{--bg:#f8fafc;--surface:#fff;--text:#0f172a;--sub:#64748b;--primary:#4f46e5;--teal:#0d9488;--border:#e2e8f0;--shadow:0 4px 6px -1px rgba(0,0,0,0.05);--radius:12px;}
+*{box-sizing:border-box;margin:0;padding:0;font-family:"Inter",system-ui,-apple-system,sans-serif;}
+body{background:var(--bg);color:var(--text);min-height:100vh;padding:2rem 1rem;line-height:1.5;}
+nav{display:flex;align-items:center;gap:1rem;flex-wrap:wrap;padding:1rem 1.5rem;background:rgba(255,255,255,0.85);backdrop-filter:blur(14px);border:1px solid var(--border);border-radius:16px;box-shadow:0 10px 30px rgba(0,0,0,0.05);margin-bottom:2.5rem;max-width:1200px;margin-left:auto;margin-right:auto;}
+nav h1{font-weight:900;font-size:1.35rem;letter-spacing:-0.03em;flex:1;color:var(--text);}
+nav a.tab-btn{display:inline-flex;padding:.55rem 1rem;border:1px solid var(--border);background:transparent;text-decoration:none;color:var(--sub);font-weight:600;font-size:.9rem;border-radius:9999px;transition:.2s;cursor:pointer;}
+nav a.tab-btn:hover{background:#fff;border-color:#c7d2fe;color:var(--primary);box-shadow:0 1px 3px rgba(0,0,0,0.05);}
+nav a.tab-btn.active{background:linear-gradient(135deg,#6366f1,#4f46e5);color:#fff;border-color:transparent;box-shadow:0 4px 14px rgba(79,70,229,0.25);font-weight:700;}
+.tab-content{display:none;animation:fadeUp .35s ease;max-width:1200px;margin:0 auto;}
 .tab-content.active{display:block;}
-@keyframes fadeIn{from{opacity:0;transform:translateY(6px);}to{opacity:1;transform:translateY(0);}}
-.grid{display:grid;grid-template-columns:1fr 1fr;gap:2rem;max-width:1200px;margin:0 auto;}
-@media(max-width:900px){.grid{grid-template-columns:1fr;}}
-.card{border:4px solid var(--black);border-radius:14px;padding:1.2rem;background:#fff;box-shadow:6px 6px 0 var(--black);}
-.card h2{font-weight:900;font-size:1.15rem;margin-bottom:.8rem;padding-bottom:.3rem;border-bottom:3px solid var(--black);display:inline-block;letter-spacing:-0.01em;}
-.card ul{list-style:none;padding:0;}
-.card ul li{padding:.35rem 0;border-bottom:2px dashed var(--black);font-weight:600;font-size:.92rem;display:flex;justify-content:space-between;}
-.card input[type=text],.card input[type=number],.card input[type=date],.card select{width:100%;padding:.5rem;border:3px solid var(--black);border-radius:10px;font-size:.95rem;font-family:inherit;margin-top:.5rem;box-shadow:3px 3px 0 var(--black);}
-.card button{margin-top:.5rem;padding:.45rem .9rem;border:3px solid var(--black);background:var(--cyan);font-weight:900;border-radius:9999px;cursor:pointer;box-shadow:3px 3px 0 var(--black);}
-.card .tag{display:inline-block;padding:.15rem .5rem;border:2px solid var(--black);border-radius:9999px;font-size:.7rem;font-weight:900;text-transform:uppercase;margin-right:.25rem;}
-.footer{margin-top:2.5rem;text-align:center;font-weight:700;font-size:.8rem;color:#444;}
-.plat-card{border:4px solid var(--black);border-radius:14px;padding:1rem;background:#fff;box-shadow:6px 6px 0 var(--black);}
-.modal-backdrop{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.65);z-index:1000;display:none;align-items:center;justify-content:center;}
+@keyframes fadeUp{from{opacity:0;transform:translateY(10px);}to{opacity:1;transform:translateY(0);}}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(340px,1fr));gap:1.5rem;}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:1.5rem;box-shadow:var(--shadow);transition:box-shadow .2s,border-color .2s;}
+.card:hover{box-shadow:0 10px 30px rgba(0,0,0,0.08);border-color:#c7d2fe;}
+.card h2{font-weight:800;font-size:1.1rem;margin-bottom:1rem;padding-bottom:.5rem;border-bottom:1.5px solid var(--border);color:var(--text);letter-spacing:-0.02em;display:flex;align-items:center;gap:.6rem;}
+.card h2::before{content:"";display:inline-block;width:4px;height:20px;border-radius:4px;background:linear-gradient(180deg,#6366f1,#0d9488);flex-shrink:0;}
+.card ul{list-style:none;}
+.card ul li{padding:.55rem 0;border-bottom:1px dashed var(--border);font-weight:500;font-size:.92rem;color:var(--text);display:flex;justify-content:space-between;align-items:center;gap:1rem;}
+.card ul li:last-child{border-bottom:none;}
+.card input,.card select,.card textarea{width:100%;padding:.65rem .85rem;border:1.5px solid var(--border);border-radius:10px;font-size:.95rem;font-family:inherit;background:#fff;color:var(--text);margin-top:.5rem;outline:none;transition:border-color .2s,box-shadow .2s;}
+.card input:focus,.card select:focus,.card textarea:focus{border-color:#6366f1;box-shadow:0 0 0 3px rgba(99,102,241,0.15);}
+.card button{margin-top:.75rem;padding:.65rem 1.2rem;border:1.5px solid transparent;background:linear-gradient(135deg,#6366f1,#4f46e5);color:#fff;font-weight:700;border-radius:10px;cursor:pointer;box-shadow:0 4px 14px rgba(79,70,229,0.25);transition:transform .15s,box-shadow .2s;font-size:.9rem;}
+.card button:hover{transform:translateY(-1px);box-shadow:0 6px 20px rgba(79,70,229,0.35);}
+.table-clean{width:100%;border-collapse:collapse;font-weight:500;font-size:.88rem;color:var(--text);}
+.table-clean thead th{font-weight:700;font-size:.75rem;text-transform:uppercase;color:var(--sub);letter-spacing:.04em;padding:.6rem .5rem;border-bottom:2.5px solid var(--border);text-align:left;}
+.table-clean tbody tr{border-bottom:1px solid var(--border);transition:background .15s;}
+.table-clean tbody tr:hover{background:#f1f5f9;}
+.table-clean tbody td{padding:.65rem .5rem;vertical-align:top;}
+.footer{margin-top:3rem;text-align:center;font-weight:600;font-size:.82rem;color:var(--sub);letter-spacing:.02em;}
+.modal-backdrop{position:fixed;inset:0;background:rgba(15,23,42,0.45);backdrop-filter:blur(6px);z-index:2000;display:none;align-items:center;justify-content:center;animation:fadeIn .25s ease;}
 .modal-backdrop.active{display:flex;}
+.modal-card{background:#fff;border:1.5px solid var(--border);border-radius:18px;padding:1.8rem;width:92%;max-width:520px;box-shadow:0 25px 50px -12px rgba(15,23,42,0.15);animation:popUp .3s ease;}
+@keyframes popUp{from{opacity:0;transform:scale(0.96) translateY(12px);}to{opacity:1;transform:scale(1) translateY(0);}}
+.badge-completed{background:#d1fae5;color:#047857;border:1px solid #a7f3d0;font-weight:800;font-size:.75rem;border-radius:9999px;padding:.15rem .7rem;text-transform:uppercase;}
+.badge-upcoming{background:#e0e7ff;color:#3730a3;border:1px solid #c7d2fe;font-weight:800;font-size:.75rem;border-radius:9999px;padding:.15rem .7rem;text-transform:uppercase;}
 </style>
 </head>
 <body>
@@ -46,27 +52,30 @@ nav a.tab-btn.active{background:var(--mint);}
 
 <div id="tab-daily" class="tab-content active" aria-label="Daily Life">
   <main class="grid" aria-label="Daily Life Dashboard">
-    <section style="display:flex;flex-direction:column;gap:2rem;">
-      <article class="card" aria-label="Habit Tracker"><h2 style="color:var(--cyan);">✅ Habit Tracker</h2>
+    <section style="display:flex;flex-direction:column;gap:1.5rem;">
+      <article class="card" aria-label="Habit Tracker"><h2>✅ Habit Tracker</h2>
         <ul id="habit-list">
           <li><span>Morning exercise (30 min)</span><button onclick="toggleHabit(this)">✓</button></li>
           <li><span>Read 10 pages</span><button onclick="toggleHabit(this)">✓</button></li>
           <li><span>Review AI prompts (15 min)</span><button onclick="toggleHabit(this)">✓</button></li>
         </ul>
       </article>
-      <article class="card" aria-label="Daily Checklist" style="background:var(--mint);"><h2>📋 Daily Checklist</h2>
+      <article class="card" aria-label="Daily Checklist" style="background:#fdfcfb;"><h2>📋 Daily Checklist</h2>
         <ul id="checklist"><li><span>Client outreach (3 messages)</span><button onclick="removeItem(this)">✓</button></li>
         <li><span>Sync Notion DB / Dashboard</span><button onclick="removeItem(this)">✓</button></li></ul>
-        <form onsubmit="addChecklist(event)" style="display:flex;gap:.4rem;align-items:center;"><input type="text" id="chk-text" placeholder="New task..." required><button type="submit">Add</button></form>
+        <form onsubmit="addChecklist(event)" style="display:flex;gap:.6rem;align-items:center;margin-top:1rem;">
+          <input type="text" id="chk-text" placeholder="New task..." aria-label="New task" required style="flex:1;">
+          <button type="submit">Add</button>
+        </form>
       </article>
-      <article class="card" aria-label="Personal Budget" style="background:var(--yellow);"><h2>💰 Personal Budget</h2>
+      <article class="card" aria-label="Personal Budget"><h2>💰 Personal Budget</h2>
         <ul><li><span>Income (monthly)</span><strong>$4,200</strong></li>
         <li><span>Expenses (monthly)</span><strong>$2,850</strong></li>
         <li><span>Net Savings</span><strong>$1,350 (+32%)</strong></li></ul>
       </article>
     </section>
-    <section style="display:flex;flex-direction:column;gap:2rem;">
-      <article class="card" aria-label="Expense Tracker" style="background:var(--pink);"><h2>📊 Expense Tracker</h2>
+    <section style="display:flex;flex-direction:column;gap:1.5rem;">
+      <article class="card" aria-label="Expense Tracker" style="background:#fff7ed;"><h2>📊 Expense Tracker</h2>
         <ul><li><span>API / Tools</span><strong>$45</strong></li>
         <li><span>Hosting (Hostinger KVM2)</span><strong>$12</strong></li>
         <li><span>Content / Media</span><strong>$28</strong></li></ul>
@@ -77,30 +86,36 @@ nav a.tab-btn.active{background:var(--mint);}
 
 <div id="tab-study" class="tab-content" aria-label="NU Study Hub">
   <main class="grid" aria-label="Study Hub">
-    <section style="display:flex;flex-direction:column;gap:2rem;">
+    <section style="display:flex;flex-direction:column;gap:1.5rem;">
       <article class="card" aria-label="Exam Routine"><h2>🎓 NU Honours 2nd Year — Final Exam Routine</h2>
-<table style="width:100%;border-collapse:collapse;font-weight:700;font-size:.85rem;">
-<thead><tr style="border-bottom:4px solid var(--black);"><th>Date</th><th>Day</th><th>Subject</th><th>Paper</th><th>Status</th></tr></thead>
-<tbody>
-<tr style="border-bottom:2px dashed var(--black);"><td>Nov 10</td><td>Mon</td><td>CS-101: Computing</td><td>CS-101-F</td><td><span style="background:#10b981;color:#fff;padding:.15rem .5rem;border-radius:9999px;border:2px solid var(--black);font-weight:900;font-size:.75rem;">COMPLETED ✓</span></td></tr>
-<tr style="border-bottom:2px dashed var(--black);"><td>Nov 14</td><td>Fri</td><td>MATH-204: Linear Algebra</td><td>MATH-204-F</td><td><span style="border:2px solid #111;padding:.15rem .5rem;border-radius:9999px;background:#fff;font-weight:900;font-size:.75rem;">UPCOMING ⏳</span></td></tr>
-<tr style="border-bottom:2px dashed var(--black);"><td>Nov 18</td><td>Tue</td><td>ENG-301: Technical Writing</td><td>ENG-301-F</td><td><span style="border:2px solid #111;padding:.15rem .5rem;border-radius:9999px;background:#fff;font-weight:900;font-size:.75rem;">UPCOMING ⏳</span></td></tr>
-<tr><td>Nov 22</td><td>Sat</td><td>CS-101 Lab (Practical)</td><td>CS-LAB</td><td><span style="border:2px solid #111;padding:.15rem .5rem;border-radius:9999px;background:#fff;font-weight:900;font-size:.75rem;">UPCOMING ⏳</span></td></tr>
-</tbody>
-</table>
-</article>
-<article class="card" style="background:var(--mint);margin-top:1.5rem;" aria-label="3rd Year Roadmap"><h2>📘 3rd Year Academic Roadmap (Tentative)</h2>
-<p style="font-weight:700;font-size:.95rem;margin-bottom:.5rem;">Expected Class Start: <strong>Jan 12, 2027</strong> | Tentative Exam Window: <strong>Apr 14 – Apr 28, 2027</strong></p>
-<ul><li><span>Syllabus Checklist — CS-301 (Advanced Algorithms)</span><button onclick="addExam('CS-301 Syllabus Added')">+ Add</button></li>
-<li><span>Syllabus Checklist — ENG-401 (Thesis Prep)</span><button onclick="addExam('ENG-401 Syllabus Added')">+ Add</button></li>
-<li><span>Exam Schedule — Midterms: Mar 10 / Mar 12</span><button onclick="addExam('Midterms Added')">+ Add</button></li>
-</ul>
-</article>
-    </section>
-    <section style="display:flex;flex-direction:column;gap:2rem;">
+        <table class="table-clean" id="study-table">
+          <thead><tr><th>Date</th><th>Day</th><th>Subject</th><th>Paper</th><th>Status</th></tr></thead>
+          <tbody>
+            <tr><td>Nov 10</td><td>Mon</td><td>CS-101: Computing</td><td>CS-101-F</td><td><span class="badge badge-completed">COMPLETED ✓</span></td></tr>
+            <tr><td>Nov 14</td><td>Fri</td><td>MATH-204: Linear Algebra</td><td>MATH-204-F</td><td><span class="badge" style="background:#e0e7ff;color:#3730a3;border-color:#c7d2fe;">UPCOMING ⏳</span></td></tr>
+            <tr><td>Nov 18</td><td>Tue</td><td>ENG-301: Technical Writing</td><td>ENG-301-F</td><td><span class="badge" style="background:#e0e7ff;color:#3730a3;border-color:#c7d2fe;">UPCOMING ⏳</span></td></tr>
+            <tr><td>Nov 22</td><td>Sat</td><td>CS-101 Lab (Practical)</td><td>CS-LAB</td><td><span class="badge" style="background:#e0e7ff;color:#3730a3;border-color:#c7d2fe;">UPCOMING ⏳</span></td></tr>
+          </tbody>
+        </table>
+      </article>
+      <article class="card" aria-label="3rd Year Roadmap" style="background:#fdfcfb;"><h2>📘 3rd Year Academic Roadmap (Tentative)</h2>
+        <p style="font-weight:600;font-size:.95rem;margin-bottom:.6rem;">Expected Class Start: <strong>Jan 12, 2027</strong> &nbsp;|&nbsp; Exam Window: <strong>Apr 14 – Apr 28, 2027</strong></p>
+        <ul>
+          <li><span>Syllabus Checklist — CS-301 (Advanced Algorithms)</span><button onclick="addExamRow('CS-301')" class="secondary">+ Add</button></li>
+          <li><span>Syllabus Checklist — ENG-401 (Thesis Prep)</span><button onclick="addExamRow('ENG-401')" class="secondary">+ Add</button></li>
+          <li><span>Exam Schedule — Midterms: Mar 10 / Mar 12</span><button onclick="addExamRow('Midterms')" class="secondary">+ Add</button></li>
+        </ul>
+      </article>
       <article class="card" aria-label="Assignments"><h2>📝 Assignments & Deadlines</h2>
         <ul><li><span>Essay Draft — ENG-301</span><strong>Nov 15 (3 days left)</strong></li>
         <li><span>Lab Report — CS-101</span><strong>Nov 12 (today)</strong></li></ul>
+      </article>
+    </section>
+    <section style="display:flex;flex-direction:column;gap:1.5rem;">
+      <article class="card" aria-label="Active Courses"><h2>📚 Active Courses</h2>
+        <ul><li><span>CS-101: Intro to Computing</span><span>Midterm: Nov 10</span></li>
+        <li><span>MATH-204: Linear Algebra</span><span>Assignment: Nov 12</span></li>
+        <li><span>ENG-301: Technical Writing</span><span>Essay: Nov 15</span></li></ul>
       </article>
     </section>
   </main>
@@ -108,26 +123,28 @@ nav a.tab-btn.active{background:var(--mint);}
 
 <div id="tab-hermes" class="tab-content" aria-label="Hermes & AI Vault">
   <main class="grid" aria-label="Hermes Vault">
-    <section style="display:flex;flex-direction:column;gap:2rem;">
+    <section style="display:flex;flex-direction:column;gap:1.5rem;">
       <article class="card" aria-label="Skills Tracker"><h2>🧠 Hermes Agent Skills Tracker</h2>
-        <ul><li><span>bangla-user-interaction</span><span>✓ Active</span></li>
-        <li><span>maps / geo</span><span>✓ Active</span></li>
-        <li><span>notion / db sync</span><span>✓ Active</span></li>
-        <li><span>google-workspace / sheets</span><span>✓ Active</span></li>
-        <li><span>autonomous-ai-agents / delegate</span><span>✓ Active</span></li></ul>
+        <ul><li><span>bangla-user-interaction</span><span class="tag">Active</span></li>
+        <li><span>maps / geo</span><span class="tag">Active</span></li>
+        <li><span>notion / db sync</span><span class="tag">Active</span></li>
+        <li><span>google-workspace / sheets</span><span class="tag">Active</span></li>
+        <li><span>autonomous-ai-agents / delegate</span><span class="tag">Active</span></li></ul>
       </article>
-      <article class="card" style="background:var(--cyan);" aria-label="AI Tool Directory"><h2>⚡ AI Tool Directory</h2>
+      <article class="card" aria-label="AI Tools" style="background:#fdfcfb;"><h2>⚡ AI Tool Directory</h2>
         <ul><li><span>Groq (Llama 3.3 70B)</span><strong>Configured</strong></li>
         <li><span>OpenRouter (free models)</span><strong>Active</strong></li>
         <li><span>Thinking Machines Lab (Inkling)</span><strong>Active</strong></li>
         <li><span>Anthropic (Claude)</span><strong>Connected</strong></li></ul>
       </article>
     </section>
-    <section style="display:flex;flex-direction:column;gap:2rem;">
+    <section style="display:flex;flex-direction:column;gap:1.5rem;">
       <article class="card" aria-label="Prompt Vault"><h2>🔑 Prompt Vault</h2>
-        <ul><li><span>Social-automation setup prompt</span><button onclick="copyPrompt(this)">Copy</button></li>
-        <li><span>Dashboard design spec (Neubrutalism)</span><button onclick="copyPrompt(this)">Copy</button></li>
-        <li><span>Real estate lead scraper prompt</span><button onclick="copyPrompt(this)">Copy</button></li></ul>
+        <ul>
+          <li><span>Social-automation setup prompt</span><button onclick="copyPrompt(this)" class="secondary">Copy</button></li>
+          <li><span>Dashboard design spec (Neubrutalism)</span><button onclick="copyPrompt(this)" class="secondary">Copy</button></li>
+          <li><span>Real estate lead scraper prompt</span><button onclick="copyPrompt(this)" class="secondary">Copy</button></li>
+        </ul>
       </article>
     </section>
   </main>
@@ -135,7 +152,7 @@ nav a.tab-btn.active{background:var(--mint);}
 
 <div id="tab-outreach" class="tab-content" aria-label="Client Outreach">
   <main class="grid" aria-label="Outreach" style="max-width:1200px;margin:0 auto;">
-    <section style="display:flex;flex-direction:column;gap:2rem;">
+    <section style="display:flex;flex-direction:column;gap:1.5rem;">
       <article class="card" aria-label="Pipeline Metrics"><h2>📊 Client Acquisition Pipeline</h2>
         <ul><li><span>Active Leads</span><strong>48</strong></li>
         <li><span>Hot Leads</span><strong>12</strong></li>
@@ -143,17 +160,16 @@ nav a.tab-btn.active{background:var(--mint);}
         <li><span>Est. Pipeline Value</span><strong>$45,000</strong></li></ul>
       </article>
       <article class="card" aria-label="Message Templates"><h2>✉️ Outreach Message Templates</h2>
-        <ul><li><span>Cold Email — Spyglass Realty</span><button onclick="useTemplate('Spyglass')">Use</button></li>
-        <li><span>LinkedIn Connection — Compass</span><button onclick="useTemplate('Compass')">Use</button></li>
-        <li><span>Email Draft — JPAR Dallas</span><button onclick="useTemplate('JPAR')">Use</button></li></ul>
+        <ul><li><span>Cold Email — Spyglass Realty</span><button onclick="useTemplate('Spyglass')" class="secondary">Use</button></li>
+        <li><span>LinkedIn Connection — Compass</span><button onclick="useTemplate('Compass')" class="secondary">Use</button></li>
+        <li><span>Email Draft — JPAR Dallas</span><button onclick="useTemplate('JPAR')" class="secondary">Use</button></li></ul>
       </article>
     </section>
-    <section style="display:flex;flex-direction:column;gap:2rem;">
+    <section style="display:flex;flex-direction:column;gap:1.5rem;">
       <article class="card" aria-label="Lead Status"><h2>📋 Lead Status Tracker</h2>
-        <table style="width:100%;border-collapse:collapse;font-weight:700;font-size:.85rem;"><thead><tr style="border-bottom:4px solid var(--black);"><th>Lead</th><th>Source</th><th>Stage</th><th>Value</th></tr></thead><tbody>
-          <tr style="border-bottom:2px dashed var(--black);"><td>John Doe</td><td>Facebook</td><td>Negotiation</td><td>$12,000</td></tr>
-          <tr><td>Success Group</td><td>LinkedIn</td><td>Contacted</td><td>$18,500</td></tr>
-        </tbody></table>
+        <table class="table-clean"><thead><tr><th>Lead</th><th>Source</th><th>Stage</th><th>Value</th></tr></thead>
+        <tbody><tr><td>John Doe</td><td>Facebook</td><td>Negotiation</td><td>$12,000</td></tr>
+        <tr><td>Success Group</td><td>LinkedIn</td><td>Contacted</td><td>$18,500</td></tr></tbody></table>
       </article>
     </section>
   </main>
@@ -161,49 +177,96 @@ nav a.tab-btn.active{background:var(--mint);}
 
 <div id="tab-memory" class="tab-content" aria-label="Memory Vault">
   <main class="grid" aria-label="Memory" style="max-width:1200px;margin:0 auto;">
-    <section style="display:flex;flex-direction:column;gap:2rem;">
-      <article class="card" style="background:var(--pink);"><h2>🔐 Vault Metrics</h2>
+    <section style="display:flex;flex-direction:column;gap:1.5rem;">
+      <article class="card" style="background:#fff7ed;"><h2>🔐 Vault Metrics</h2>
         <ul><li><span>Saved Notes & Ideas</span><strong>24</strong></li>
         <li><span>Vault Documents</span><strong>8</strong></li>
         <li><span>Encrypted Entries</span><strong>5</strong></li></ul>
       </article>
       <article class="card" aria-label="Knowledge Directory"><h2>📓 Knowledge Base</h2>
-        <table style="width:100%;border-collapse:collapse;font-weight:700;font-size:.85rem;"><thead><tr style="border-bottom:4px solid var(--black);"><th>Title</th><th>Category</th><th>Date</th><th>Actions</th></tr></thead><tbody>
-          <tr style="border-bottom:2px dashed var(--black);"><td>Social-automation skill notes</td><td>Business Idea</td><td>Oct 22, 2026</td><td><a href="#" style="border:2px solid var(--black);padding:.15rem .5rem;border-radius:9999px;font-weight:900;font-size:.75rem;text-decoration:none;background:#fff;color:var(--ink);box-shadow:2px 2px 0 var(--black);">View</a></td></tr>
-          <tr><td>Dashboard Design Spec</td><td>Strategy</td><td>Oct 20, 2026</td><td><a href="#" style="border:2px solid var(--black);padding:.15rem .5rem;border-radius:9999px;font-weight:900;font-size:.75rem;text-decoration:none;background:#fff;color:var(--ink);box-shadow:2px 2px 0 var(--black);">Edit</a></td></tr>
-        </tbody></table>
+        <table class="table-clean"><thead><tr><th>Title</th><th>Category</th><th>Date</th><th>Actions</th></tr></thead>
+        <tbody><tr><td>Social-automation skill notes</td><td>Business Idea</td><td>Oct 22, 2026</td><td><a href="#" style="display:inline-block;padding:.15rem .5rem;border:1.5px solid var(--black);border-radius:9999px;font-weight:800;font-size:.75rem;text-decoration:none;background:#fff;color:var(--primary);box-shadow:var(--shadow);">View</a></td></tr>
+        <tr><td>Dashboard Design Spec</td><td>Strategy</td><td>Oct 20, 2026</td><td><a href="#" style="display:inline-block;padding:.15rem .5rem;border:1.5px solid var(--black);border-radius:9999px;font-weight:800;font-size:.75rem;text-decoration:none;background:#fff;color:var(--primary);box-shadow:var(--shadow);">Edit</a></td></tr></tbody></table>
       </article>
     </section>
-    <section style="display:flex;flex-direction:column;gap:2rem;">
-      <article class="card" style="background:var(--mint);"><h2>🔒 Secure Document Vault</h2>
-        <ul><li><span>Passport / ID Backup</span><span>Encrypted • Verified</span></li>
-        <li><span>Master Password List</span><span>Encrypted • Verified</span></li>
-        <li><span>Service Account Credentials</span><span>Encrypted • Verified</span></li>
-        </ul>
+    <section style="display:flex;flex-direction:column;gap:1.5rem;">
+      <article class="card" style="background:#f0fdf4;"><h2>🔒 Secure Document Vault</h2>
+        <ul><li><span>Passport / ID Backup</span><span style="font-size:.75rem;color:#64748b;">Encrypted • Verified</span></li>
+        <li><span>Master Password List</span><span style="font-size:.75rem;color:#64748b;">Encrypted • Verified</span></li>
+        <li><span>Service Account Credentials</span><span style="font-size:.75rem;color:#64748b;">Encrypted • Verified</span></li></ul>
       </article>
       <article class="card" aria-label="Add Note"><h2>+ Save New Note</h2>
         <form onsubmit="submitNewNote(event)">
-          <input type="text" id="nv-title" placeholder="Note title" required><br>
-          <select id="nv-cat" style="margin-top:.3rem;border:3px solid var(--black);padding:.3rem;border-radius:8px;font-family:inherit;font-weight:700;"><option>Business Idea</option><option>Personal</option><option>Strategy</option></select><br>
-          <textarea id="nv-content" rows="2" placeholder="Content..." style="width:100%;margin-top:.3rem;border:3px solid var(--black);border-radius:8px;font-family:inherit;padding:.3rem;"></textarea><br>
-          <button type="submit">Save Note</button>
+          <input type="text" id="nv-title" placeholder="Note title" required>
+          <select id="nv-cat" style="margin-top:.5rem;" aria-label="Category"><option>Business Idea</option><option>Personal</option><option>Strategy</option></select>
+          <textarea id="nv-content" rows="2" placeholder="Content..." style="margin-top:.5rem;width:100%;padding:.5rem;border:1.5px solid var(--border);border-radius:10px;font-family:inherit;resize:vertical;"></textarea>
+          <button type="submit" style="margin-top:.75rem;">Save Note</button>
         </form>
       </article>
     </section>
   </main>
 </div>
 
-<footer class="footer">PROJECT-NEXUS-OS — Personal OS Dashboard — Single File SPA — Neubrutalism — All CSS/JS Embedded — https://rudronil969-crypto.github.io/dashboard/</footer>
+<footer class="footer">PROJECT-NEXUS-OS — Modern SaaS Personal OS — 5-Tab SPA — Inter / #4f46e5 / #0d9488 — localStorage Persistence — Clean Design — https://rudronil969-crypto.github.io/dashboard/</footer>
+
+<div id="modal-add" class="modal-backdrop" onclick="if(event.target===this)closeModal('add')">
+  <div class="modal-card" onclick="event.stopPropagation()">
+    <h3>+ Add Client <button onclick="closeModal('add')" style="border:none;background:#10b981;color:#fff;border-radius:9999px;padding:.3rem .6rem;cursor:pointer;font-weight:800;">✕</button></h3>
+    <form onsubmit="submitAddClient(event)">
+      <label style="font-weight:600;display:block;margin-bottom:.25rem;">Name</label><input type="text" id="mc-name" required>
+      <label style="font-weight:600;display:block;margin-top:.75rem;margin-bottom:.25rem;">Project</label><input type="text" id="mc-project" required>
+      <label style="font-weight:600;display:block;margin-top:.75rem;margin-bottom:.25rem;">Retainer ($)</label><input type="text" id="mc-ret" required>
+      <label style="font-weight:600;display:block;margin-top:.75rem;margin-bottom:.25rem;">Status</label><select id="mc-stat"><option>Active</option><option>Onboarding</option><option>In Review</option></select>
+      <button type="submit" style="margin-top:1rem;">Add Client</button>
+    </form>
+  </div>
+</div>
+
+<div id="modal-add-lead" class="modal-backdrop" onclick="if(event.target===this)closeModal('add-lead')">
+  <div class="modal-card" onclick="event.stopPropagation()">
+    <h3>+ Add Lead <button onclick="closeModal('add-lead')" style="border:none;background:#10b981;color:#fff;border-radius:9999px;padding:.3rem .6rem;cursor:pointer;font-weight:800;">✕</button></h3>
+    <form onsubmit="submitAddLead(event)">
+      <label>Name</label><input type="text" id="ld-name" required>
+      <label>Source</label><select id="ld-source"><option>Facebook</option><option>LinkedIn</option><option>Direct</option></select>
+      <label>Value ($)</label><input type="number" id="ld-val" required>
+      <button type="submit" style="margin-top:1rem;">Add Lead</button>
+    </form>
+  </div>
+</div>
+
+<div id="modal-add-note" class="modal-backdrop" onclick="if(event.target===this)closeModal('add-note')">
+  <div class="modal-card" onclick="event.stopPropagation()">
+    <h3>+ Save Note <button onclick="closeModal('add-note')" style="border:none;background:#10b981;color:#fff;border-radius:9999px;padding:.3rem .6rem;cursor:pointer;font-weight:800;">✕</button></h3>
+    <form onsubmit="submitNewNote(event)">
+      <label>Title</label><input type="text" id="nv-title" required>
+      <label>Category</label><select id="nv-cat"><option>Business Idea</option><option>Personal</option><option>Strategy</option></select>
+      <label>Content</label><textarea id="nv-content" rows="2" style="width:100%;margin-top:.25rem;border:1.5px solid var(--border);border-radius:10px;padding:.5rem;"></textarea>
+      <button type="submit" style="margin-top:.75rem;">Save Note</button>
+    </form>
+  </div>
+</div>
 
 <script>
-function switchTab(name, btn){document.querySelectorAll('.tab-content').forEach(el=>el.classList.remove('active'));document.querySelectorAll('.tab-btn').forEach(el=>el.classList.remove('active'));const t=document.getElementById('tab-'+name);if(t)t.classList.add('active');if(btn)btn.classList.add('active');}
-function toggleHabit(btn){btn.parentElement.style.opacity='0.4';btn.innerText='✓ Done';}
+function switchTab(name,btn){document.querySelectorAll('.tab-content').forEach(el=>el.classList.remove('active'));document.querySelectorAll('.tab-btn').forEach(el=>el.classList.remove('active'));const t=document.getElementById('tab-'+name);if(t)t.classList.add('active');if(btn)btn.classList.add('active');}
+function toggleHabit(btn){btn.parentElement.style.opacity='0.35';btn.innerText='✓ Done';}
 function removeItem(btn){btn.parentElement.remove();}
 function addChecklist(e){e.preventDefault();const t=document.getElementById('chk-text').value.trim();if(!t)return;const li=document.createElement('li');li.innerHTML='<span>'+t+'</span><button onclick="removeItem(this)">✓</button>';document.getElementById('checklist').appendChild(li);document.getElementById('chk-text').value='';}
-function copyPrompt(btn){const p=btn.parentElement.querySelector('span').innerText;navigator.clipboard?navigator.clipboard.writeText(p).then(()=>btn.innerText='Copied!'):alert('Copied: '+p);}
+function copyPrompt(btn){const p=btn.parentElement.querySelector('span').innerText;navigator.clipboard?navigator.clipboard.writeText(p).then(()=>btn.innerText='Copied!').catch(()=>alert('Copied (manual)')):alert('Copied: '+p);}
 function useTemplate(name){alert('Template loaded: '+name);}
-function submitNewNote(e){e.preventDefault();const t=document.getElementById('nv-title').value;const c=document.getElementById('nv-cat').value;const b=document.getElementById('nv-content').value;const tb=document.querySelector('#tab-memory table tbody');if(tb){const row=document.createElement('tr');row.innerHTML='<td>'+t+'</td><td>'+c+'</td><td>Today</td><td><a href="#" style="border:2px solid var(--black);padding:.15rem .5rem;border-radius:9999px;font-weight:900;font-size:.75rem;text-decoration:none;background:#fff;color:var(--ink);box-shadow:2px 2px 0 var(--black);">View</a></td>';tb.appendChild(row);}const notes=JSON.parse(localStorage.getItem('vault_notes')||'[]');notes.push({title:t,cat:c,content:b,date:'Today'});localStorage.setItem('vault_notes',JSON.stringify(notes));e.target.reset();}
-function addExam(t){const done=JSON.parse(localStorage.getItem('study_done')||'[]');done.push({date:'Nov 10/14/18/22',subject:t,paper:'-',day:'—',status:'done'});localStorage.setItem('study_done',JSON.stringify(done));const li=document.createElement('li');li.innerHTML='<span>'+t+'</span><button onclick="this.parentElement.remove()">Mark Done</button>';document.querySelector('#tab-study ul').appendChild(li);initStudy();}
+function addExamRow(t){const tbody=document.querySelector('#study-table tbody');if(tbody){const row=document.createElement('tr');row.innerHTML='<td>—</td><td>—</td><td>'+t+'</td><td>—</td><td><span class="badge" style="background:#e0e7ff;color:#3730a3;border-color:#c7d2fe;">UPCOMING ⏳</span></td>';tbody.appendChild(row);}const done=JSON.parse(localStorage.getItem('study_done')||'[]');done.push({date:'—',subject:t,day:'—',status:'pending'});localStorage.setItem('study_done',JSON.stringify(done));}
+function submitNewNote(e){e.preventDefault();const title=document.getElementById('nv-title').value;const cat=document.getElementById('nv-cat').value;const content=document.getElementById('nv-content').value;const tbody=document.querySelector('#tab-memory table tbody');if(tbody){const row=document.createElement('tr');row.innerHTML='<td>'+title+'</td><td>'+cat+'</td><td>Today</td><td><a href="#" style="display:inline-block;padding:.15rem .5rem;border:1.5px solid var(--black);border-radius:9999px;font-weight:800;font-size:.75rem;text-decoration:none;background:#fff;color:var(--primary);box-shadow:var(--shadow);">View</a></td>';tbody.appendChild(row);}const notes=JSON.parse(localStorage.getItem('vault_notes')||'[]');notes.push({title,cat,content,date:'Today'});localStorage.setItem('vault_notes',JSON.stringify(notes));e.target.reset();closeModal('add-note');}
+function submitAddClient(e){e.preventDefault();const name=document.getElementById('mc-name').value;const proj=document.getElementById('mc-project').value;const ret=document.getElementById('mc-ret').value.replace(/[^0-9]/g,'');const stat=document.getElementById('mc-stat').value;const clients=JSON.parse(localStorage.getItem('crm_clients')||'[]');clients.push({name,project:proj,retainer:ret,status:stat});localStorage.setItem('crm_clients',JSON.stringify(clients));const table=document.querySelector('#tab-clients table tbody');const row=document.createElement('tr');row.innerHTML='<td>'+name+'</td><td>'+proj+'</td><td>$'+ret+'</td><td><span style="border:2px solid var(--black);padding:.1rem .4rem;border-radius:9999px;background:var(--mint);font-size:.7rem;">'+stat+'</span></td><td>Today</td>';table.appendChild(row);updateMetrics();closeModal('add');e.target.reset();}
+function submitAddLead(e){e.preventDefault();const name=document.getElementById('ld-name').value;const source=document.getElementById('ld-source').value;const value=document.getElementById('ld-val').value;const priority=document.getElementById('ld-priority').value;const tbody=document.querySelector('#leads-table tbody');if(tbody){const row=document.createElement('tr');row.innerHTML='<td>'+name+'</td><td>'+source+'</td><td>$'+value+'</td><td><span style="border:2px solid var(--black);padding:.1rem .4rem;border-radius:9999px;background:var(--pink);font-size:.7rem;">New</span></td><td>'+priority+'</td><td><a href="#" style="border:2px solid var(--black);padding:.15rem .5rem;border-radius:9999px;font-weight:900;font-size:.75rem;text-decoration:none;background:#fff;color:var(--ink);box-shadow:2px 2px 0 var(--black);">Contact</a></td>';tbody.appendChild(row);}const clients=JSON.parse(localStorage.getItem('lead_items')||'[]');clients.push({name,source,value,stage:'New',priority});localStorage.setItem('lead_items',JSON.stringify(clients));closeModal('add-lead');e.target.reset();}
+function submitAddTeam(e){e.preventDefault();const n=document.getElementById('tm-name').value;const r=document.getElementById('tm-role').value;const s=document.getElementById('tm-status').value;const tbody=document.querySelector('#tab-team table tbody');if(tbody){const row=document.createElement('tr');row.innerHTML='<td>'+n+'</td><td>'+r+'</td><td><span style="border:2px solid var(--black);padding:.1rem .4rem;border-radius:9999px;background:var(--mint);font-size:.7rem;">'+s+'</span></td><td><a href="#" style="border:2px solid var(--black);padding:.15rem .5rem;border-radius:9999px;font-weight:900;font-size:.75rem;text-decoration:none;background:#fff;color:var(--ink);box-shadow:2px 2px 0 var(--black);">View</a></td>';tbody.appendChild(row);}const members=JSON.parse(localStorage.getItem('team_members')||'[]');members.push({name:n,role:r,status:s});localStorage.setItem('team_members',JSON.stringify(members));closeModal('add-team');e.target.reset();}
+function updateMetrics(){const clients=JSON.parse(localStorage.getItem('crm_clients')||'[]');const metrics=document.querySelector('#tab-clients .card ul');if(metrics){const base=18500;const total=clients.reduce((sum,c)=>sum+(parseInt(c.retainer||0)||0),0);metrics.innerHTML='<li><span>Active Clients</span> <strong>'+(4+clients.length)+'</strong></li><li><span>Monthly Retainer Revenue</span> <strong>$'+(base+total).toLocaleString()+'</strong></li><li><span>Retention Rate</span> <strong>92%</strong></li><li><span>Pending Invoices</span> <strong>$2,400</strong></li>';}}
+function openModal(id){document.getElementById('modal-'+id).classList.add('active');document.body.style.overflow='hidden';}
+function closeModal(id){document.getElementById('modal-'+id).classList.remove('active');document.body.style.overflow='';}
+function initClients(){const clients=JSON.parse(localStorage.getItem('crm_clients')||'[]');const tbody=document.querySelector('#tab-clients table tbody');if(!tbody)return;tbody.innerHTML='';const defaults=[{name:'John Doe',project:'Austin Property Leads',retainer:'3200',status:'Active'},{name:'Success Group',project:'Social Intel Automation',retainer:'5500',status:'Onboarding'},{name:'Rudro Consulting',project:'Dashboard & Notion Sync',retainer:'4800',status:'In Review'},{name:'Sarah Khan',project:'Real Estate CRM Setup',retainer:'5000',status:'Active'}];const all=[...defaults,...clients];all.forEach(c=>{const row=document.createElement('tr');row.innerHTML='<td>'+c.name+'</td><td>'+c.project+'</td><td>$'+c.retainer+'</td><td><span style="border:2px solid var(--black);padding:.1rem .4rem;border-radius:9999px;background:var(--mint);font-size:.7rem;">'+c.status+'</span></td><td>Today</td>';tbody.appendChild(row);});updateMetrics();}
+function initLeads(){const leads=JSON.parse(localStorage.getItem('lead_items')||'[]');const tbody=document.querySelector('#leads-table tbody');if(!tbody)return;tbody.innerHTML='';const defaults=[{name:'John Doe',source:'Facebook',value:'12000',stage:'Hot',priority:'High'},{name:'Success Group',source:'LinkedIn',value:'18500',stage:'Contacted',priority:'Medium'},{name:'Rudro Consulting',source:'Direct',value:'9200',stage:'Negotiation',priority:'High'},{name:'Sarah Khan',source:'Instagram',value:'5300',stage:'New',priority:'Medium'}];const all=[...defaults,...leads];all.forEach(l=>{const row=document.createElement('tr');row.innerHTML='<td>'+l.name+'</td><td>'+l.source+'</td><td>$'+l.value+'</td><td><span style="border:2px solid var(--black);padding:.1rem .4rem;border-radius:9999px;background:var(--pink);font-size:.7rem;">'+l.stage+'</span></td><td>'+l.priority+'</td><td><a href="#" style="border:2px solid var(--black);padding:.15rem .5rem;border-radius:9999px;font-weight:900;font-size:.75rem;text-decoration:none;background:#fff;color:var(--ink);box-shadow:2px 2px 0 var(--black);">Contact</a></td>';tbody.appendChild(row);});}
+function initMemory(){const notes=JSON.parse(localStorage.getItem('vault_notes')||'[]');const tbody=document.querySelector('#tab-memory table tbody');if(!tbody)return;tbody.innerHTML='';const defaults=[{title:'Social-automation skill notes',cat:'Business Idea',date:'Oct 22, 2026'},{title:'Real estate dashboard design spec',cat:'Strategy',date:'Oct 20, 2026'},{title:'Profile reminder settings',cat:'Personal',date:'Oct 22, 2026'}];const all=[...defaults,...notes];all.forEach(n=>{const row=document.createElement('tr');row.innerHTML='<td>'+n.title+'</td><td>'+n.cat+'</td><td>'+n.date+'</td><td><a href="#" style="border:2px solid var(--black);padding:.15rem .5rem;border-radius:9999px;font-weight:900;font-size:.75rem;text-decoration:none;background:#fff;color:var(--primary);box-shadow:var(--shadow);">View</a> <a href="#" style="border:2px solid var(--black);padding:.15rem .5rem;border-radius:9999px;font-weight:900;font-size:.75rem;text-decoration:none;background:#fff;color:var(--primary);box-shadow:var(--shadow);">Edit</a></td>';tbody.appendChild(row);});}
+function initTeam(){const members=JSON.parse(localStorage.getItem('team_members')||'[]');const tbody=document.querySelector('#tab-team table tbody');if(!tbody)return;tbody.innerHTML='';const defaults=[{name:'Billal Hossien',role:'Lead Scraper / Owner',status:'Active'},{name:'Dashboard Agent',role:'UI / HTML Engineer',status:'Busy'},{name:'Outreach Agent',role:'Email / Cold Outreach',status:'Active'},{name:'VA (Virtual Assistant)',role:'Admin / Scheduling',status:'On Leave'}];const all=[...defaults,...members];all.forEach(m=>{const row=document.createElement('tr');row.innerHTML='<td>'+m.name+'</td><td>'+m.role+'</td><td><span style="border:2px solid var(--black);padding:.1rem .4rem;border-radius:9999px;background:var(--mint);font-size:.7rem;">'+m.status+'</span></td><td><a href="#" style="border:2px solid var(--black);padding:.15rem .5rem;border-radius:9999px;font-weight:900;font-size:.75rem;text-decoration:none;background:#fff;color:var(--ink);box-shadow:2px 2px 0 var(--black);">View</a></td>';tbody.appendChild(row);});}
+function initStudy(){const done=JSON.parse(localStorage.getItem('study_done')||'[]');const tbody=document.querySelector('#study-table tbody');if(!tbody)return;done.forEach(d=>{if(d.status==='done'||d.status==='pending'){const tr=document.createElement('tr');tr.innerHTML='<td>'+d.date+'</td><td>'+d.day+'</td><td>'+d.subject+'</td><td>'+d.paper+'</td><td><span class="badge badge-completed">COMPLETED ✓</span></td>';tbody.appendChild(tr);}});}
+document.addEventListener('DOMContentLoaded',()=>{initClients();initLeads();initMemory();initTeam();initStudy();});
 </script>
 </body>
 </html>
