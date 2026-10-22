@@ -21,7 +21,7 @@ nav a.tab-btn.active{background:var(--mint);}
 .grid{display:grid;grid-template-columns:1fr 1fr;gap:2rem;max-width:1200px;margin:0 auto;}
 @media(max-width:900px){.grid{grid-template-columns:1fr;}}
 .card{border:4px solid var(--black);border-radius:14px;padding:1.2rem;background:#fff;box-shadow:6px 6px 0 var(--black);}
-.card h2{font-weight:900;font-size:1.15rem;margin-bottom:.8rem;padding-bottom:.3rem;border-bottom:3px solid var(--black);display:inline-block;}
+.card h2{font-weight:900;font-size:1.15rem;margin-bottom:.8rem;padding-bottom:.3rem;border-bottom:3px solid var(--black);display:inline-block;letter-spacing:-0.01em;}
 .card ul{list-style:none;padding:0;}
 .card ul li{padding:.35rem 0;border-bottom:2px dashed var(--black);font-weight:600;font-size:.92rem;display:flex;justify-content:space-between;}
 .card input[type=text],.card input[type=number],.card input[type=date],.card select{width:100%;padding:.5rem;border:3px solid var(--black);border-radius:10px;font-size:.95rem;font-family:inherit;margin-top:.5rem;box-shadow:3px 3px 0 var(--black);}
@@ -78,15 +78,24 @@ nav a.tab-btn.active{background:var(--mint);}
 <div id="tab-study" class="tab-content" aria-label="NU Study Hub">
   <main class="grid" aria-label="Study Hub">
     <section style="display:flex;flex-direction:column;gap:2rem;">
-      <article class="card" aria-label="Syllabus"><h2>🎓 NU Syllabus — Active Courses</h2>
-        <ul><li><span>CS-101: Intro to Computing</span><span>Midterm: Nov 10</span></li>
-        <li><span>MATH-204: Linear Algebra</span><span>Assignment: Nov 12</span></li>
-        <li><span>ENG-301: Technical Writing</span><span>Essay: Nov 15</span></li></ul>
-      </article>
-      <article class="card" style="background:var(--mint);" aria-label="Exam Schedule"><h2>📅 Exam Schedule</h2>
-        <ul><li><span>Nov 10 — CS-101 Midterm</span><button onclick="addExam('Nov 10 — CS-101 Midterm')">Mark Done</button></li>
-        <li><span>Nov 14 — MATH-204 Final</span><button onclick="addExam('Nov 14 — MATH-204 Final')">Mark Done</button></li></ul>
-      </article>
+      <article class="card" aria-label="Exam Routine"><h2>🎓 NU Honours 2nd Year — Final Exam Routine</h2>
+<table style="width:100%;border-collapse:collapse;font-weight:700;font-size:.85rem;">
+<thead><tr style="border-bottom:4px solid var(--black);"><th>Date</th><th>Day</th><th>Subject</th><th>Paper</th><th>Status</th></tr></thead>
+<tbody>
+<tr style="border-bottom:2px dashed var(--black);"><td>Nov 10</td><td>Mon</td><td>CS-101: Computing</td><td>CS-101-F</td><td><span style="background:#10b981;color:#fff;padding:.15rem .5rem;border-radius:9999px;border:2px solid var(--black);font-weight:900;font-size:.75rem;">COMPLETED ✓</span></td></tr>
+<tr style="border-bottom:2px dashed var(--black);"><td>Nov 14</td><td>Fri</td><td>MATH-204: Linear Algebra</td><td>MATH-204-F</td><td><span style="border:2px solid #111;padding:.15rem .5rem;border-radius:9999px;background:#fff;font-weight:900;font-size:.75rem;">UPCOMING ⏳</span></td></tr>
+<tr style="border-bottom:2px dashed var(--black);"><td>Nov 18</td><td>Tue</td><td>ENG-301: Technical Writing</td><td>ENG-301-F</td><td><span style="border:2px solid #111;padding:.15rem .5rem;border-radius:9999px;background:#fff;font-weight:900;font-size:.75rem;">UPCOMING ⏳</span></td></tr>
+<tr><td>Nov 22</td><td>Sat</td><td>CS-101 Lab (Practical)</td><td>CS-LAB</td><td><span style="border:2px solid #111;padding:.15rem .5rem;border-radius:9999px;background:#fff;font-weight:900;font-size:.75rem;">UPCOMING ⏳</span></td></tr>
+</tbody>
+</table>
+</article>
+<article class="card" style="background:var(--mint);margin-top:1.5rem;" aria-label="3rd Year Roadmap"><h2>📘 3rd Year Academic Roadmap (Tentative)</h2>
+<p style="font-weight:700;font-size:.95rem;margin-bottom:.5rem;">Expected Class Start: <strong>Jan 12, 2027</strong> | Tentative Exam Window: <strong>Apr 14 – Apr 28, 2027</strong></p>
+<ul><li><span>Syllabus Checklist — CS-301 (Advanced Algorithms)</span><button onclick="addExam('CS-301 Syllabus Added')">+ Add</button></li>
+<li><span>Syllabus Checklist — ENG-401 (Thesis Prep)</span><button onclick="addExam('ENG-401 Syllabus Added')">+ Add</button></li>
+<li><span>Exam Schedule — Midterms: Mar 10 / Mar 12</span><button onclick="addExam('Midterms Added')">+ Add</button></li>
+</ul>
+</article>
     </section>
     <section style="display:flex;flex-direction:column;gap:2rem;">
       <article class="card" aria-label="Assignments"><h2>📝 Assignments & Deadlines</h2>
@@ -194,7 +203,7 @@ function addChecklist(e){e.preventDefault();const t=document.getElementById('chk
 function copyPrompt(btn){const p=btn.parentElement.querySelector('span').innerText;navigator.clipboard?navigator.clipboard.writeText(p).then(()=>btn.innerText='Copied!'):alert('Copied: '+p);}
 function useTemplate(name){alert('Template loaded: '+name);}
 function submitNewNote(e){e.preventDefault();const t=document.getElementById('nv-title').value;const c=document.getElementById('nv-cat').value;const b=document.getElementById('nv-content').value;const tb=document.querySelector('#tab-memory table tbody');if(tb){const row=document.createElement('tr');row.innerHTML='<td>'+t+'</td><td>'+c+'</td><td>Today</td><td><a href="#" style="border:2px solid var(--black);padding:.15rem .5rem;border-radius:9999px;font-weight:900;font-size:.75rem;text-decoration:none;background:#fff;color:var(--ink);box-shadow:2px 2px 0 var(--black);">View</a></td>';tb.appendChild(row);}const notes=JSON.parse(localStorage.getItem('vault_notes')||'[]');notes.push({title:t,cat:c,content:b,date:'Today'});localStorage.setItem('vault_notes',JSON.stringify(notes));e.target.reset();}
-function addExam(t){const li=document.createElement('li');li.innerHTML='<span>'+t+'</span><button onclick="this.parentElement.remove()">Mark Done</button>';document.querySelector('#tab-study ul').appendChild(li);}
+function addExam(t){const done=JSON.parse(localStorage.getItem('study_done')||'[]');done.push({date:'Nov 10/14/18/22',subject:t,paper:'-',day:'—',status:'done'});localStorage.setItem('study_done',JSON.stringify(done));const li=document.createElement('li');li.innerHTML='<span>'+t+'</span><button onclick="this.parentElement.remove()">Mark Done</button>';document.querySelector('#tab-study ul').appendChild(li);initStudy();}
 </script>
 </body>
 </html>
