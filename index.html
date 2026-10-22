@@ -85,6 +85,9 @@ footer code{background:#fff;border:1.5px solid var(--shadow);padding:.15rem .35r
 /* Responsive */
 @media(max-width:1024px){.main-grid{grid-template-columns:1fr;}}
 @media(max-width:640px){header h1{font-size:1.8rem;}nav .logo{font-size:1rem;}}
+
+.social-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:1rem;margin-top:1rem;}
+@media(max-width:640px){.social-grid{grid-template-columns:1fr;}}
 </style>
 </head>
 <body>
@@ -216,11 +219,15 @@ footer code{background:#fff;border:1.5px solid var(--shadow);padding:.15rem .35r
 
 <script>
 function showTab(id){
-  document.getElementById('leads').style.display=id==='leads'?'grid':'none';
-  document.getElementById('todo').style.display=id==='todo'?'block':'none';
-  document.getElementById('notes').style.display=id==='notes'?'block':'none';
-  document.getElementById('calendar').style.display=id==='calendar'?'block':'none';
-  document.getElementById('social').style.display=id==='social'?'block':'none';
+  ['leads','todo','notes','calendar','social'].forEach(s=>{
+    var el=document.getElementById(s);
+    if(el)el.style.display='none';
+  });
+  var active=document.getElementById(id);
+  if(active){
+    if(id==='leads')active.style.display='grid';
+    else active.style.display='block';
+  }
   document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('leads','todo','notes','calendar','social'));
   if(id==='leads')document.querySelector('.tab-btn:nth-child(1)').classList.add('leads');
   if(id==='todo')document.querySelector('.tab-btn:nth-child(2)').classList.add('todo');
